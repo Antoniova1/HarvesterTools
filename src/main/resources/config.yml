@@ -1,0 +1,124 @@
+
+database: #At the moment only supports mysql
+  use: false #If this is false, a file to store player data will be created.
+  host: "localhost"
+  port: "3306"
+  database: "test"
+  username: "root"
+  password: ""
+#This disables /sword /hoe... commands
+tools:
+  enabled: true
+  cooldown: 60 #In seconds
+  give-on-join: true #Only on first join
+  hoe:
+    material: "DIAMOND_HOE"
+    name: "<blue>Harvester Hoe <white>%sell-mode%"
+    lore:
+      - "<gray>Use this hoe to farm crops and become the richest player"
+      - ""
+      - "<white><b>Stats"
+      - "<yellow> - Owner: <white>%owner%"
+      - "<yellow> - Recollected essence: <white>%essence%"
+      - "<yellow> - Level: <white>%level%"
+      - "<yellow> - Prestige: <white>%prestige%"
+      - ""
+      - "<white><b>Mode"
+      - "<yellow> - Mode: <white>%sell-mode%"
+      - "<gray> (Right click + shift to change it)"
+      - ""
+      - "<white><b>Enchants"
+      - "%enchantlist%"
+  sword:
+    material: "DIAMOND_SWORD"
+    name: "<blue>Harvester sword <white>%sell-mode%"
+    lore:
+      - "<gray>Use this sword to kill mobs and become the richest player"
+      - ""
+      - "<white><b>Stats"
+      - "<yellow> - Owner: <white>%owner%"
+      - "<yellow> - Recollected essence: <white>%essence%"
+      - "<yellow> - Level: <white>%level%"
+      - "<yellow> - Prestige: <white>%prestige%"
+      - ""
+      - "<white><b>Mode"
+      - "<yellow> - Mode: <white>%sell-mode%"
+      - "<gray> (Right click + shift to change it)"
+      - ""
+      - "<white><b>Enchants"
+      - "%enchantlist%"
+  rod:
+    name: "<blue>Harvester rod <white>%sell-mode%"
+    lore:
+      - "<gray>Use this hoe to fish and become the richest player"
+      - ""
+      - "<white><b>Stats"
+      - "<yellow> - Owner: <white>%owner%"
+      - "<yellow> - Recollected essence: <white>%essence%"
+      - "<yellow> - Level: <white>%level%"
+      - "<yellow> - Prestige: <white>%prestige%"
+      - ""
+      - "<white><b>Mode"
+      - "<yellow> - Mode: <white>%sell-mode%"
+      - "<gray> (Right click + shift to change it)"
+      - ""
+      - "<white><b>Enchants"
+      - "%enchantlist%"
+  pickaxe:
+    material: "DIAMOND_PICKAXE"
+    name: "<blue>Harvester Pickaxe <white>%sell-mode%"
+    lore:
+      - "<gray>Use this hoe to mine ores and become the richest player"
+      - ""
+      - "<white><b>Stats"
+      - "<yellow> - Owner: <white>%owner%"
+      - "<yellow> - Recollected essence: <white>%essence%"
+      - "<yellow> - Level: <white>%level%"
+      - "<yellow> - Prestige: <white>%prestige%"
+      - ""
+      - "<white><b>Mode"
+      - "<yellow> - Mode: <white>%sell-mode%"
+      - "<gray> (Right click + shift to change it)"
+      - ""
+      - "<white><b>Enchants"
+      - "%enchantlist%"
+#Format for %enchantlist% in item lore.
+enchantList: " <white>➛ <green><b>%enchant% <gray>(<yellow>%level%<gray>/<yellow>%maxLevel%<gray>)"
+#This will show like this:
+#➛ %enchant%
+#➛ %enchant% ...
+Prestige:
+  level-to-prestige: 30 #Level needed to prestige
+  boost-essence: true
+  boost-money: true
+  boost-enchants: true
+  max-prestige: 100
+  boosts:
+    essence: 0.1
+    money: 0.5
+    enchants: 0.05
+
+Confirm-Enchant-Menu:
+  item-preview: true
+  item-preview-slot: 4
+  title: "<gray>%enchant%"
+  items:
+    max-item:
+      value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODdkODg1YjMyYjBkZDJkNmI3ZjFiNTgyYTM0MTg2ZjhhNTM3M2M0NjU4OWEyNzM0MjMxMzJiNDQ4YjgwMzQ2MiJ9fX0=
+      name: "<green>+%next_level% enchants levels."
+      slot: 12
+      lore:
+        - "<gray>Current level: %current_level%"
+        - "<gray>Next level: %next_level%"
+        - "<gray>Price: %price%"
+        - ""
+        - "<gray>Right click to buy %enchant%"
+    select-item:
+      value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODdkODg1YjMyYjBkZDJkNmI3ZjFiNTgyYTM0MTg2ZjhhNTM3M2M0NjU4OWEyNzM0MjMxMzJiNDQ4YjgwMzQ2MiJ9fX0
+      slot: 14
+      name: "<green>Choose the amount of levels!"
+      lore:
+        - "<gray>Click this item to be able"
+        - "<gray>to choose the amount of levels"
+        - "<gray>you want."
+        -

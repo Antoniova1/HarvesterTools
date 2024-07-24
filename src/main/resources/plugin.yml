@@ -1,0 +1,24 @@
+name: HarvesterTools
+version: '${project.version}'
+main: org.frags.harvestertools.HarvesterTools
+api-version: '1.16'
+softdepend:
+  - PlaceholderAPI
+commands:
+  hoe:
+    description: Gives you hoe
+  sword:
+    description: Gives you sword
+  rod:
+    description: Gives you rod
+  pickaxe:
+    description: Gives you pickaxe
+  essence:
+    description: Core essence command.
+permissions:
+  harvestertools.essence:
+    default: op
+  harvestertools.essence.balance:
+    default: true
+  harvestertools.essence.give:
+    default: op

@@ -1,45 +1,44 @@
-package org.frags.harvestertools.commands;
+package org.frags.harvestertools.commands.commandsmanagers;
 
-import org.apache.logging.log4j.message.Message;
+import com.sun.tools.javac.Main;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.frags.harvestertools.HarvesterTools;
-import org.frags.harvestertools.commands.essencesubcommands.BalanceCommand;
-import org.frags.harvestertools.commands.essencesubcommands.GiveCommand;
-import org.frags.harvestertools.commands.essencesubcommands.PayCommand;
+import org.frags.harvestertools.commands.SubCommand;
+import org.frags.harvestertools.commands.subcommands.mainsubcommands.LevelCommand;
+import org.frags.harvestertools.commands.subcommands.mainsubcommands.ToolsCommand;
 import org.frags.harvestertools.managers.MessageManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class EssenceCommandManager implements CommandExecutor {
+public class MainCommandManager implements CommandExecutor {
+
+    private ArrayList<SubCommand> subCommands = new ArrayList<>();
 
     private final HarvesterTools plugin;
 
-    private final ArrayList<SubCommand> subCommands = new ArrayList<>();
-
-    public EssenceCommandManager(HarvesterTools plugin) {
+    public MainCommandManager(HarvesterTools plugin) {
         this.plugin = plugin;
-
-        subCommands.add(new BalanceCommand());
-        subCommands.add(new GiveCommand());
-        subCommands.add(new PayCommand());
+        //register subcommands
+        subCommands.add(new LevelCommand());
+        subCommands.add(new ToolsCommand());
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
-
+        //harvestertools /tools /ht /harvester /tool
         if (sender instanceof Player player) {
 
             if (args.length == 0) {
                 //List that shows all possible commands
-                if (player.hasPermission("harvestertools.essence")) {
+                if (player.hasPermission("harvestertools.main")) {
                     MessageManager.miniMessageSender(player, "<green>These are the list of the possible commands:");
-                    MessageManager.miniMessageSender(player, "<gray>/essence balance (player)");
-                    MessageManager.miniMessageSender(player, "<gray>/essence pay <white>(player) (amount)");
-                    MessageManager.miniMessageSender(player, "<gray>/essence withdraw <white>(amount)");
+                    MessageManager.miniMessageSender(player, "<gray>/harvestertools give <white>(tool) (player)");
+                    MessageManager.miniMessageSender(player, "<gray>/harvestertools level <white>(amount)");
+                    MessageManager.miniMessageSender(player, "<gray>/harvestertools prestige <white>(amount)");
                     MessageManager.miniMessageSender(player, "<gray>/essence shop");
                     MessageManager.miniMessageSender(player, "<gray>/essence give <white>(player) (amount)");
                     return true;
@@ -62,9 +61,9 @@ public class EssenceCommandManager implements CommandExecutor {
                     }
                 }
             }
+
+
         }
-
-
         return true;
     }
 

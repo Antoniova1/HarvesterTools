@@ -7,8 +7,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.frags.harvestertools.commands.EssenceCommandManager;
-import org.frags.harvestertools.commands.ToolsCommand;
+import org.frags.harvestertools.commands.commandsmanagers.EssenceCommandManager;
+import org.frags.harvestertools.commands.commandsmanagers.MainCommandManager;
 import org.frags.harvestertools.enchants.EnchantsManager;
 import org.frags.harvestertools.essence.EssenceManager;
 import org.frags.harvestertools.files.*;
@@ -94,14 +94,8 @@ public final class HarvesterTools extends JavaPlugin {
 
 
 
-        if (getConfig().getBoolean("tools.enabled")) {
-            getCommand("hoe").setExecutor(new ToolsCommand(this));
-            getCommand("sword").setExecutor(new ToolsCommand(this));
-            getCommand("pickaxe").setExecutor(new ToolsCommand(this));
-            getCommand("rod").setExecutor(new ToolsCommand(this));
-        }
         getCommand("essence").setExecutor(new EssenceCommandManager(this));
-
+        getCommand("harvestertools").setExecutor(new MainCommandManager(this));
 
         useDatabase = getConfig().getBoolean("database.use");
 

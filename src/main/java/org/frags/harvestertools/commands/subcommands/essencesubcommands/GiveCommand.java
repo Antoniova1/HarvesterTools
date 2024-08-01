@@ -1,4 +1,4 @@
-package org.frags.harvestertools.commands.essencesubcommands;
+package org.frags.harvestertools.commands.subcommands.essencesubcommands;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;

@@ -13,9 +13,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.frags.harvestertools.enums.Tools;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.math.BigDecimal;
 import java.util.List;
 
+import static org.bukkit.plugin.java.JavaPlugin.getPlugin;
 import static org.frags.harvestertools.HarvesterTools.getInstance;
 
 public class ToolUtils {
@@ -28,6 +33,8 @@ public class ToolUtils {
     public static NamespacedKey essenceBoostKey = new NamespacedKey(getInstance(), "essence_boost");
     public static NamespacedKey moneyBoostKey = new NamespacedKey(getInstance(), "money_boost");
     public static NamespacedKey enchantBoostKey = new NamespacedKey(getInstance(), "enchant_boost");
+
+    public static NamespacedKey essenceItemKey = new NamespacedKey(getInstance(), "essence_item");
 
     private static ConfigurationSection section = getInstance().getConfig().getConfigurationSection("tools");
 
@@ -181,6 +188,21 @@ public class ToolUtils {
         return null;
     }
 
+    public static ItemStack giveCorrectItem(Tools tool, Player player) {
+        ItemStack item;
+        if (tool == Tools.hoe) {
+            item = getHoe(player);
+        } else if (tool == Tools.rod) {
+            item = getRod(player);
+        } else if (tool == Tools.pickaxe) {
+            item = getPickaxe(player);
+        } else {
+            item = getSword(player);
+        }
+        player.getInventory().addItem(item);
+        return item;
+    }
+
     private static String replaceVariables(String string, Player player) {
         MiniMessage miniMessage = MiniMessage.miniMessage();
         TextComponent text = (TextComponent) miniMessage.deserialize(string);
@@ -216,15 +238,101 @@ public class ToolUtils {
         container.set(enchantBoostKey, PersistentDataType.DOUBLE, 0D);
     }
 
+    @Nullable
+    public static Tools getTool(@NotNull ItemStack itemStack) {
+        if (!isTool(itemStack))
+            return null;
+
+        String toolType = itemStack.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(getInstance(), "tool"), PersistentDataType.STRING);
+        if (toolType == null)
+            return null;
+        return Tools.getTool(toolType);
+    }
+
     public static int getItemLevel(ItemStack itemStack) {
+        if (!isTool(itemStack))
+            return 0;
         PersistentDataContainer container = itemStack.getItemMeta().getPersistentDataContainer();;
 
         return container.getOrDefault(levelKey, PersistentDataType.INTEGER, 0);
     }
 
+    public static String getItemSellMode(ItemStack itemStack) {
+        if (!isTool(itemStack))
+            return null;
+        PersistentDataContainer container = itemStack.getItemMeta().getPersistentDataContainer();;
+
+        return container.getOrDefault(autosellKey, PersistentDataType.STRING, "Collect");
+    }
+
     public static int getItemPrestige(ItemStack itemStack) {
+        if (!isTool(itemStack))
+            return 0;
         PersistentDataContainer container = itemStack.getItemMeta().getPersistentDataContainer();;
 
         return container.getOrDefault(levelKey, PersistentDataType.INTEGER, 0);
+    }
+
+    public static double getItemEssence(ItemStack itemStack) {
+        if (!isTool(itemStack))
+            return 0;
+        PersistentDataContainer container = itemStack.getItemMeta().getPersistentDataContainer();;
+
+        return container.getOrDefault(essenceKey, PersistentDataType.DOUBLE, 0D);
+    }
+
+
+    public static boolean isTool(@NotNull ItemStack itemStack) {
+        PersistentDataContainer container = itemStack.getItemMeta().getPersistentDataContainer();
+
+        return container.has(new NamespacedKey(getInstance(), "tool"));
+    }
+
+    public static void setLevel(@NotNull ItemStack itemStack, int newLevel) {
+        if (!isTool(itemStack))
+            return;
+
+        ItemMeta meta = itemStack.getItemMeta();
+        PersistentDataContainer container = meta.getPersistentDataContainer();
+
+        container.set(levelKey, PersistentDataType.INTEGER, newLevel);
+    }
+
+    private void updateVariables(@NotNull ItemStack itemStack) {
+        Tools tools = getTool(itemStack);
+        //tools.tools.name
+        List<String> expectedLore = getInstance().getConfig().getStringList("tools." + tools.name() + ".lore");
+
+        //Edit level
+        int levelLine = -1;
+        int prestigeLine = -1;
+        int essenceLine = -1;
+        int sellModeLine = -1;
+        for (int i = 0; i < expectedLore.size(); i++) {
+            String line = expectedLore.get(i);
+            if (line.contains("%level%")) {
+                levelLine = i;
+            } else if (line.contains("%prestige%")) {
+                prestigeLine = i;
+            } else if (line.contains("%essence%")) {
+                essenceLine = i;
+            } else if (line.contains("%sell-mode%")) {
+                sellModeLine = i;
+            }
+        }
+
+        ItemMeta meta = itemStack.getItemMeta();
+
+        List<String> lore = meta.getLore();
+
+        assert lore != null;
+        if (levelLine != -1)
+            lore.set(levelLine, expectedLore.get(levelLine).replace("%level%", String.valueOf(getItemLevel(itemStack))));
+        if (prestigeLine != -1)
+            lore.set(prestigeLine, expectedLore.get(prestigeLine).replace("%prestige%", String.valueOf(getItemPrestige(itemStack))));
+        if (essenceLine != -1)
+            lore.set(essenceLine, expectedLore.get(essenceLine).replace("%essence%", Utils.formatNumber(BigDecimal.valueOf(getItemEssence(itemStack)))));
+        if (sellModeLine != -1)
+            lore.set(sellModeLine, expectedLore.get(sellModeLine).replace("%sell-mode%", getItemSellMode(itemStack)));
     }
 }

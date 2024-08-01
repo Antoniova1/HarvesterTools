@@ -18,3 +18,8 @@ not-enough-prestige: "<red>You don't have the required prestige: <white>%prestig
 wrong-pay-usage: "<red>Wrong usage! Use /essence pay <player> <amount>"
 pay-success-receive: "<green>You have received %amount% from %player%"
 pay-success-send: "<green>You have payed %amount% to %player%"
+wrong-withdraw-usage: "<red>Wrong usage! Use /essence withdraw <amount>"
+withdraw-success: "<green>You have successfully withdrawn <white>%amount%"
+essence-redeem: "<green>You have successfully received <white>%amount%"
+give-item-received: "<green>You have received %tool% from %player%"
+give-item-sent: "<green>You have sent %tool% to %player%"

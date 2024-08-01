@@ -22,3 +22,13 @@ permissions:
     default: true
   harvestertools.essence.give:
     default: op
+  harvestertools.essence.pay:
+    default: true
+  harvestertools.essence.withdraw:
+    default: true
+  harvestertools.main:
+    default: op
+  harvestertools.give:
+    default: op
+  harvestertools.level:
+    default: op

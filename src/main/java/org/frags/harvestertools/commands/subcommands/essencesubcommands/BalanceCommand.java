@@ -1,4 +1,4 @@
-package org.frags.harvestertools.commands.essencesubcommands;
+package org.frags.harvestertools.commands.subcommands.essencesubcommands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;

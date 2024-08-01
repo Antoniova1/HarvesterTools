@@ -102,6 +102,7 @@ public class EssenceManager {
         }
     }
 
+
     public String getFormattedEssence(Player player) {
         double amount;
         if (player.isOnline()) {

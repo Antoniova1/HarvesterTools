@@ -1,4 +1,4 @@
-package org.frags.harvestertools.commands.essencesubcommands;
+package org.frags.harvestertools.commands.subcommands.essencesubcommands;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
@@ -52,7 +52,7 @@ public class PayCommand extends SubCommand {
         }
 
         String stringAmount = args[2];
-        double amount = 0;
+        double amount = 0D;
         try {
             amount = Double.parseDouble(stringAmount);
         } catch (NumberFormatException e) {

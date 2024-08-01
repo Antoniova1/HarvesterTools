@@ -92,6 +92,7 @@ Prestige:
   boost-essence: true
   boost-money: true
   boost-enchants: true
+  max-level: 100
   max-prestige: 100
   boosts:
     essence: 0.1
@@ -121,4 +122,8 @@ Confirm-Enchant-Menu:
         - "<gray>Click this item to be able"
         - "<gray>to choose the amount of levels"
         - "<gray>you want."
-        -
+Essence-item: #To use a skin with a PLAYER_HEAD include value:
+  material: MAGMA_CREAM
+  name: "<white>%amount% <red>Essence"
+  lore:
+    - "<yellow>Right Click this item to reclaim <white>%amount%"

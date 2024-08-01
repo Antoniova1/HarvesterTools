@@ -12,6 +12,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.frags.harvestertools.HarvesterTools;
 import org.frags.harvestertools.menusystem.menu.ToolMenu;
 import org.frags.harvestertools.enums.Tools;
+import org.frags.harvestertools.utils.ToolUtils;
 
 import static org.frags.harvestertools.HarvesterTools.*;
 
@@ -34,13 +35,8 @@ public class OpenMenuListener implements Listener {
         if (!item.getItemMeta().getPersistentDataContainer().has(new NamespacedKey(getInstance(), "tool"), PersistentDataType.STRING))
             return;
         //The item clicked is a tool
-        PersistentDataContainer container = item.getItemMeta().getPersistentDataContainer();
-        String toolTypeString =  container.get(new NamespacedKey(getInstance(), "tool"), PersistentDataType.STRING);
 
-        //This cannot be null
-        assert toolTypeString != null;
-        Tools toolType = Tools.getTool(toolTypeString);
-
+        Tools toolType = ToolUtils.getTool(item);
         //Open menu
         if (player.isSneaking()) {
             new ToolMenu(plugin, createPlayerMenuUtility(player, toolType, item)).open();

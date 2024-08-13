@@ -1,0 +1,36 @@
+crops:
+  WHEAT:
+    level: 0
+    price: 1.3
+    essence-price: 2
+    experience: 2.3
+  POTATOES:
+    level: 2
+    price: 1.5
+    essence-price: 2.2
+    experience: 2.5
+  PUMPKIN:
+    level: 3
+    price: 2.5
+    essence-price: 2.5
+    experience: 2.7
+  MELON:
+    level: 3
+    price: 2.5
+    essence-price: 2.5
+    experience: 3
+  CARROTS:
+    level: 5
+    price: 2
+    essence-price: 2.4
+    experience: 3
+  BEETROOTS:
+    level: 7
+    price: 2.3
+    essence-price: 2.6
+    experience: 3.2
+  NETHER_WART:
+    level: 16
+    price: 3.2
+    essence-price: 3.6
+    experience: 3.5

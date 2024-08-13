@@ -1,0 +1,71 @@
+Mobs:
+  cow:
+    money: 5
+    essence: 2
+    experience: 1
+    level: 0
+  pig:
+    money: 5
+    essence: 2
+    experience: 1
+    level: 0
+  sheep:
+    money: 5
+    essence: 2
+    experience: 1
+    level: 0
+  chicken:
+    money: 3
+    essence: 1
+    experience: 1
+    level: 0
+  silverfish:
+    money: 10
+    essence: 5
+    experience: 3
+    level: 0
+  cave_spider:
+    money: 12
+    essence: 6
+    experience: 4
+    level: 0
+  baby_zombie:
+    money: 15
+    essence: 8
+    experience: 5
+    level: 0
+  zombie:
+    money: 20
+    essence: 10
+    experience: 6
+    level: 2
+  skeleton:
+    money: 20
+    essence: 10
+    experience: 6
+    level: 2
+  spider:
+    money: 18
+    essence: 9
+    experience: 5
+    level: 1
+  wither_skeleton:
+    money: 30
+    essence: 15
+    experience: 8
+    level: 5
+  blaze:
+    money: 28
+    essence: 14
+    experience: 7
+    level: 6
+  enderman:
+    money: 40
+    essence: 20
+    experience: 10
+    level: 8
+  iron_golem:
+    money: 50
+    essence: 25
+    experience: 12
+    level: 8

@@ -1,0 +1,236 @@
+#######################################################
+#  _____ _   _  ____ _   _    _    _   _ _____ ____   #
+#  | ____| \ | |/ ___| | | |  / \  | \ | |_   _/ ___| #
+# |  _| |  \| | |   | |_| | / _ \ |  \| | | | \___ \  #
+# | |___| |\  | |___|  _  |/ ___ \| |\  | | |  ___) | #
+# |_____|_| \_|\____|_| |_/_/   \_|_| \_| |_| |____/  #
+#                                                     #
+#######################################################
+
+
+EnchantsMenu:
+  name: "<gold>Enchants Menu"
+  size: 45
+  item-preview: true
+  item-preview-slot: 4
+  filler: GRAY_STAINED_GLASS_PANE
+
+
+CustomEnchants:
+  autosell:
+    upgradable: false
+    name: "<green><b>Auto Sell"
+    material: PLAYER_HEAD
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjA5Mjk5YTExN2JlZTg4ZDMyNjJmNmFiOTgyMTFmYmEzNDRlY2FlMzliNDdlYzg0ODEyOTcwNmRlZGM4MWU0ZiJ9fX0=
+    slot: 10
+    price: 100000
+    required-level: 0
+    maxLevel: 1
+    required-prestige: 0
+    autosell-time: 60
+    price-per-fish: 100
+    essence-per-fish: 100
+    experience-per-fish: 50
+    lore:
+      - '<gray>Automatically sells all crops'
+      - ''
+      - '<gray><b>· Price: <white>%price%'
+      - ''
+      - '<gray>Click to buy this enchant!'
+    actionbar:
+      enabled: true
+      message: '<dark_green><b>[💰] AutoSell: + <green>$%money% <dark_green>+ <yellow>❋%essence%'
+    title:
+      enabled: true
+      title: '<dark_green><b>[💰] <green><b>AutoSell'
+      subtitle: '<dark_green>+ <green>$%money% <dark_green>+ <yellow>❋%essence%'
+      fadeIn: 20
+      fadeOut: 20
+      time: 80
+    change:
+      title:
+        enabled: true
+        title: "<red><b>[!] %mode%"
+        subtitle: "<gray>Mode changed"
+        fadeIn: 20
+        fadeOut: 20
+        time: 80
+      message: "<green>Your sell mode have been changed to %mode%"
+  moneybooster:
+    name: '<red><b>Money Booster'
+    material: PLAYER_HEAD
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTQ2N2E3YjlkNzZiYTZkMGZlZDc0MzYwMjUzM2ZjOThjODdhZjBjNjBmODBmMzhkYTc3NGY3YTAxYTIwOTNmYSJ9fX0=
+    upgradable: true
+    slot: 11
+    boost-per-level: 0.1
+    price: 100
+    price-increase: 150
+    maxLevel: 300
+    required-level: 0
+    required-prestige: 0
+    lore:
+      - "<gray>Boost obtained money"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - "<gray><b>· Boost: <white>%boost%"
+      - ""
+      - "<dark_gray>Click to buy this enchant!"
+  essencebooster:
+    name: "<red><b>Essence Booster"
+    material: PLAYER_HEAD
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjdjNDE5MzBmOGZmMGYyYjA0MzBlMTY5YWU1ZjM4ZTk4NGRmMTI0NDIxNTcwNWM2ZjE3Mzg2Mjg0NDU0M2U5ZCJ9fX0=
+    upgradable: true
+    slot: 12
+    boost-per-level: 0.1
+    price: 200
+    price-increase: 250
+    maxLevel: 300
+    required-level: 0
+    required-prestige: 0
+    lore:
+      - "<gray>Boost obtained essence"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - "<gray><b>· Boost: <white>%boost%"
+      - ""
+      - "<dark_gray>Click to buy this enchant!"
+  experiencebooster:
+    name: "<red><b>Experience Booster"
+    material: PLAYER_HEAD
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODdkODg1YjMyYjBkZDJkNmI3ZjFiNTgyYTM0MTg2ZjhhNTM3M2M0NjU4OWEyNzM0MjMxMzJiNDQ4YjgwMzQ2MiJ9fX0=
+    upgradable: true
+    slot: 13
+    boost-per-level: 0.1
+    price: 250
+    price-increase: 300
+    maxLevel: 300
+    required-level: 0
+    required-prestige: 0
+    lore:
+      - "<gray>Boost obtained experience"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - "<gray><b>· Boost: <white>%boost%"
+      - ""
+      - "<dark_gray>Click to buy this enchant"
+  moneybag:
+    name: "<green><b>Money Bag"
+    material: PLAYER_HEAD
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWZkMTA4MzgzZGZhNWIwMmU4NjYzNTYwOTU0MTUyMGU0ZTE1ODk1MmQ2OGMxYzhmOGYyMDBlYzdlODg2NDJkIn19fQ==
+    upgradable: true
+    slot: 14
+    chance-per-level: 0.001
+    price: 200
+    price-increase: 50
+    maxLevel: 500
+    lore:
+      - "<gray>Chance to find a bag full of money!"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - "<gray><b>· Chance: <white>%chance%"
+      - ""
+      - "<dark_gray>Click to buy this enchant!"
+    commands:
+      little:
+        command: "eco give %player% 300000"
+        chance: 20
+      medium:
+       command: "eco give %player% 500000"
+       chance: 15
+       large:
+        command: "eco give %player% 1000000"
+        chance: 10
+       huge:
+        command: "eco give %player% 2000000"
+        chance: 5
+       jackpot:
+        command: "eco give %player% 5000000"
+        chance: 1
+  essencebag:
+    name: "<gold><b>Essence Bag"
+    material: PLAYER_HEAD
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWZkMTA4MzgzZGZhNWIwMmU4NjYzNTYwOTU0MTUyMGU0ZTE1ODk1MmQ2OGMxYzhmOGYyMDBlYzdlODg2NDJkIn19fQ==
+    upgradable: true
+    slot: 15
+    chance-per-level: 0.001
+    price: 200
+    price-increase: 50
+    maxLevel: 500
+    lore:
+      - "<gray>Chance to find a bag full of essence!"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - "<gray><b>· Chance: <white>%chance%"
+      - ""
+      - "<dark_gray>Click to buy this enchant!"
+    commands:
+      little:
+        command: "eco give %player% 300000"
+        chance: 20
+      medium:
+        command: "eco give %player% 500000"
+        chance: 15
+      large:
+        command: "eco give %player% 1000000"
+        chance: 10
+      huge:
+        command: "eco give %player% 2000000"
+        chance: 5
+      jackpot:
+        command: "eco give %player% 5000000"
+        chance: 1
+  fastrod:
+    name: "<aqua><b>Fast Rod"
+    material: PLAYER_HEAD
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWM0ZDU3ODY3ZDYyOGZlOWYzZTc4NzAyNzBkN2RlYTJjMWI4NzM5MzhlMTBmNmFjOTRmOGQ3MjhlMGM3ZWE0NSJ9fX0=
+    upgradable: true
+    slot: 20
+    boost-per-level: 10 #In % (Only in this enchant) This will make the cast 10% faster per level
+    price: 50000
+    price-increase: 450000
+    maxLevel: 10
+    lore:
+      - "<gray>Boost your fishing speed!"
+      - "<gray>Chance to find a bag full of essence!"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - "<gray><b>· Boost: <white>%boost%"
+      - ""
+      - "<dark_gray>Click to buy this enchant!"
+  tsunami:
+    name: "<blue><b>Tsunami"
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDY4Njk1NGRjMzkzYmFjMDBjNzM3NWE3OWI3YzBhMTdkN2RmODk2NmFiYTFhZjExZmVkZjI0OGJjNjc4ODRmMyJ9fX0=
+    upgradable: true
+    slot: 16
+    price: 1000000
+    price-increase: 1500
+    maxLevel: 30
+    chance-per-level: 0.15
+    required-prestige: 10
+    lore:
+      - "<gray>Chance to generate a tsunami!"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - "<gray><b>· Current Chance: <white>%chance%"
+      - ""
+      - "<dark_gray>Click to buy the enchant!"
+    actionbar:
+      enabled: true
+      message: '<blue><b>[!] Tsunami: + $%money% + ❋%essence%'
+    title:
+      enabled: true
+      title: '<blue><b>[!] <blue><b>Tsunami'
+      subtitle: '+ <blue>$%money% + ❋%essence%'
+      fadeIn: 20
+      fadeOut: 20
+      time: 80
+
+
+

@@ -34,9 +34,7 @@ public class CropBrokenListener implements Listener {
         String world = player.getWorld().getName();
         Block block = e.getBlock();
 
-        if (!shouldContinue(itemStack, player, world, block, e)) {
-            return;
-        }
+
 
         if (!isCrop(itemStack, player, world, block)) {
             return;
@@ -44,6 +42,10 @@ public class CropBrokenListener implements Listener {
 
         if (!isFullyGrownCrop(block)) {
             e.setCancelled(true);
+            return;
+        }
+
+        if (!shouldContinue(itemStack, player, world, block, e)) {
             return;
         }
 
@@ -78,10 +80,12 @@ public class CropBrokenListener implements Listener {
 
 
     private boolean shouldContinue(ItemStack itemStack, Player player, String world, Block block, BlockBreakEvent e) {
-        if (itemStack.getType() == Material.AIR) {
+        if (!plugin.getConfig().getStringList("farming-worlds").contains(world)) {
             return false;
         }
-        if (!plugin.getConfig().getStringList("farming-worlds").contains(world)) {
+
+        if (itemStack.getType() == Material.AIR) {
+            e.setCancelled(true);
             return false;
         }
 

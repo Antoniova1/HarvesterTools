@@ -13,6 +13,7 @@ EnchantsMenu:
   size: 45
   item-preview: true
   item-preview-slot: 4
+  filler: GRAY_STAINED_GLASS_PANE
 
 
 CustomEnchants:
@@ -43,6 +44,16 @@ CustomEnchants:
       fadeIn: 20
       fadeOut: 20
       time: 80
+    message:
+      - "   <aqua><b>Auto Sell Summary"
+      - ""
+      - "<green>- Earned Money: <dark_green>$%money%"
+      - "<yellow>- Recollected essence: <gold>☀%essence%"
+      - ""
+      - "   <aqua><b>Boosters"
+      - ""
+      - "<green>- Money Booster: <white>x%money_boost%"
+      - "<yellow>- Essence Booster: <white>x%essence_boost%"
     change:
       title:
         enabled: true
@@ -112,40 +123,40 @@ CustomEnchants:
       - "<gray><b>· Boost: <white>%boost%"
       - ""
       - "<dark_gray>Click to buy this enchant"
-    moneybag:
-      name: "<green><b>Money Bag"
-      material: PLAYER_HEAD
-      value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWZkMTA4MzgzZGZhNWIwMmU4NjYzNTYwOTU0MTUyMGU0ZTE1ODk1MmQ2OGMxYzhmOGYyMDBlYzdlODg2NDJkIn19fQ==
-      upgradable: true
-      slot: 14
-      chance-per-level: 0.001
-      price: 200
-      price-increase: 50
-      maxLevel: 500
-      lore:
-        - "<gray>Chance to find a bag full of money!"
-        - "<gray><b>· Price: <white>%price%"
-        - "<gray><b>· Max Level: <white>%maxLevel%"
-        - "<gray><b>· Current Level: <white>%level%"
-        - "<gray><b>· Chance: <white>%chance%"
-        - ""
-        - "<dark_gray>Click to buy this enchant!"
-      commands:
-        little:
-          command: "eco give %player% 300000"
-          chance: 20
-        medium:
-          command: "eco give %player% 500000"
-          chance: 15
-        large:
-          command: "eco give %player% 1000000"
-          chance: 10
-        huge:
-          command: "eco give %player% 2000000"
-          chance: 5
-        jackpot:
-          command: "eco give %player% 5000000"
-          chance: 1
+  moneybag:
+    name: "<green><b>Money Bag"
+    material: PLAYER_HEAD
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWZkMTA4MzgzZGZhNWIwMmU4NjYzNTYwOTU0MTUyMGU0ZTE1ODk1MmQ2OGMxYzhmOGYyMDBlYzdlODg2NDJkIn19fQ==
+    upgradable: true
+    slot: 14
+    chance-per-level: 0.001
+    price: 200
+    price-increase: 50
+    maxLevel: 500
+    lore:
+      - "<gray>Chance to find a bag full of money!"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - "<gray><b>· Chance: <white>%chance%"
+      - ""
+      - "<dark_gray>Click to buy this enchant!"
+    commands:
+      little:
+        command: "eco give %player% 300000"
+        chance: 20
+      medium:
+        command: "eco give %player% 500000"
+        chance: 15
+      large:
+        command: "eco give %player% 1000000"
+        chance: 10
+      huge:
+        command: "eco give %player% 2000000"
+        chance: 5
+      jackpot:
+        command: "eco give %player% 5000000"
+        chance: 1
   essencebag:
     name: "<gold><b>Essence Bag"
     material: PLAYER_HEAD

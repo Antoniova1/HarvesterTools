@@ -47,6 +47,16 @@ CustomEnchants:
       fadeIn: 20
       fadeOut: 20
       time: 80
+    message:
+      - "   <aqua><b>Auto Sell Summary"
+      - ""
+      - "<green>- Earned Money: <dark_green>$%money%"
+      - "<yellow>- Recollected essence: <gold>☀%essence%"
+      - ""
+      - "   <aqua><b>Boosters"
+      - ""
+      - "<green>- Money Booster: <white>x%money_boost%"
+      - "<yellow>- Essence Booster: <white>x%essence_boost%"
     change:
       title:
         enabled: true

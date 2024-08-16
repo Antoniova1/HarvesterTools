@@ -13,7 +13,7 @@ farming-worlds:
 mining-worlds:
   - world
 
-#Calculated as in Rival Harvester Hoes: starting-xp + starting-xp * (level * increment-xp)
+#Calculated with this formula: starting-xp + starting-xp * (level * increment-xp)
 levels:
   hoe:
     max-level: 30

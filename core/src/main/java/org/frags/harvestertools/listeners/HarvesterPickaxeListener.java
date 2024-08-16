@@ -27,16 +27,29 @@ public class HarvesterPickaxeListener implements Listener {
         Block block = e.getBlock();
 
         String worldName = player.getLocation().getWorld().getName();
-        if (itemStack == null || itemStack.getType() == Material.AIR) return;
-
-        if (!ToolUtils.isTool(itemStack)) return;
-
-        if (ToolUtils.getTool(itemStack) != Tools.pickaxe) return;
 
         if (!plugin.getConfig().getStringList("mining-worlds").contains(worldName)) return;
 
+        //Farming world, can only break ores with tool
+
         if (plugin.getBlockManager().getBlock(block.getType().name()) == null) return;
 
+        //Ore detected.
+        if (itemStack == null || itemStack.getType() == Material.AIR) {
+            e.setCancelled(true);
+            return;
+        }
+
+
+        if (!ToolUtils.isTool(itemStack)) {
+            e.setCancelled(true);
+            return;
+        }
+
+        if (ToolUtils.getTool(itemStack) != Tools.pickaxe) {
+            e.setCancelled(true);
+            return;
+        }
         //Do stuff
 
         org.frags.harvestertools.objects.Block customBlock = plugin.getBlockManager().getBlock(block.getType().name());

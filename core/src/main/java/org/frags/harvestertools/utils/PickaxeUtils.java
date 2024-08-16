@@ -38,6 +38,8 @@ public class PickaxeUtils {
     private final HashMap<Player, Double> moneyMap = new HashMap<>();
     private final HashMap<Player, Double> essenceMap = new HashMap<>();
     private final HashMap<Player, Double> experienceMap = new HashMap<>();
+    private final HashMap<Player, Double> moneyBoostMap = new HashMap<>();
+    private final HashMap<Player, Double> essenceBoostMap = new HashMap<>();
 
     private final HashMap<UUID, Long> lastHasteTime = new HashMap<>();
     private final HashMap<UUID, Long> lastSpeedTime = new HashMap<>();
@@ -119,6 +121,22 @@ public class PickaxeUtils {
                         player.sendTitle(titleMessage, subtitle, fadeIn, time, fadeOut);
                     }
 
+                    List<String> message = section.getStringList("autosell.message");
+                    if (!message.isEmpty()) {
+                        double moneyBoost = moneyBoostMap.get(player);
+                        double essenceBoost = essenceBoostMap.get(player);
+                        for (String line : message) {
+                            String formattedLine = MessageManager.miniStringParse(line)
+                                    .replace("%money%", Utils.formatNumber(BigDecimal.valueOf(moneyL)))
+                                    .replace("%essence%", Utils.formatNumber(BigDecimal.valueOf(essenceL)))
+                                    .replace("%money_boost%", String.valueOf(moneyBoost))
+                                    .replace("%essence_boost%", String.valueOf(essenceBoost));
+                            player.sendMessage(formattedLine);
+                        }
+                    }
+                    moneyBoostMap.remove(player);
+                    essenceBoostMap.remove(player);
+
                     if (plugin.canUseVault) {
                         //Give money
                         plugin.getEcon().depositPlayer(Bukkit.getOfflinePlayer(player.getUniqueId()), moneyL);
@@ -134,6 +152,7 @@ public class PickaxeUtils {
 
                     container.set(ToolUtils.essenceKey, PersistentDataType.DOUBLE, essence + essenceL);
 
+                    itemStack.setItemMeta(meta);
                     moneyMap.remove(player);
                     essenceMap.remove(player);
                     autoSellKey.remove(player);
@@ -156,7 +175,19 @@ public class PickaxeUtils {
                 Bukkit.getScheduler().runTaskLater(plugin, () -> {
                     collectKey.remove(player);
                     plugin.getEssenceManager().addEssence(player, essenceMap.get(player));
+
+                    ItemMeta meta = itemStack.getItemMeta();
+
+                    PersistentDataContainer container = meta.getPersistentDataContainer();
+
+                    double essence = container.getOrDefault(ToolUtils.essenceKey, PersistentDataType.DOUBLE, 0.0D);
+
+                    container.set(ToolUtils.essenceKey, PersistentDataType.DOUBLE, essence + essenceMap.get(player));
+
+                    itemStack.setItemMeta(meta);
+
                     essenceMap.remove(player);
+                    experienceMap.remove(player);
                 }, 5 * 20);
             }
 
@@ -195,29 +226,33 @@ public class PickaxeUtils {
         double essenceToAdd = 0D;
         double experienceToAdd = 0D;
 
+        double moneyBooster = 0D;
+        double essenceBooster = 0D;
+
         PersistentDataContainer container = itemStack.getItemMeta().getPersistentDataContainer();
 
         double moneyPrestigeBooster = container.getOrDefault(ToolUtils.moneyBoostKey, PersistentDataType.DOUBLE, 0D);
         double essencePrestigeBooster = container.getOrDefault(ToolUtils.essenceBoostKey, PersistentDataType.DOUBLE, 0D);
-        CustomEnchant moneyBooster = plugin.getEnchantsManager().getEnchant("moneybooster", Tools.sword);
-        if (moneyBooster != null) {
-            if (enchantsManager.hasEnchantment(itemStack, moneyBooster)) {
-                int level = enchantsManager.getEnchantmentLevel(itemStack, moneyBooster);
-                double boost = moneyBooster.getBoostPerLevel() * level;
+        CustomEnchant moneyBoost = plugin.getEnchantsManager().getEnchant("moneybooster", Tools.sword);
+        if (moneyBoost != null) {
+            if (enchantsManager.hasEnchantment(itemStack, moneyBoost)) {
+                int level = enchantsManager.getEnchantmentLevel(itemStack, moneyBoost);
+                double boost = moneyBoost.getBoostPerLevel() * level;
 
                 moneyToAdd = boost * initialMoney;
+                moneyBooster = boost + moneyPrestigeBooster;
             }
         }
 
 
         CustomEnchant essenceBoost = plugin.getEnchantsManager().getEnchant("essencebooster", Tools.sword);
         if (essenceBoost != null) {
-            if (enchantsManager.hasEnchantment(itemStack, moneyBooster)) {
-                int level = enchantsManager.getEnchantmentLevel(itemStack, moneyBooster);
+            if (enchantsManager.hasEnchantment(itemStack, moneyBoost)) {
+                int level = enchantsManager.getEnchantmentLevel(itemStack, moneyBoost);
                 double boost = essenceBoost.getBoostPerLevel() * level;
 
                 essenceToAdd = boost * initialEssence;
-
+                essenceBooster = boost + essencePrestigeBooster;
             }
         }
 
@@ -229,6 +264,11 @@ public class PickaxeUtils {
 
                 experienceToAdd = boost * initialExperience;
             }
+        }
+
+        if (!moneyBoostMap.containsKey(player)) {
+            moneyBoostMap.put(player, moneyBooster);
+            essenceBoostMap.put(player, essenceBooster);
         }
 
         addAmountToMaps(player,

@@ -13,7 +13,7 @@ EnchantsMenu:
   size: 45
   item-preview: true
   item-preview-slot: 4
-
+  filler: GRAY_STAINED_GLASS_PANE
 
 CustomEnchants:
   autosell:
@@ -43,6 +43,16 @@ CustomEnchants:
       fadeIn: 20
       fadeOut: 20
       time: 80
+    message:
+      - "   <aqua><b>Auto Sell Summary"
+      - ""
+      - "<green>- Earned Money: <dark_green>$%money%"
+      - "<yellow>- Recollected essence: <gold>☀%essence%"
+      - ""
+      - "   <aqua><b>Boosters"
+      - ""
+      - "<green>- Money Booster: <white>x%money_boost%"
+      - "<yellow>- Essence Booster: <white>x%essence_boost%"
     change:
       title:
         enabled: true

@@ -11,4 +11,6 @@ public interface NMSHandler {
     void replenishCrop(Block block, HarvesterTools plugin);
     List<ItemStack> getDrops(Block block);
 
+    void regenBlock(Block block, HarvesterTools plugin);
+
 }

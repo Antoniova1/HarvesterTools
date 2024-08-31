@@ -1,29 +1,25 @@
 package org.frags.harvestertools.objects;
 
-public class Mob {
+public class Mob extends HarvesterMob {
 
     private final double money;
-    private final double experience;
     private final double essence;
-    private final double level;
+    private final double experience;
 
-    public Mob(double money, double experience, double essence, double level) {
+    public Mob(double level, double money, double essence, double experience) {
+        super(level);
         this.money = money;
-        this.experience = experience;
         this.essence = essence;
-        this.level = level;
+        this.experience = experience;
     }
 
-    public double getExperience() {
-        return experience;
-    }
 
     public double getEssence() {
         return essence;
     }
 
-    public double getLevel() {
-        return level;
+    public double getExperience() {
+        return experience;
     }
 
     public double getMoney() {

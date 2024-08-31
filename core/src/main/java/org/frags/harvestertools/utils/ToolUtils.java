@@ -4,6 +4,7 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
@@ -17,6 +18,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.frags.harvestertools.enums.ToolMode;
 import org.frags.harvestertools.enums.Tools;
+import org.frags.harvestertools.managers.LevelManager;
 import org.frags.harvestertools.managers.MessageManager;
 import org.frags.harvestertools.objects.Level;
 import org.jetbrains.annotations.NotNull;
@@ -43,7 +45,11 @@ public class ToolUtils {
 
     public static NamespacedKey essenceItemKey = new NamespacedKey(getInstance(), "essence_item");
 
-    private static ConfigurationSection section = getInstance().getConfig().getConfigurationSection("tools");
+    private static ConfigurationSection section;
+
+    public ToolUtils() {
+        section = getInstance().getConfig().getConfigurationSection("tools");
+    }
 
     public static ItemStack getHoe(Player player) {
         try {
@@ -213,10 +219,20 @@ public class ToolUtils {
     private static String replaceVariables(String string, Player player) {
         MiniMessage miniMessage = MiniMessage.miniMessage();
         TextComponent text = (TextComponent) miniMessage.deserialize(string);
+        int progressType = getInstance().getConfig().getInt("progress-type");
+        String progressStringType;
+        if (progressType == 1) {
+            //Percentage
+            progressStringType = "0%";
+        } else if (progressType == 2) {
+            progressStringType = ChatColor.RED + "██████████" +  ChatColor.WHITE + " 0%";
+        } else {
+            progressStringType = ChatColor.RED + "██████████";
+        }
         //Replace in the return
         return LegacyComponentSerializer.legacySection().serialize(text).replace("%owner%", player.getName()).replace("%level%", "0").
                 replace("%prestige%", "0").replace("%sell-mode%", "Collect").replace("%essence%", "0")
-                .replace("%enchantlist%", "");
+                .replace("%enchantlist%", "").replace("%progress%", progressStringType);
     }
 
     private static void addPDC(PersistentDataContainer container, Player player) {
@@ -418,9 +434,28 @@ public class ToolUtils {
         itemStack.setItemMeta(meta);
     }
 
+    private static String createProgessBar(double percentage, int lenght) {
+        int progress = (int) (lenght * (percentage / 100));
+
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < lenght; i++) {
+            if (progress <= 0) {
+                builder.append(ChatColor.RED + "██████████");
+                break;
+            }
+            if (i < progress) {
+                builder.append(ChatColor.GREEN + "█");
+            } else {
+                builder.append(ChatColor.RED + "█");
+            }
+        }
+        return builder.toString();
+    }
+
     public static void updateVariables(@NotNull ItemStack itemStack) {
         Tools tools = getTool(itemStack);
         //tools.tools.name
+
 
         ItemMeta meta = itemStack.getItemMeta();
 
@@ -428,20 +463,46 @@ public class ToolUtils {
 
         String expectedName = config.getString("tools." + tools.name() + ".name");
 
-        String level = String.valueOf(getItemLevel(itemStack));
+        int level = getItemLevel(itemStack);
         String prestige = String.valueOf(getItemPrestige(itemStack));
         String essence = Utils.formatNumber(BigDecimal.valueOf(getItemEssence(itemStack)));
         String sellMode = getItemSellMode(itemStack);
 
+        LevelManager levelManager = getInstance().getLevelManager();
+
+        Level levels = levelManager.getLevel(tools);
+
+        //starting-xp + starting-xp * (level * increment-xp)
+
+        double nextLevelXP = levels.getStartingXP() + levels.getStartingXP() * (level * levels.getIncrementXP());
+
+        double percentage = (getItemExperience(itemStack) / nextLevelXP) * 100;
+
+        String formattedPercentage = String.format("%.2f", percentage);
+
+
+        int progressType = getInstance().getConfig().getInt("progress-type");
+        String progressStringType;
+        if (progressType == 1) {
+            //Percentage
+            progressStringType = formattedPercentage + "%";
+        } else if (progressType == 2) {
+            progressStringType = createProgessBar(percentage, 10) + " " + ChatColor.WHITE + formattedPercentage + ChatColor.WHITE + "%";
+        } else {
+            progressStringType = createProgessBar(percentage, 10);
+        }
+
 
         if (expectedName.contains("%level%")) {
-            meta.setDisplayName(MessageManager.miniStringParse(expectedName).replace("%level%", level));
+            meta.setDisplayName(MessageManager.miniStringParse(expectedName).replace("%level%", String.valueOf(level)));
         } else if (expectedName.contains("%prestige%")) {
             meta.setDisplayName(MessageManager.miniStringParse(expectedName).replace("%prestige%", prestige));
         } else if (expectedName.contains("%essence%")) {
             meta.setDisplayName(MessageManager.miniStringParse(expectedName).replace("%essence%", essence));
         } else if (expectedName.contains("%sell-mode%")) {
             meta.setDisplayName(MessageManager.miniStringParse(expectedName).replace("%sell-mode%", sellMode));
+        } else if (expectedName.contains("%progress%")) {
+            meta.setDisplayName(MessageManager.miniStringParse(expectedName).replace("%progress%", progressStringType));
         }
 
         List<String> expectedLore = getInstance().getConfig().getStringList("tools." + tools.name() + ".lore");
@@ -451,6 +512,7 @@ public class ToolUtils {
         int prestigeLine = -1;
         int essenceLine = -1;
         int sellModeLine = -1;
+        int progressLine = -1;
         for (int i = 0; i < expectedLore.size(); i++) {
             String line = expectedLore.get(i);
             if (line.contains("%level%")) {
@@ -461,6 +523,8 @@ public class ToolUtils {
                 essenceLine = i;
             } else if (line.contains("%sell-mode%")) {
                 sellModeLine = i;
+            } else if (line.contains("%progress%")) {
+                progressLine = i;
             }
         }
 
@@ -469,15 +533,19 @@ public class ToolUtils {
 
         assert lore != null;
         if (levelLine != -1)
-            lore.set(levelLine, MessageManager.miniStringParse(expectedLore.get(levelLine).replace("%level%", level)));
+            lore.set(levelLine, MessageManager.miniStringParse(expectedLore.get(levelLine).replace("%level%", String.valueOf(level))));
         if (prestigeLine != -1)
             lore.set(prestigeLine, MessageManager.miniStringParse(expectedLore.get(prestigeLine).replace("%prestige%", prestige)));
         if (essenceLine != -1)
             lore.set(essenceLine, MessageManager.miniStringParse(expectedLore.get(essenceLine).replace("%essence%", essence)));
         if (sellModeLine != -1)
             lore.set(sellModeLine, MessageManager.miniStringParse(expectedLore.get(sellModeLine).replace("%sell-mode%", getItemSellMode(itemStack))));
-
+        if (progressLine != -1)
+            lore.set(progressLine, MessageManager.miniStringParse(expectedLore.get(progressLine)).replace("%progress%", progressStringType));
         meta.setLore(lore);
         itemStack.setItemMeta(meta);
     }
+
+
+
 }

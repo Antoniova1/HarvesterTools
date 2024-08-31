@@ -28,7 +28,8 @@ public class MainCommandTab implements TabCompleter {
             arguments.add("prestige");
         if (player.hasPermission("harvestertools.main.give"))
             arguments.add("give");
-
+        if (player.hasPermission("harvestertools.reload"))
+            arguments.add("reload");
         List<String> result = new ArrayList<>();
         if (args.length == 1) {
             for (String arg : arguments) {

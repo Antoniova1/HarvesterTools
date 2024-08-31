@@ -23,8 +23,7 @@ import org.frags.harvestertools.enums.Tools;
 import org.frags.harvestertools.managers.CropsManager;
 import org.frags.harvestertools.managers.LevelManager;
 import org.frags.harvestertools.managers.MessageManager;
-import org.frags.harvestertools.objects.Crops;
-import org.frags.harvestertools.objects.Level;
+import org.frags.harvestertools.objects.*;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -45,6 +44,7 @@ public class CropBreakUtils {
     private final HashMap<Player, Double> essenceBoostMap = new HashMap<>();
     private final HashMap<UUID, Long> lastSpeedTime = new HashMap<>();
     private final HashMap<UUID, Long> lastHasteTime = new HashMap<>();
+    private final Set<Player> variableKey = new HashSet<>();
 
     private final long cooldownTime = 5000;
 
@@ -75,7 +75,7 @@ public class CropBreakUtils {
         CropsManager cropsManager = plugin.getCropsManager();
         Material material = block.getType();
 
-        Crops crops = cropsManager.getCrop(material);
+        HarvesterDrops crop = cropsManager.getCrop(material);
 
         double initialEssencePrice = 0D;
         double initialMoneySell = 0D;
@@ -86,11 +86,22 @@ public class CropBreakUtils {
 
         if (ToolUtils.isAutoSell(itemStack)) {
             //Is activated
-            int size = plugin.getNmsHandler().getDrops(block).size();
-            for (int i = 0; i < size; i++) {
-                initialMoneySell += crops.getPrice();
-                initialEssencePrice += crops.getEssencePrice();
-                initialXP += crops.getExperience();
+            if (crop instanceof Drops crops) {
+                int size = plugin.getNmsHandler().getDrops(block).size();
+                for (int i = 0; i < size; i++) {
+                    initialMoneySell += crops.getPrice();
+                    initialEssencePrice += crops.getEssencePrice();
+                    initialXP += crops.getExperience();
+                }
+            } else if (crop instanceof CustomDrops crops) {
+                List<ItemsChance> itemsChanceList = cropsManager.roll(crops);
+                if (!itemsChanceList.isEmpty()) {
+                    for (ItemsChance item : itemsChanceList) {
+                        initialMoneySell += item.getPrice();
+                        initialEssencePrice += item.getEssence();
+                        initialXP += item.getExperience();
+                    }
+                }
             }
 
             getInitialPrices(initialMoneySell, initialEssencePrice, initialXP);
@@ -172,11 +183,24 @@ public class CropBreakUtils {
         } else {
 
 
-            for (ItemStack item : plugin.getNmsHandler().getDrops(block)) {
-                player.getInventory().addItem(item);
-                initialEssencePrice += crops.getEssencePrice();
-                initialXP += crops.getExperience();
+            if (crop instanceof Drops crops) {
+                for (ItemStack item : plugin.getNmsHandler().getDrops(block)) {
+                    player.getInventory().addItem(item);
+                    initialEssencePrice += crops.getEssencePrice();
+                    initialXP += crops.getExperience();
+                }
+            } else if (crop instanceof CustomDrops crops) {
+                List<ItemsChance> items = cropsManager.roll(crops);
+                if (!items.isEmpty()) {
+                    for (ItemsChance item : items) {
+                        player.getInventory().addItem(item.getItem());
+                        initialEssencePrice += item.getEssence();
+                        initialXP += item.getExperience();
+                    }
+                }
             }
+
+
 
             getInitialPrices(initialMoneySell, initialEssencePrice, initialXP);
 
@@ -199,6 +223,15 @@ public class CropBreakUtils {
                 }, 5 * 20);
             }
         }
+
+        if (!variableKey.contains(player)) {
+            variableKey.add(player);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> {
+                ToolUtils.updateVariables(itemStack);
+                variableKey.remove(player);
+            }, 120L);
+        }
+
     }
 
     //This need to be run last
@@ -328,7 +361,7 @@ public class CropBreakUtils {
             return;
 
         CropsManager crops = plugin.getCropsManager();
-        Crops crop = crops.getCrop(block.getType());
+        HarvesterDrops drop = crops.getCrop(block.getType());
         double essence = 0D;
         double money = 0D;
         //Enchant has been activated
@@ -344,8 +377,15 @@ public class CropBreakUtils {
                 List<ItemStack> drops = plugin.getNmsHandler().getDrops(blockToCheck);
 
                 for (int i = 0; i < drops.size(); i++) {
-                    essence += crop.getEssencePrice();
-                    money += crop.getPrice();
+                    if (drop instanceof Drops crop) {
+                        essence += crop.getEssencePrice();
+                        money += crop.getPrice();
+                    } else if (drop instanceof CustomDrops crop) {
+                        for (ItemsChance items : crop.getItems()) {
+                            essence += items.getEssence();
+                            money += items.getPrice();
+                        }
+                    }
                 }
             }
         }

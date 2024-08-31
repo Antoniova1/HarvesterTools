@@ -2,7 +2,6 @@ package org.frags.harvestertools.commands.subcommands.essencesubcommands;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.frags.harvestertools.HarvesterTools;
@@ -13,31 +12,32 @@ import org.frags.harvestertools.utils.Utils;
 
 import java.math.BigDecimal;
 
-public class GiveCommand extends SubCommand {
+public class TakeCommand extends SubCommand {
+
     @Override
     public String getName() {
-        return "give";
+        return "take";
     }
 
     @Override
     public String getDescription() {
-        return "gives essence to player";
+        return "";
     }
 
     @Override
     public String getSyntax() {
-        return "/essence give <player> <amount> [-s]";
+        return "/essence take <player> <amount> [-s]";
     }
 
     @Override
     public void performPlayer(Player player, String[] args, HarvesterTools plugin) {
-        if (!player.hasPermission("harvestertools.essence.give")) {
+        if (!player.hasPermission("harvestertools.essence.take")) {
             MessageManager.miniMessageSender(player, plugin.messages.getConfig().getString("no-permission"));
             return;
         }
 
         if (args.length < 3) {
-            MessageManager.miniMessageSender(player, "<red>Wrong usage! Use /essence give <player> <amount> [-s]");
+            MessageManager.miniMessageSender(player, "<red>Wrong usage! Use /essence take <player> <amount> [-s]");
             return;
         }
 
@@ -68,16 +68,16 @@ public class GiveCommand extends SubCommand {
 
         EssenceManager manager = plugin.getEssenceManager();
 
-        manager.addEssence(target, amount);
+        manager.removeEssence(target, amount);
 
         String formattedNumber = Utils.formatNumber(new BigDecimal(amount));
 
         if (args.length == 4 && args[3].equalsIgnoreCase("-s")) {
-             return;
+            return;
         }
-        MessageManager.miniMessageSender(player, "<green>You have successfully given " + formattedNumber + " essence to " + target.getName() + "!");
+        MessageManager.miniMessageSender(player, "<green>You have successfully taken " + formattedNumber + " essence to " + target.getName() + "!");
 
-        String message = plugin.messages.getConfig().getString("essence-given-success").replace("%amount%", formattedNumber)
+        String message = plugin.messages.getConfig().getString("essence-taken-success").replace("%amount%", formattedNumber)
                 .replace("%player%", player.getName());
 
         message = PlaceholderAPI.setPlaceholders(player, message);
@@ -88,7 +88,7 @@ public class GiveCommand extends SubCommand {
     @Override
     public void performConsole(CommandSender sender, String[] args, HarvesterTools plugin) {
         if (args.length < 3) {
-            Bukkit.getLogger().warning("Wrong usage! Use /essence give <player> <amount>");
+            Bukkit.getLogger().warning("Wrong usage! Use /essence take <player> <amount>");
             return;
         }
         //Right usage.
@@ -118,7 +118,7 @@ public class GiveCommand extends SubCommand {
 
         EssenceManager manager = plugin.getEssenceManager();
 
-        manager.addEssence(target, amount);
+        manager.removeEssence(target, amount);
 
         String formattedNumber = Utils.formatNumber(new BigDecimal(amount));
 
@@ -130,6 +130,7 @@ public class GiveCommand extends SubCommand {
                 replace("%player%", "Console");
 
         MessageManager.miniMessageSender(target, message);
-        Bukkit.getLogger().info("You have given " + formattedNumber + " essence to " + target.getName() + "!");
+        Bukkit.getLogger().info("You have taken " + formattedNumber + " essence to " + target.getName() + "!");
     }
 }
+

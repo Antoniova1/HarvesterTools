@@ -21,8 +21,7 @@ import org.frags.harvestertools.enchants.EnchantsManager;
 import org.frags.harvestertools.enums.Tools;
 import org.frags.harvestertools.managers.LevelManager;
 import org.frags.harvestertools.managers.MessageManager;
-import org.frags.harvestertools.objects.Level;
-import org.frags.harvestertools.objects.Mob;
+import org.frags.harvestertools.objects.*;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -35,6 +34,7 @@ public class MobSwordUtils {
     private final Set<Player> autoSellKey = new HashSet<>();
     private final Set<Player> experienceKey = new HashSet<>();
     private final Set<Player> collectKey = new HashSet<>();
+    private final Set<Player> variableKey = new HashSet<>();
     private final HashMap<Player, Double> moneyMap = new HashMap<>();
     private final HashMap<Player, Double> essenceMap = new HashMap<>();
     private final HashMap<Player, Double> experienceMap = new HashMap<>();
@@ -67,7 +67,7 @@ public class MobSwordUtils {
         this.initialExperience = experience;
     }
 
-    public void calculateAutoSellDrops(ItemStack itemStack, Player player, Mob mob, List<ItemStack> drops) {
+    public void calculateAutoSellDrops(ItemStack itemStack, Player player, HarvesterMob mobs, List<ItemStack> drops) {
 
         moneyMap.putIfAbsent(player, 0D);
         essenceMap.putIfAbsent(player, 0D);
@@ -81,10 +81,22 @@ public class MobSwordUtils {
 
         if (ToolUtils.isAutoSell(itemStack)) {
             //Is activated
-            for (int i = 0; i < drops.size(); i++) {
-                initialMoneySell += mob.getMoney();
-                initialEssencePrice += mob.getEssence();
-                initialXP += mob.getExperience();
+
+            if (mobs instanceof Mob mob) {
+                for (int i = 0; i < drops.size(); i++) {
+                    initialMoneySell += mob.getMoney();
+                    initialEssencePrice += mob.getEssence();
+                    initialXP += mob.getExperience();
+                }
+            } else if (mobs instanceof CustomMob mob) {
+                List<ItemsChance> itemsChanceList = plugin.getMobManager().roll(mob);
+                if (!itemsChanceList.isEmpty()) {
+                    for (ItemsChance item : itemsChanceList) {
+                        initialMoneySell += item.getPrice();
+                        initialEssencePrice += item.getEssence();
+                        initialXP += item.getExperience();
+                    }
+                }
             }
 
 
@@ -159,12 +171,23 @@ public class MobSwordUtils {
                 }, autoSellTime);
             }
         } else {
-
-            for (ItemStack drop : drops) {
-                player.getInventory().addItem(drop);
-                initialEssencePrice += mob.getEssence();
-                initialXP += mob.getExperience();
+            if (mobs instanceof Mob mob) {
+                for (ItemStack drop : drops) {
+                    player.getInventory().addItem(drop);
+                    initialEssencePrice += mob.getEssence();
+                    initialXP += mob.getExperience();
+                }
+            } else if (mobs instanceof CustomMob mob) {
+                List<ItemsChance> items = plugin.getMobManager().roll(mob);
+                if (!items.isEmpty()) {
+                    for (ItemsChance item : items) {
+                        player.getInventory().addItem(item.getItem());
+                        initialEssencePrice += item.getEssence();
+                        initialXP += item.getExperience();
+                    }
+                }
             }
+
 
 
             getInitialPrices(initialMoneySell, initialEssencePrice, initialXP);
@@ -191,6 +214,14 @@ public class MobSwordUtils {
                 }, 5 * 20);
             }
 
+        }
+
+        if (!variableKey.contains(player)) {
+            variableKey.add(player);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> {
+                ToolUtils.updateVariables(itemStack);
+                variableKey.remove(player);
+            }, 120L);
         }
     }
 

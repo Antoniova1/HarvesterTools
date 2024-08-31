@@ -26,6 +26,8 @@ public class EssenceTab implements TabCompleter {
             arguments.add("pay");
         if (player.hasPermission("harvestertools.essence.give"))
             arguments.add("give");
+        if (player.hasPermission("harvestertools.essence.take"))
+            arguments.add("take");
         if (player.hasPermission("harvestertools.essence.balance"))
             arguments.add("balance");
 

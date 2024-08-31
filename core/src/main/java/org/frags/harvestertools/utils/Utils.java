@@ -21,14 +21,17 @@ import java.util.UUID;
 public class Utils {
 
     public static String formatNumber(BigDecimal number) {
-        String[] suffixes = {"", "K", "M", "B", "T", "Q", "Qi", "S", "Sp", "O", "N", "D"};
+        String[] suffixes = {"", "k", "M", "B", "T", "Q", "Qi", "S", "Sp", "O", "N", "D"};
         BigDecimal divisor = new BigDecimal(1000);
         int suffixIndex = 0;
+
+        number = number.setScale(2, RoundingMode.HALF_UP);
 
         while (number.compareTo(divisor) >= 0 && suffixIndex < suffixes.length - 1) {
             number = number.divide(divisor, 2, RoundingMode.HALF_UP);
             suffixIndex++;
         }
+
 
         return String.format("%.2f%s", number, suffixes[suffixIndex]);
     }

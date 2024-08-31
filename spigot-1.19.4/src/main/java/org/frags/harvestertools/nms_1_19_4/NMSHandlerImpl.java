@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.LevelChunk;
@@ -46,7 +47,13 @@ public class NMSHandlerImpl implements NMSHandler {
         final BlockState blockState = levelChunk.getSection(levelChunk.getSectionIndex(block.getY())).getBlockState(x, y, z);
 
 
-        BlockState newState = blockState.setValue(BlockStateProperties.AGE_7, 0);
+        BlockState newState;
+
+        if (blockState.hasProperty(BlockStateProperties.AGE_3)) {
+            newState = blockState.setValue(BlockStateProperties.AGE_3, 0);
+        } else {
+            newState = blockState.setValue(BlockStateProperties.AGE_7, 0);
+        }
 
         levelChunkSection.setBlockState(x, y, z, newState);
 
@@ -64,7 +71,13 @@ public class NMSHandlerImpl implements NMSHandler {
 
             levelChunkSection.setBlockState(x, y, z, blockState);
 
-            BlockState grownState = blockState.setValue(BlockStateProperties.AGE_7, 7);
+            BlockState grownState;
+
+            if (blockState.hasProperty(BlockStateProperties.AGE_3)) {
+                grownState = blockState.setValue(BlockStateProperties.AGE_3, 3);
+            } else {
+                grownState = blockState.setValue(BlockStateProperties.AGE_7, 7);
+            }
 
             ClientboundBlockUpdatePacket grownPacket = new ClientboundBlockUpdatePacket(blockPos, grownState);
 
@@ -101,6 +114,50 @@ public class NMSHandlerImpl implements NMSHandler {
         }
 
         return ret;
+    }
+
+    @Override
+    public void regenBlock(Block block, HarvesterTools plugin) {
+        long timeToRegen = plugin.getConfig().getLong("tools.pickaxe.time-to-regen") * 20;
+
+        World world = block.getWorld();
+        ServerLevel nmsWorld = ((CraftWorld) world).getHandle();
+        BlockPos blockPos = new BlockPos(block.getX(), block.getY(), block.getZ());
+
+        int x = block.getX() & 15;
+        int y = block.getY() & 15;
+        int z = block.getZ() & 15;
+
+        final LevelChunk levelChunk = nmsWorld.getChunkIfLoaded(block.getX() >> 4, block.getZ() >> 4);
+        final LevelChunkSection levelChunkSection = levelChunk.getSection(levelChunk.getSectionIndex(block.getY()));
+        final BlockState blockState = levelChunk.getSection(levelChunk.getSectionIndex(block.getY())).getBlockState(x, y, z);
+
+        final BlockState newState = Blocks.BEDROCK.defaultBlockState();
+
+        levelChunkSection.setBlockState(x, y, z, newState);
+
+        ClientboundBlockUpdatePacket packet = new ClientboundBlockUpdatePacket(blockPos, newState);
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            CraftPlayer craftPlayer = (CraftPlayer) player;
+            ServerPlayer serverPlayer = craftPlayer.getHandle();
+
+            serverPlayer.connection.send(packet);
+        }
+
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            levelChunkSection.setBlockState(x, y, z, blockState);
+
+            ClientboundBlockUpdatePacket newPacket = new ClientboundBlockUpdatePacket(blockPos, blockState);
+
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                CraftPlayer craftPlayer = (CraftPlayer) player;
+                ServerPlayer serverPlayer = craftPlayer.getHandle();
+
+                serverPlayer.connection.send(newPacket);
+            }
+
+        }, timeToRegen);
     }
 
 }

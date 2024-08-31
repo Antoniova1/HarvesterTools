@@ -74,6 +74,12 @@ public class EssenceManager {
         playerEssence.replace(uuid, newAmount);
     }
 
+    public void removeEssence(Player player, double amount) {
+        UUID uuid = player.getUniqueId();
+        double newAmount = getEssence(player) - amount;
+        playerEssence.replace(uuid, newAmount);
+    }
+
 
     public boolean withdrawEssence(Player player, double amount) {
         UUID uuid = player.getUniqueId();
@@ -159,9 +165,7 @@ public class EssenceManager {
                 e.printStackTrace();
             }
         } else {
-            if (data.getConfig().contains(uuid.toString())) {
-                return data.getConfig().getDouble(uuid.toString());
-            }
+            return data.getConfig().getDouble(uuid.toString());
         }
         return 0;
     }

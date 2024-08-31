@@ -26,6 +26,7 @@ public class EssenceCommandManager implements CommandExecutor {
         subCommands.add(new PayCommand());
         subCommands.add(new WithdrawCommand());
         subCommands.add(new ShopCommand());
+        subCommands.add(new TakeCommand());
     }
 
     @Override
@@ -41,7 +42,8 @@ public class EssenceCommandManager implements CommandExecutor {
                     MessageManager.miniMessageSender(player, "<gray>/essence pay <white>(player) (amount)");
                     MessageManager.miniMessageSender(player, "<gray>/essence withdraw <white>(amount)");
                     MessageManager.miniMessageSender(player, "<gray>/essence shop");
-                    MessageManager.miniMessageSender(player, "<gray>/essence give <white>(player) (amount)");
+                    MessageManager.miniMessageSender(player, "<gray>/essence give <white>(player) (amount) [-s]");
+                    MessageManager.miniMessageSender(player, "<gray>/essence take <white>(player) (amount) [-s]");
                     return true;
                 }
                 //No permission message

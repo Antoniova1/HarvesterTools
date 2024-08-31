@@ -15,6 +15,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.frags.harvestertools.HarvesterTools;
+import org.frags.harvestertools.managers.MessageManager;
+import org.frags.harvestertools.objects.HarvesterMob;
 import org.frags.harvestertools.utils.ToolUtils;
 
 public class MobSwordListener implements Listener {
@@ -54,7 +56,9 @@ public class MobSwordListener implements Listener {
             return;
         //Mob registered in file
 
-        plugin.getMobUtils().calculateAutoSellDrops(itemStack, player, plugin.getMobManager().getMob(entityName), e.getDrops());
+        HarvesterMob mob = plugin.getMobManager().getMob(entityName);
+
+        plugin.getMobUtils().calculateAutoSellDrops(itemStack, player, mob, e.getDrops());
 
         plugin.getMobUtils().procHaste(player, itemStack);
 
@@ -73,10 +77,38 @@ public class MobSwordListener implements Listener {
     public void onHit(EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Player player)) return;
         if (!(e.getEntity() instanceof Damageable)) return;
+        Entity entity = e.getEntity();
         ItemStack itemStack = player.getInventory().getItemInMainHand();
         if (itemStack == null || itemStack.getType() == Material.AIR) return;
 
         if (!ToolUtils.isTool(itemStack)) return;
+
+        String entityName;
+
+        boolean isMythicMob = MythicBukkit.inst().getMobManager().isMythicMob(entity);
+        if (isMythicMob) {
+            ActiveMob activeMob = MythicBukkit.inst().getMobManager().getMythicMobInstance(entity);
+            if (activeMob == null) return;
+            MythicMob mob = activeMob.getType();
+            entityName = mob.getInternalName();
+        } else {
+            entityName = entity.getName();
+        }
+
+        if (plugin.getMobManager().getMob(entityName) == null)
+            return;
+        //Mob registered in file
+
+        HarvesterMob mob = plugin.getMobManager().getMob(entityName);
+
+        int toolLevel = ToolUtils.getItemLevel(itemStack);
+
+        if (mob.getLevel() > toolLevel) {
+            MessageManager.miniMessageSender(player, plugin.messages.getConfig().getString("not-enough-level")
+                    .replace("%level%", String.valueOf(mob.getLevel())));
+            e.setCancelled(true);
+            return;
+        }
 
         plugin.getMobUtils().manageSharpness(e, itemStack);
     }

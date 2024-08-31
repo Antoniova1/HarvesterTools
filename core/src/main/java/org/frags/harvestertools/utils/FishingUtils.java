@@ -4,8 +4,6 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
-import org.bukkit.block.Block;
-import org.bukkit.block.data.Ageable;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -19,10 +17,8 @@ import org.frags.harvestertools.HarvesterTools;
 import org.frags.harvestertools.enchants.CustomEnchant;
 import org.frags.harvestertools.enchants.EnchantsManager;
 import org.frags.harvestertools.enums.Tools;
-import org.frags.harvestertools.managers.CropsManager;
 import org.frags.harvestertools.managers.LevelManager;
 import org.frags.harvestertools.managers.MessageManager;
-import org.frags.harvestertools.objects.Crops;
 import org.frags.harvestertools.objects.Level;
 
 import java.math.BigDecimal;
@@ -39,6 +35,7 @@ public class FishingUtils {
     private final Set<Player> autoSellKey = new HashSet<>();
     private final Set<Player> experienceKey = new HashSet<>();
     private final Set<Player> collectKey = new HashSet<>();
+    private final Set<Player> variableKey = new HashSet<>();
     private final HashMap<Player, Double> moneyMap = new HashMap<>();
     private final HashMap<Player, Double> essenceMap = new HashMap<>();
     private final HashMap<Player, Double> experienceMap = new HashMap<>();
@@ -213,6 +210,14 @@ public class FishingUtils {
                 }, 5 * 20);
             }
 
+        }
+
+        if (!variableKey.contains(player)) {
+            variableKey.add(player);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> {
+                ToolUtils.updateVariables(itemStack);
+                variableKey.remove(player);
+            }, 120L);
         }
     }
 

@@ -11,9 +11,9 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.frags.harvestertools.HarvesterTools;
 import org.frags.harvestertools.enums.Tools;
-import org.frags.harvestertools.objects.Crops;
 import org.frags.harvestertools.managers.CropsManager;
 import org.frags.harvestertools.managers.MessageManager;
+import org.frags.harvestertools.objects.HarvesterDrops;
 import org.frags.harvestertools.utils.RandomSystem;
 import org.frags.harvestertools.utils.ToolUtils;
 
@@ -35,8 +35,7 @@ public class CropBrokenListener implements Listener {
         Block block = e.getBlock();
 
 
-
-        if (!isCrop(itemStack, player, world, block)) {
+        if (!isCrop(itemStack, player, e, block)) {
             return;
         }
 
@@ -104,7 +103,7 @@ public class CropBrokenListener implements Listener {
         return true;
     }
 
-    private boolean isCrop(ItemStack itemStack, Player player, String world, Block block) {
+    private boolean isCrop(ItemStack itemStack, Player player, BlockBreakEvent e, Block block) {
         if (!(block.getBlockData() instanceof Ageable))
             return false;
 
@@ -112,10 +111,11 @@ public class CropBrokenListener implements Listener {
         CropsManager cropsManager = plugin.getCropsManager();
         Material material = block.getType();
 
-        Crops crops = cropsManager.getCrop(material);
+        HarvesterDrops crop = cropsManager.getCrop(material);
 
-        if (crops.getRequiredLevel() > ToolUtils.getItemLevel(itemStack)) {
-            MessageManager.miniMessageSender(player, plugin.messages.getConfig().getString("level-required-crop").replace("%level%", String.valueOf(crops.getRequiredLevel())));
+        if (crop.getRequiredLevel() > ToolUtils.getItemLevel(itemStack)) {
+            e.setCancelled(true);
+            MessageManager.miniMessageSender(player, plugin.messages.getConfig().getString("level-required-crop").replace("%level%", String.valueOf(crop.getRequiredLevel())));
             return false;
         }
 

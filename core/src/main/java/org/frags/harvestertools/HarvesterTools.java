@@ -4,6 +4,7 @@ import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.MemoryConfigurationOptions;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -28,10 +29,7 @@ import org.frags.harvestertools.enums.Tools;
 import org.frags.harvestertools.mysql.MySQL;
 import org.frags.harvestertools.mysql.SQLGetter;
 import org.frags.harvestertools.placeholderapi.EssenceExpansions;
-import org.frags.harvestertools.utils.CropBreakUtils;
-import org.frags.harvestertools.utils.FishingUtils;
-import org.frags.harvestertools.utils.MobSwordUtils;
-import org.frags.harvestertools.utils.PickaxeUtils;
+import org.frags.harvestertools.utils.*;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -130,11 +128,10 @@ public final class HarvesterTools extends JavaPlugin {
         this.config.options().copyDefaults(true);
         this.cFile = new File(getDataFolder(), "config.yml");
         saveDefaultConfig();
-
          */
 
         getConfig().options().copyDefaults(true);
-        saveConfig();
+        saveDefaultConfig();
 
         if (setupEconomy()) {
             canUseVault = true;
@@ -201,6 +198,8 @@ public final class HarvesterTools extends JavaPlugin {
 
         this.pickaxeUtils = new PickaxeUtils(this);
 
+        new ToolUtils();
+
         registerEvents();
 
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
@@ -247,6 +246,8 @@ public final class HarvesterTools extends JavaPlugin {
         this.mobUtils = new MobSwordUtils(this);
 
         this.pickaxeUtils = new PickaxeUtils(this);
+
+        new ToolUtils();
     }
 
     private boolean setupEconomy() {

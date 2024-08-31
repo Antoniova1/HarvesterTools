@@ -20,9 +20,7 @@ import org.frags.harvestertools.enchants.EnchantsManager;
 import org.frags.harvestertools.enums.Tools;
 import org.frags.harvestertools.managers.LevelManager;
 import org.frags.harvestertools.managers.MessageManager;
-import org.frags.harvestertools.objects.Block;
-import org.frags.harvestertools.objects.Level;
-import org.frags.harvestertools.objects.Mob;
+import org.frags.harvestertools.objects.*;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -35,6 +33,7 @@ public class PickaxeUtils {
     private final Set<Player> autoSellKey = new HashSet<>();
     private final Set<Player> experienceKey = new HashSet<>();
     private final Set<Player> collectKey = new HashSet<>();
+    private final Set<Player> variableKey = new HashSet<>();
     private final HashMap<Player, Double> moneyMap = new HashMap<>();
     private final HashMap<Player, Double> essenceMap = new HashMap<>();
     private final HashMap<Player, Double> experienceMap = new HashMap<>();
@@ -67,7 +66,7 @@ public class PickaxeUtils {
         this.initialExperience = experience;
     }
 
-    public void calculateAutoSellDrops(ItemStack itemStack, Player player, Block block, Collection<ItemStack> drops) {
+    public void calculateAutoSellDrops(ItemStack itemStack, Player player, HarvesterDrops block, Collection<ItemStack> drops) {
 
         moneyMap.putIfAbsent(player, 0D);
         essenceMap.putIfAbsent(player, 0D);
@@ -82,11 +81,24 @@ public class PickaxeUtils {
         if (ToolUtils.isAutoSell(itemStack)) {
             //Is activated
 
-            for (int i = 0; i < drops.size(); i++) {
-                initialMoneySell += block.getMoney();
-                initialEssencePrice += block.getEssence();
-                initialXP += block.getExperience();
+            if (block instanceof Drops drop) {
+                for (int i = 0; i < drops.size(); i++) {
+                    initialMoneySell += drop.getPrice();
+                    initialEssencePrice += drop.getEssencePrice();
+                    initialXP += drop.getExperience();
+                }
+            } else if (block instanceof CustomDrops customDrops) {
+                List<ItemsChance> itemsChanceList = plugin.getBlockManager().roll(customDrops);
+                if (!itemsChanceList.isEmpty()) {
+                    for (ItemsChance item : itemsChanceList) {
+                        initialMoneySell += item.getPrice();
+                        initialEssencePrice += item.getEssence();
+                        initialXP += item.getExperience();
+                    }
+                }
             }
+
+
 
             getInitialPrices(initialMoneySell, initialEssencePrice, initialXP);
 
@@ -159,12 +171,25 @@ public class PickaxeUtils {
                 }, autoSellTime);
             }
         } else {
-
-            for (ItemStack drop : drops) {
-                player.getInventory().addItem(drop);
-                initialEssencePrice += block.getEssence();
-                initialXP += block.getExperience();
+            if (block instanceof Drops drop) {
+                for (ItemStack a : drops) {
+                    player.getInventory().addItem(a);
+                    System.out.println(a.getItemMeta().getDisplayName());
+                    initialEssencePrice += drop.getEssencePrice();
+                    initialXP += drop.getExperience();
+                }
+            } else if (block instanceof CustomDrops customDrops) {
+                List<ItemsChance> items = plugin.getBlockManager().roll(customDrops);
+                if (!items.isEmpty()) {
+                    for (ItemsChance item : items) {
+                        player.getInventory().addItem(item.getItem());
+                        initialEssencePrice += item.getEssence();
+                        initialXP += item.getExperience();
+                    }
+                }
             }
+
+
 
 
             getInitialPrices(initialMoneySell, initialEssencePrice, initialXP);
@@ -191,6 +216,14 @@ public class PickaxeUtils {
                 }, 5 * 20);
             }
 
+        }
+
+        if (!variableKey.contains(player)) {
+            variableKey.add(player);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> {
+                ToolUtils.updateVariables(itemStack);
+                variableKey.remove(player);
+            }, 120L);
         }
     }
 

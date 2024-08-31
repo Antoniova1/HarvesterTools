@@ -1,5 +1,6 @@
 package org.frags.harvestertools.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -9,6 +10,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.frags.harvestertools.HarvesterTools;
 import org.frags.harvestertools.enums.Tools;
+import org.frags.harvestertools.objects.HarvesterDrops;
 import org.frags.harvestertools.utils.ToolUtils;
 
 public class HarvesterPickaxeListener implements Listener {
@@ -32,7 +34,8 @@ public class HarvesterPickaxeListener implements Listener {
 
         //Farming world, can only break ores with tool
 
-        if (plugin.getBlockManager().getBlock(block.getType().name()) == null) return;
+        if (plugin.getBlockManager().getBlock(block.getType().name()) == null)
+            return;
 
         //Ore detected.
         if (itemStack == null || itemStack.getType() == Material.AIR) {
@@ -52,7 +55,14 @@ public class HarvesterPickaxeListener implements Listener {
         }
         //Do stuff
 
-        org.frags.harvestertools.objects.Block customBlock = plugin.getBlockManager().getBlock(block.getType().name());
+        if (plugin.getConfig().getBoolean("tools.pickaxe.regen-block")) {
+            e.setCancelled(true);
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                plugin.getNmsHandler().regenBlock(block, plugin);
+            }, 2L);
+        }
+
+        HarvesterDrops customBlock = plugin.getBlockManager().getBlock(block.getType().name());
 
         plugin.getPickaxeUtils().calculateAutoSellDrops(itemStack, player, customBlock, block.getDrops());
 

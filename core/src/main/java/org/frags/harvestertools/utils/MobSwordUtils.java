@@ -259,7 +259,7 @@ public class MobSwordUtils {
                 double boost = moneyBoost.getBoostPerLevel() * level;
 
                 moneyToAdd = boost * initialMoney;
-                moneyPrestigeBooster = boost + moneyPrestigeBooster;
+                moneyBooster = boost + moneyPrestigeBooster;
             }
         }
 
@@ -402,9 +402,9 @@ public class MobSwordUtils {
     public void procCustomEnchants(Player player, ItemStack itemStack) {
         for (CustomEnchant enchant : enchantsManager.getSwordEnchants()) {
             if (enchant == null)
-                return;
+                continue;
             if (!enchantsManager.hasEnchantment(itemStack, enchant))
-                return;
+                continue;
             //Player has enchant
 
             int level = enchantsManager.getEnchantmentLevel(itemStack, enchant);
@@ -413,7 +413,7 @@ public class MobSwordUtils {
             RandomSystem randomSystem = new RandomSystem();
 
             if (!randomSystem.success(chance, true))
-                return;
+                continue;
             //Command has been activated.
 
             HashMap<String, Double> commands = enchant.getCommands().getCommands();
@@ -428,7 +428,6 @@ public class MobSwordUtils {
                     finalCommand = PlaceholderAPI.setPlaceholders(player, finalCommand);
                 }
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), finalCommand);
-
             }
         }
     }

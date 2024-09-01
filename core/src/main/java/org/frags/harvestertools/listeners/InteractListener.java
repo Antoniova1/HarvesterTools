@@ -68,6 +68,8 @@ public class InteractListener implements Listener {
             return;
         Tools tools = ToolUtils.getTool(itemStack);
         CustomEnchant autosell = plugin.getEnchantsManager().getEnchant("autosell", tools);
+        if (autosell == null)
+            return;
         if (!plugin.getEnchantsManager().hasEnchantment(itemStack, autosell))
             return;
         if (tools == Tools.rod) {

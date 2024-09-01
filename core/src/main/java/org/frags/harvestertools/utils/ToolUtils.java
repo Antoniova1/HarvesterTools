@@ -225,9 +225,9 @@ public class ToolUtils {
             //Percentage
             progressStringType = "0%";
         } else if (progressType == 2) {
-            progressStringType = ChatColor.RED + "██████████" +  ChatColor.WHITE + " 0%";
+            progressStringType = ChatColor.translateAlternateColorCodes('&', "&c&l|||||||||| &f0%");
         } else {
-            progressStringType = ChatColor.RED + "██████████";
+            progressStringType = ChatColor.translateAlternateColorCodes('&', "&c&l||||||||||");
         }
         //Replace in the return
         return LegacyComponentSerializer.legacySection().serialize(text).replace("%owner%", player.getName()).replace("%level%", "0").
@@ -440,13 +440,16 @@ public class ToolUtils {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < lenght; i++) {
             if (progress <= 0) {
-                builder.append(ChatColor.RED + "██████████");
+                //builder.append(ChatColor.RED + "██████████");
+                builder.append(ChatColor.translateAlternateColorCodes('&', "&c&l||||||||||"));
                 break;
             }
             if (i < progress) {
-                builder.append(ChatColor.GREEN + "█");
+                //builder.append(ChatColor.GREEN + "█");
+                builder.append(ChatColor.translateAlternateColorCodes('&', "&a&l|"));
             } else {
-                builder.append(ChatColor.RED + "█");
+                //builder.append(ChatColor.RED + "█");
+                builder.append(ChatColor.translateAlternateColorCodes('&', "&c&l|"));
             }
         }
         return builder.toString();

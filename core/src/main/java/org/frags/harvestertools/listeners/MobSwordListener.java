@@ -3,6 +3,7 @@ package org.frags.harvestertools.listeners;
 import io.lumine.mythic.api.mobs.MythicMob;
 import io.lumine.mythic.bukkit.MythicBukkit;
 import io.lumine.mythic.core.mobs.ActiveMob;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
@@ -41,15 +42,18 @@ public class MobSwordListener implements Listener {
         if (!ToolUtils.isTool(itemStack)) return;
 
         String entityName;
-
-        boolean isMythicMob = MythicBukkit.inst().getMobManager().isMythicMob(entity);
-        if (isMythicMob) {
-            ActiveMob activeMob = MythicBukkit.inst().getMobManager().getMythicMobInstance(entity);
-            if (activeMob == null) return;
-            MythicMob mob = activeMob.getType();
-            entityName = mob.getInternalName();
+        if (Bukkit.getPluginManager().getPlugin("MythicMobs") != null) {
+            boolean isMythicMob = MythicBukkit.inst().getMobManager().isMythicMob(entity);
+            if (isMythicMob) {
+                ActiveMob activeMob = MythicBukkit.inst().getMobManager().getMythicMobInstance(entity);
+                if (activeMob == null) return;
+                MythicMob mob = activeMob.getType();
+                entityName = mob.getInternalName();
+            } else {
+                entityName = entity.getType().name();
+            }
         } else {
-            entityName = entity.getName();
+            entityName = entity.getType().name();
         }
 
         if (plugin.getMobManager().getMob(entityName) == null)
@@ -59,6 +63,8 @@ public class MobSwordListener implements Listener {
         HarvesterMob mob = plugin.getMobManager().getMob(entityName);
 
         plugin.getMobUtils().calculateAutoSellDrops(itemStack, player, mob, e.getDrops());
+
+        e.getDrops().clear();
 
         plugin.getMobUtils().procHaste(player, itemStack);
 
@@ -70,7 +76,6 @@ public class MobSwordListener implements Listener {
 
         plugin.getMobUtils().procCustomEnchants(player, itemStack);
 
-        e.getDrops().clear();
     }
 
     @EventHandler
@@ -84,16 +89,20 @@ public class MobSwordListener implements Listener {
         if (!ToolUtils.isTool(itemStack)) return;
 
         String entityName;
-
-        boolean isMythicMob = MythicBukkit.inst().getMobManager().isMythicMob(entity);
-        if (isMythicMob) {
-            ActiveMob activeMob = MythicBukkit.inst().getMobManager().getMythicMobInstance(entity);
-            if (activeMob == null) return;
-            MythicMob mob = activeMob.getType();
-            entityName = mob.getInternalName();
+        if (Bukkit.getPluginManager().getPlugin("MythicMobs") != null) {
+            boolean isMythicMob = MythicBukkit.inst().getMobManager().isMythicMob(entity);
+            if (isMythicMob) {
+                ActiveMob activeMob = MythicBukkit.inst().getMobManager().getMythicMobInstance(entity);
+                if (activeMob == null) return;
+                MythicMob mob = activeMob.getType();
+                entityName = mob.getInternalName();
+            } else {
+                entityName = entity.getName();
+            }
         } else {
             entityName = entity.getName();
         }
+
 
         if (plugin.getMobManager().getMob(entityName) == null)
             return;

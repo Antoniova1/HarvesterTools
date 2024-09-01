@@ -408,9 +408,9 @@ public class FishingUtils {
     public void procCustomEnchants(Player player, ItemStack itemStack) {
         for (CustomEnchant enchant : enchantsManager.getRodEnchants()) {
             if (enchant == null)
-                return;
+                continue;
             if (!enchantsManager.hasEnchantment(itemStack, enchant))
-                return;
+                continue;
             //Player has enchant
 
             int level = enchantsManager.getEnchantmentLevel(itemStack, enchant);
@@ -419,7 +419,7 @@ public class FishingUtils {
             RandomSystem randomSystem = new RandomSystem();
 
             if (!randomSystem.success(chance, true))
-                return;
+                continue;
             //Command has been activated.
 
             HashMap<String, Double> commands = enchant.getCommands().getCommands();

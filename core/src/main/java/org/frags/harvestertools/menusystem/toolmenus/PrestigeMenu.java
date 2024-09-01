@@ -19,6 +19,7 @@ import org.frags.harvestertools.enums.Tools;
 import org.frags.harvestertools.utils.ToolUtils;
 import org.frags.harvestertools.utils.Utils;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -172,7 +173,7 @@ public class PrestigeMenu extends Menu {
             double moneyBoost = toolContainer.get(ToolUtils.moneyBoostKey, PersistentDataType.DOUBLE);
             double enchantBoost = toolContainer.get(ToolUtils.enchantBoostKey, PersistentDataType.DOUBLE);
             return miniMessageParser(string.replace("%level%", String.valueOf(level)).
-                    replace("%current_essence_boost%", String.valueOf(essBoost)).replace("%current_money_boost%", String.valueOf(moneyBoost)).
+                    replace("%current_essence_boost%", String.format("%.2f", essBoost)).replace("%current_money_boost%", String.format("%.2f", moneyBoost)).
                     replace("%current_enchant_boost%", String.valueOf(enchantBoost)).replace("%level_to_prestige%", String.valueOf(
                             plugin.getConfig().getInt("Prestige.level-to-prestige"))));
         } catch (NullPointerException e) {

@@ -140,7 +140,6 @@ public class EnchantsManager {
                 MessageManager.miniMessageSender(player, plugin.messages.getConfig().getString("not-enough-essence"));
                 return;
             }
-
             if (enchantName.equalsIgnoreCase("sweeping")) {
                 if (meta.hasEnchant(Enchantment.SWEEPING_EDGE)) {
                     meta.removeEnchant(Enchantment.SWEEPING_EDGE);

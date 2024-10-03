@@ -33,7 +33,7 @@ CustomEnchants:
       - ''
       - '<gray><b>· Price: <white>%price%'
       - ''
-      - '<gray>Click to buy this enchant!'
+      - '<dark_gray>Click to buy this enchant!'
     actionbar:
       enabled: true
       message: '<dark_green><b>[💰] AutoSell: + <green>$%money% <dark_green>+ <yellow>❋%essence%'
@@ -123,40 +123,19 @@ CustomEnchants:
       - "<gray><b>· Boost: <white>%boost%"
       - ""
       - "<dark_gray>Click to buy this enchant"
-  moneybag:
-    name: "<green><b>Money Bag"
-    material: PLAYER_HEAD
-    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWZkMTA4MzgzZGZhNWIwMmU4NjYzNTYwOTU0MTUyMGU0ZTE1ODk1MmQ2OGMxYzhmOGYyMDBlYzdlODg2NDJkIn19fQ==
-    upgradable: true
+  soul_speed:
+    upgradable: false
+    name: "<dark_gray><b>Soul Speed"
+    material: SOUL_SAND
     slot: 14
-    chance-per-level: 0.001
-    price: 200
-    price-increase: 50
-    maxLevel: 500
+    price: 1000000
+    maxLevel: 1
     lore:
-      - "<gray>Chance to find a bag full of money!"
-      - "<gray><b>· Price: <white>%price%"
-      - "<gray><b>· Max Level: <white>%maxLevel%"
-      - "<gray><b>· Current Level: <white>%level%"
-      - "<gray><b>· Chance: <white>%chance%"
-      - ""
-      - "<dark_gray>Click to buy this enchant!"
-    commands:
-      little:
-        command: "eco give %player% 300000"
-        chance: 20
-      medium:
-        command: "eco give %player% 500000"
-        chance: 15
-      large:
-        command: "eco give %player% 1000000"
-        chance: 10
-      huge:
-        command: "eco give %player% 2000000"
-        chance: 5
-      jackpot:
-        command: "eco give %player% 5000000"
-        chance: 1
+      - '<gray>Don''t slow down while farming in soul sand!'
+      - ''
+      - '<gray><b>· Price: <white>%price%'
+      - ''
+      - '<dark_gray>Click to buy this enchant!'
   essencebag:
     name: "<gold><b>Essence Bag"
     material: PLAYER_HEAD

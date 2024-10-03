@@ -68,6 +68,13 @@ public class PrestigeMenu extends Menu {
                 PersistentDataContainer toolContainer = Objects.requireNonNull(tool.getItemMeta()).getPersistentDataContainer();
 
                 int level = toolContainer.get(ToolUtils.levelKey, PersistentDataType.INTEGER);
+                int prestige = ToolUtils.getItemPrestige(tool);
+
+                if (prestige >= plugin.getConfig().getInt("Prestige.max-prestige")) {
+                    player.sendMessage(miniMessageParse(player, plugin.messages.getConfig().getString("max-prestige")));
+                    player.closeInventory();
+                    return;
+                }
 
                 if (level < prestigeSection.getInt("level-to-prestige")) {
                     player.sendMessage(miniMessageParse(player,plugin.messages.getConfig().getString("not-enough-level-to-prestige")).replace("%level%",

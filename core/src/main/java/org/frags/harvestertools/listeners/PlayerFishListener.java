@@ -1,18 +1,23 @@
 package org.frags.harvestertools.listeners;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.frags.harvestertools.HarvesterTools;
 import org.frags.harvestertools.enchants.CustomEnchant;
 import org.frags.harvestertools.enchants.EnchantsManager;
 import org.frags.harvestertools.enums.Tools;
 import org.frags.harvestertools.utils.ToolUtils;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 public class PlayerFishListener implements Listener {
 
@@ -37,8 +42,50 @@ public class PlayerFishListener implements Listener {
         if (!ToolUtils.isTool(itemStack))
             return;
         if (e.getState() == PlayerFishEvent.State.FISHING) {
+
+            CustomEnchant fastRod = plugin.getEnchantsManager().getEnchant("fastrod", Tools.rod);
+            if (fastRod != null) {
+                plugin.getFishingUtils().fastRod(fastRod, e, itemStack);
+            }
             //Player cast the rod
-            plugin.getFishingUtils().fastRod(e, itemStack);
+
+            FishHook hook = e.getHook();
+            hook.setCustomNameVisible(true);
+
+            int randomNumber = ThreadLocalRandom.current().nextInt(0, 80);
+
+            hook.setMaxLureTime(hook.getMinLureTime());
+
+            hook.setMinWaitTime(hook.getMinWaitTime() + randomNumber);
+            hook.setMaxWaitTime(hook.getMinWaitTime());
+
+            int totalTimeMs = (hook.getMinWaitTime()+ hook.getMinLureTime()) * 50;
+
+            new BukkitRunnable() {
+                int time = totalTimeMs;
+
+                public void run() {
+
+                    if (time <= 0 || hook.isDead()) {
+                        hook.setCustomName(ChatColor.translateAlternateColorCodes('&', "&a0.000"));
+                        this.cancel();
+                        return;
+                    }
+
+                    int seconds = time / 1000;
+                    int milliseconds = time % 1000;
+
+                    String newTimeDisplay = ChatColor.translateAlternateColorCodes('&', "&a" + seconds + "." + String
+                            .format("%03d", milliseconds));
+                    hook.setCustomName(newTimeDisplay);
+
+                    time -= 50;
+
+                    if (hook.isDead() || hook.getLocation() == null)
+                        this.cancel();
+                }
+            }.runTaskTimer(plugin, 0L, 1L);
+
         }
 
         if (e.getState() == PlayerFishEvent.State.CAUGHT_FISH) {
@@ -54,9 +101,9 @@ public class PlayerFishListener implements Listener {
 
             plugin.getFishingUtils().procTsunami(player, itemStack);
 
-            plugin.getFishingUtils().addExperience(player, itemStack);
-
             plugin.getFishingUtils().calculateBoosters(player, itemStack);
+
+            plugin.getFishingUtils().addExperience(player, itemStack);
 
             plugin.getFishingUtils().procCustomEnchants(player, itemStack);
         }

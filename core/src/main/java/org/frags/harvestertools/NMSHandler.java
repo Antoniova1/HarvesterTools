@@ -1,6 +1,7 @@
 package org.frags.harvestertools;
 
 import org.bukkit.block.Block;
+import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 

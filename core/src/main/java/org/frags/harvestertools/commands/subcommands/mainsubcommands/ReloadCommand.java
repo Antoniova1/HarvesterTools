@@ -43,7 +43,7 @@ public class ReloadCommand extends SubCommand {
         plugin.shopFile.reloadConfig();
         plugin.menuFile.reloadConfig();
         plugin.messages.reloadConfig();
-
+        plugin.eventsFile.reloadConfig();
         plugin.reloadObjects();
 
         long finish = System.currentTimeMillis();
@@ -68,7 +68,7 @@ public class ReloadCommand extends SubCommand {
         plugin.shopFile.reloadConfig();
         plugin.menuFile.reloadConfig();
         plugin.messages.reloadConfig();
-
+        plugin.eventsFile.reloadConfig();
         plugin.reloadObjects();
 
         long finish = System.currentTimeMillis();

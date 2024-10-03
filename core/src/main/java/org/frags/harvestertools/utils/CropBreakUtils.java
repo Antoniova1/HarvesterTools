@@ -1,11 +1,13 @@
 package org.frags.harvestertools.utils;
 
+import io.lumine.mythic.core.skills.conditions.all.SprintingCondition;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -15,6 +17,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.frags.harvestertools.HarvesterTools;
 import org.frags.harvestertools.enchants.CustomEnchant;
@@ -44,6 +47,7 @@ public class CropBreakUtils {
     private final HashMap<Player, Double> essenceBoostMap = new HashMap<>();
     private final HashMap<UUID, Long> lastSpeedTime = new HashMap<>();
     private final HashMap<UUID, Long> lastHasteTime = new HashMap<>();
+    private final HashMap<UUID, Long> lastSoulTime = new HashMap<>();
     private final Set<Player> variableKey = new HashSet<>();
 
     private final long cooldownTime = 5000;
@@ -65,8 +69,10 @@ public class CropBreakUtils {
         this.initialExperience = experience;
     }
 
-
     public void calculateAutoSellDrops(ItemStack itemStack, Player player, Block block) {
+
+        if (!ToolUtils.isTool(itemStack))
+            return;
 
         moneyMap.putIfAbsent(player, 0D);
         essenceMap.putIfAbsent(player, 0D);
@@ -110,7 +116,6 @@ public class CropBreakUtils {
 
             long autoSellTime = plugin.hoeEnchantsFile.getConfig().getLong("CustomEnchants.autosell.autosell-time") * 20;
 
-
             if (!autoSellKey.contains(player)) {
                 autoSellKey.add(player);
                 BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
@@ -151,8 +156,8 @@ public class CropBreakUtils {
                             String formattedLine = MessageManager.miniStringParse(line)
                                     .replace("%money%", Utils.formatNumber(BigDecimal.valueOf(moneyL)))
                                     .replace("%essence%", Utils.formatNumber(BigDecimal.valueOf(essenceL)))
-                                    .replace("%money_boost%", String.valueOf(moneyBoost))
-                                    .replace("%essence_boost%", String.valueOf(essenceBoost));
+                                    .replace("%money_boost%", String.format("%.2f", moneyBoost))
+                                    .replace("%essence_boost%", String.format("%.2f", essenceBoost));
                             player.sendMessage(formattedLine);
                         }
                     }
@@ -182,7 +187,6 @@ public class CropBreakUtils {
             }
         } else {
 
-
             if (crop instanceof Drops crops) {
                 for (ItemStack item : plugin.getNmsHandler().getDrops(block)) {
                     player.getInventory().addItem(item);
@@ -199,8 +203,6 @@ public class CropBreakUtils {
                     }
                 }
             }
-
-
 
             getInitialPrices(initialMoneySell, initialEssencePrice, initialXP);
 
@@ -266,8 +268,8 @@ public class CropBreakUtils {
 
         CustomEnchant essenceBoost = plugin.getEnchantsManager().getEnchant("essencebooster", Tools.hoe);
         if (essenceBoost != null) {
-            if (enchantsManager.hasEnchantment(itemStack, moneyBoost)) {
-                int level = enchantsManager.getEnchantmentLevel(itemStack, moneyBoost);
+            if (enchantsManager.hasEnchantment(itemStack, essenceBoost)) {
+                int level = enchantsManager.getEnchantmentLevel(itemStack, essenceBoost);
                 double boost = essenceBoost.getBoostPerLevel() * level;
 
                 essenceToAdd = boost * initialEssence;
@@ -296,6 +298,9 @@ public class CropBreakUtils {
         }
 
         if (!moneyBoostMap.containsKey(player)) {
+            moneyBoostMap.put(player, moneyBooster);
+            essenceBoostMap.put(player, essenceBooster);
+        } else if (!essenceBoostMap.containsKey(player)) {
             moneyBoostMap.put(player, moneyBooster);
             essenceBoostMap.put(player, essenceBooster);
         }
@@ -342,6 +347,7 @@ public class CropBreakUtils {
 
             //Adds experience
             ToolUtils.setExperience(itemStack, toolExperience + experience);
+            experienceMap.remove(player, experience);
         }
     }
 
@@ -454,6 +460,7 @@ public class CropBreakUtils {
         }
 
         plugin.getEssenceManager().addEssence(player, essence);
+
     }
 
     public void procRush(Player player, ItemStack itemStack) {
@@ -475,6 +482,8 @@ public class CropBreakUtils {
             return;
 
         double boost = level * rush.getBoostPerLevel();
+
+        System.out.println(boost);
 
         rushMap.putIfAbsent(player, boost);
         MessageManager.miniMessageSender(player, plugin.hoeEnchantsFile.getConfig().getString("CustomEnchants.rush.message"));
@@ -561,10 +570,51 @@ public class CropBreakUtils {
         lastHasteTime.replace(playerUUID, currentTime);
     }
 
+    public void procSoulSpeed(Player player, ItemStack itemStack) {
+        UUID playerUUID = player.getUniqueId();
+
+        CustomEnchant soulSpeed = enchantsManager.getEnchant("soul_speed", Tools.hoe);
+        if (soulSpeed == null)
+            return;
+
+        long currentTime = System.currentTimeMillis();
+
+        if (lastSoulTime.containsKey(playerUUID)) {
+            return;
+        }
+
+        if (!enchantsManager.hasEnchantment(itemStack, soulSpeed))
+            return;
+
+        Block standingBlock = player.getLocation().getBlock();
+        if (standingBlock.getType() != Material.SOUL_SAND)
+            return;
+
+        float newSpeed = (float) (player.getWalkSpeed() + (player.getWalkSpeed() * 0.4191));
+        float lastSpeed = player.getWalkSpeed();
+        player.setWalkSpeed(0.4F);
+        lastSoulTime.putIfAbsent(playerUUID, currentTime);
+
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Block standingBlockTimer = player.getLocation().getBlock();
+
+                if (standingBlockTimer.getType() != Material.SOUL_SAND) {
+                    player.setWalkSpeed(0.2F);
+                    lastSoulTime.remove(playerUUID);
+                    cancel();
+                }
+
+            }
+        }.runTaskTimer(plugin, 1L, 20L);
+    }
+
     private void addAmountToMaps(Player player, double money, double essence, double experience) {
-        double newMoney = moneyMap.get(player) + money;
-        double newEssence = essenceMap.get(player) + essence;
-        double newExperience = experienceMap.get(player) + experience;
+        double newMoney = moneyMap.getOrDefault(player, 0D) + money;
+        double newEssence = essenceMap.getOrDefault(player, 0D) + essence;
+        double newExperience = experienceMap.getOrDefault(player, 0D) + experience;
 
         moneyMap.replace(player, newMoney);
         essenceMap.replace(player, newEssence);

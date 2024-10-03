@@ -60,6 +60,8 @@ public class CropBrokenListener implements Listener {
 
         plugin.getCropUtils().procRush(player, itemStack);
 
+        plugin.getCropUtils().procSoulSpeed(player, itemStack);
+
         plugin.getCropUtils().procSeller(player, itemStack);
 
         plugin.getCropUtils().calculateBoosters(player, itemStack);
@@ -112,6 +114,11 @@ public class CropBrokenListener implements Listener {
         Material material = block.getType();
 
         HarvesterDrops crop = cropsManager.getCrop(material);
+
+        if (crop == null) {
+            System.out.println(material);
+            return false;
+        }
 
         if (crop.getRequiredLevel() > ToolUtils.getItemLevel(itemStack)) {
             e.setCancelled(true);

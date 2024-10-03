@@ -6,13 +6,16 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.frags.harvestertools.HarvesterTools;
 import org.frags.harvestertools.files.DataFile;
+import org.frags.harvestertools.managers.LeaderBoardManager;
 import org.frags.harvestertools.utils.Utils;
 
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -21,8 +24,9 @@ public class EssenceManager {
     private final HarvesterTools plugin;
     private final boolean useDatabase;
     private DataFile data;
+    private final List<LeaderBoardManager> entries = new ArrayList<>();
 
-    private HashMap<UUID, Double> playerEssence = new HashMap<>();
+    private final HashMap<UUID, Double> playerEssence = new HashMap<>();
 
     public EssenceManager(HarvesterTools plugin) {
         this.plugin = plugin;
@@ -72,14 +76,111 @@ public class EssenceManager {
         UUID uuid = player.getUniqueId();
         double newAmount = amount + getEssence(player);
         playerEssence.replace(uuid, newAmount);
+
+        for (LeaderBoardManager entry : entries) {
+            if (entry.getPlayerName().equalsIgnoreCase(player.getName())) {
+                entries.remove(entry);
+                entries.add(new LeaderBoardManager(player.getName(), newAmount));
+                sortEntries();
+                return;
+            }
+        }
+        //If player is not found
+        entries.add(new LeaderBoardManager(player.getName(), newAmount));
+        sortEntries();
     }
 
     public void removeEssence(Player player, double amount) {
         UUID uuid = player.getUniqueId();
         double newAmount = getEssence(player) - amount;
         playerEssence.replace(uuid, newAmount);
+
+        for (LeaderBoardManager entry : entries) {
+            if (entry.getPlayerName().equalsIgnoreCase(player.getName())) {
+                entries.remove(entry);
+                entries.add(new LeaderBoardManager(player.getName(), newAmount));
+                sortEntries();
+                return;
+            }
+        }
+        //If player is not found
+        entries.add(new LeaderBoardManager(player.getName(), newAmount));
+        sortEntries();
     }
 
+    public void loadEssenceTops() {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            if (useDatabase) {
+                PreparedStatement ps = null;
+                ResultSet rs = null;
+                try {
+                    ps = plugin.sql.getConnection().prepareStatement("SELECT ESSENCE FROM harvestertools WHERE UUID=?");
+                    rs = ps.executeQuery();
+                    entries.clear();
+                    while (rs.next()) {
+                        double essence = rs.getDouble("ESSENCE");
+                        UUID uuid = UUID.fromString(rs.getString("UUID"));
+                        OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
+                        LeaderBoardManager manager = new LeaderBoardManager(player.getName(), essence);
+                        entries.add(manager);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (rs != null) rs.close();
+                        if (ps != null) ps.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } else {
+                //Retrieve data from the file
+                DataFile file = plugin.dataFile;
+                entries.clear();
+                for (String key : file.getConfig().getKeys(false)) {
+                    OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(key));
+                    double essence = file.getConfig().getDouble(key);
+                    LeaderBoardManager manager = new LeaderBoardManager(player.getName(), essence);
+                    entries.add(manager);
+                }
+            }
+            sortEntries();
+        });
+    }
+
+    private void sortEntries() {
+        entries.sort((entry1, entry2) -> Double.compare(entry2.getBalance(), entry1.getBalance()));
+    }
+
+    public LeaderBoardManager getPlayerEssenceTop(int top) {
+        try {
+            return entries.get(top);
+        } catch (IndexOutOfBoundsException e) {
+            return new LeaderBoardManager("---", 0);
+        }
+    }
+
+    private double getStoredEssence(UUID uuid) {
+        //This is only fired to load into the hashmap
+        if (useDatabase) {
+            try {
+                PreparedStatement ps = plugin.sql.getConnection().prepareStatement("SELECT ESSENCE FROM harvestertools WHERE UUID=?");
+                ps.setString(1, uuid.toString());
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    double result = rs.getDouble("ESSENCE");
+                    ps.close();
+                    return result;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            return data.getConfig().getDouble(uuid.toString());
+        }
+        return 0;
+    }
 
     public boolean withdrawEssence(Player player, double amount) {
         UUID uuid = player.getUniqueId();
@@ -108,6 +209,7 @@ public class EssenceManager {
             return getStoredEssence(player.getUniqueId());
         }
     }
+
 
 
     public String getFormattedEssence(Player player) {
@@ -149,26 +251,7 @@ public class EssenceManager {
     }
 
 
-    private double getStoredEssence(UUID uuid) {
-        //This is only fired to load into the hashmap
-        if (useDatabase) {
-            try {
-                PreparedStatement ps = plugin.sql.getConnection().prepareStatement("SELECT ESSENCE FROM harvestertools WHERE UUID=?");
-                ps.setString(1, uuid.toString());
-                ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
-                    double result = rs.getDouble("ESSENCE");
-                    ps.close();
-                    return result;
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } else {
-            return data.getConfig().getDouble(uuid.toString());
-        }
-        return 0;
-    }
+
 
     public void reloadPlayerEssence(Player player) {
         //This is fired every 2 hours in JoinListener to avoid balance loss when the server shuts down because an error.

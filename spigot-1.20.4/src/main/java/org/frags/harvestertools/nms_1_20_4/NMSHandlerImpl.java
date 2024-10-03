@@ -1,5 +1,6 @@
 package org.frags.harvestertools.nms_1_20_4;
 
+import com.mysql.cj.protocol.x.XpluginStatementCommand;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
 import net.minecraft.server.level.ServerLevel;
@@ -13,6 +14,7 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
@@ -20,21 +22,44 @@ import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitScheduler;
 import org.frags.harvestertools.HarvesterTools;
 import org.frags.harvestertools.NMSHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class NMSHandlerImpl implements NMSHandler {
 
+    private final BlockRestoreTask task;
+
+    public NMSHandlerImpl() {
+        this.task = new BlockRestoreTask();
+
+        BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
+
+        scheduler.scheduleSyncRepeatingTask(HarvesterTools.getInstance(), task, 0L, 40L);
+    }
 
     @Override
     public void replenishCrop(org.bukkit.block.Block block, HarvesterTools plugin) {
 
-        long timeToReplenish = plugin.getConfig().getLong("tools.hoe.time-to-replenish") * 20;
+        long timeToReplenish = System.currentTimeMillis() + (plugin.getConfig().getLong("tools.hoe.time-to-replenish") * 1000);
 
         World world = block.getWorld();
+        Chunk chunk = block.getChunk();
+        if (!chunk.isLoaded()) {
+            world.loadChunk(chunk);
+            chunk.setForceLoaded(true);
+            chunk.load();
+        }
+
+        if (chunk.getPluginChunkTickets().isEmpty()) {
+            chunk.addPluginChunkTicket(plugin);
+        }
+
         ServerLevel nmsWorld = ((CraftWorld) world).getHandle();
         BlockPos blockPos = new BlockPos(block.getX(), block.getY(), block.getZ());
 
@@ -43,9 +68,9 @@ public class NMSHandlerImpl implements NMSHandler {
         int z = block.getZ() & 15;
 
         final LevelChunk levelChunk = nmsWorld.getChunkIfLoaded(block.getX() >> 4, block.getZ() >> 4);
+        levelChunk.setLoaded(true);
         final LevelChunkSection levelChunkSection = levelChunk.getSection(levelChunk.getSectionIndex(block.getY()));
         final BlockState blockState = levelChunk.getSection(levelChunk.getSectionIndex(block.getY())).getBlockState(x, y, z);
-
 
         BlockState newState;
 
@@ -60,6 +85,8 @@ public class NMSHandlerImpl implements NMSHandler {
         ClientboundBlockUpdatePacket packet = new ClientboundBlockUpdatePacket(blockPos, newState);
 
         for (Player player : Bukkit.getOnlinePlayers()) {
+            if (!player.getWorld().getName().equalsIgnoreCase(world.getName()))
+                continue;
             CraftPlayer craftPlayer = (CraftPlayer) player;
             ServerPlayer serverPlayer = craftPlayer.getHandle();
 
@@ -67,29 +94,15 @@ public class NMSHandlerImpl implements NMSHandler {
         }
 
 
-        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+        BlockState grownState;
 
-            levelChunkSection.setBlockState(x, y, z, blockState);
+        if (blockState.hasProperty(BlockStateProperties.AGE_3)) {
+            grownState = blockState.setValue(BlockStateProperties.AGE_3, 3);
+        } else {
+            grownState = blockState.setValue(BlockStateProperties.AGE_7, 7);
+        }
 
-            BlockState grownState;
-
-            if (blockState.hasProperty(BlockStateProperties.AGE_3)) {
-                grownState = blockState.setValue(BlockStateProperties.AGE_3, 3);
-            } else {
-                grownState = blockState.setValue(BlockStateProperties.AGE_7, 7);
-            }
-
-            ClientboundBlockUpdatePacket grownPacket = new ClientboundBlockUpdatePacket(blockPos, grownState);
-
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                CraftPlayer craftPlayer = (CraftPlayer) player;
-                ServerPlayer serverPlayer = craftPlayer.getHandle();
-
-                serverPlayer.connection.send(grownPacket);
-            }
-        }, timeToReplenish);
-
-
+        task.addToQueue(new ReplenishCrop(block, blockPos, x, y, z, levelChunk, levelChunkSection, grownState, timeToReplenish, plugin));
     }
 
     @Override
@@ -129,7 +142,7 @@ public class NMSHandlerImpl implements NMSHandler {
         int y = block.getY() & 15;
         int z = block.getZ() & 15;
 
-        final LevelChunk levelChunk = nmsWorld.getChunkIfLoaded(block.getX() >> 4, block.getZ() >> 4);
+        final LevelChunk levelChunk = nmsWorld.getChunk(block.getX() >> 4, block.getZ() >> 4);
         final LevelChunkSection levelChunkSection = levelChunk.getSection(levelChunk.getSectionIndex(block.getY()));
         final BlockState blockState = levelChunk.getSection(levelChunk.getSectionIndex(block.getY())).getBlockState(x, y, z);
 
@@ -163,3 +176,4 @@ public class NMSHandlerImpl implements NMSHandler {
     }
 
 }
+

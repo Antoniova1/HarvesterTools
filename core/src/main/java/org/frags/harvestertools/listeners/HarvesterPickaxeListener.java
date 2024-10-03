@@ -10,6 +10,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.frags.harvestertools.HarvesterTools;
 import org.frags.harvestertools.enums.Tools;
+import org.frags.harvestertools.managers.MessageManager;
 import org.frags.harvestertools.objects.HarvesterDrops;
 import org.frags.harvestertools.utils.ToolUtils;
 
@@ -55,6 +56,16 @@ public class HarvesterPickaxeListener implements Listener {
         }
         //Do stuff
 
+        HarvesterDrops customBlock = plugin.getBlockManager().getBlock(block.getType().name());
+
+        int toolLevel = ToolUtils.getItemLevel(itemStack);
+
+        if (toolLevel < customBlock.getRequiredLevel()) {
+            MessageManager.miniMessageSender(player, plugin.messages.getConfig().getString("not-enough-level").replace("%level%", String.valueOf(customBlock.getRequiredLevel())));
+            e.setCancelled(true);
+            return;
+        }
+
         if (plugin.getConfig().getBoolean("tools.pickaxe.regen-block")) {
             e.setCancelled(true);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
@@ -62,17 +73,15 @@ public class HarvesterPickaxeListener implements Listener {
             }, 2L);
         }
 
-        HarvesterDrops customBlock = plugin.getBlockManager().getBlock(block.getType().name());
-
         plugin.getPickaxeUtils().calculateAutoSellDrops(itemStack, player, customBlock, block.getDrops());
 
         plugin.getPickaxeUtils().procHaste(player, itemStack);
 
         plugin.getPickaxeUtils().procSpeed(player, itemStack);
 
-        plugin.getPickaxeUtils().addExperience(player, itemStack);
-
         plugin.getPickaxeUtils().calculateBoosters(player, itemStack);
+
+        plugin.getPickaxeUtils().addExperience(player, itemStack);
 
         plugin.getPickaxeUtils().procCustomEnchants(player, itemStack);
 

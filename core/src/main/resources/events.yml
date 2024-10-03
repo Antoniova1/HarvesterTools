@@ -1,0 +1,88 @@
+#Time until next event starts when the previous one finishes
+another-event: 15 #in minutes
+
+events:
+  hoe: #Amount of crops broken
+    enabled: true
+    time: 5 #in minutes
+    start-message:
+      - "   <yellow><b>Farm Event started"
+      - ""
+      - "<gray>Start farming to be in the top and earn"
+      - "             <gray>amazing rewards!"
+    end-message:
+      - "   <yellow><b>Farm Event Finished"
+      - ""
+      - "<blue>%1_name% <gray>- <white>%1_stat%"
+      - "<blue>%2_name% <gray>- <white>%2_stat%%"
+      - "<blue>%3_name% <gray>- <white>%3_stat%"
+    rewards:
+      '1':
+        - "eco give %player% 100000000"
+      '2':
+        - "eco give %player% 10000000"
+      '3':
+        - "eco give %player% 1000000"
+  sword:
+    enabled: true
+    time: 5 #in minutes
+    start-message:
+      - "   <red><b>Mobs Event started"
+      - ""
+      - "<gray>Start killing mobs to be in the top and"
+      - "        <gray>earn amazing rewards!"
+    end-message:
+      - "   <red><b>Mobs Event Finished"
+      - ""
+      - "<blue>%1_name% <gray>- <white>%1_stat%"
+      - "<blue>%2_name% <gray>- <white>%2_stat%%"
+      - "<blue>%3_name% <gray>- <white>%3_stat%"
+    rewards:
+      '1':
+        - "eco give %player% 100000000"
+      '2':
+        - "eco give %player% 10000000"
+      '3':
+        - "eco give %player% 1000000"
+  rod:
+    enabled: true
+    time: 5 #in minutes
+    start-message:
+      - "   <blue><b>Fish Event started"
+      - ""
+      - "<gray>Start fishing to be in the top and earn"
+      - "             <gray>amazing rewards!"
+    end-message:
+      - "   <blue><b>Fish Event Finished"
+      - ""
+      - "<blue>%1_name% <gray>- <white>%1_stat%"
+      - "<blue>%2_name% <gray>- <white>%2_stat%%"
+      - "<blue>%3_name% <gray>- <white>%3_stat%"
+    rewards:
+      '1':
+        - "eco give %player% 100000000"
+      '2':
+        - "eco give %player% 10000000"
+      '3':
+        - "eco give %player% 1000000"
+  pickaxe:
+    enabled: true
+    time: 5 #in minutes
+    start-message:
+      - "   <green><b>Ore Event started"
+      - ""
+      - "<gray>Start mining to be in the top and earn"
+      - "             <gray>amazing rewards!"
+    end-message:
+      - "   <green><b>Ore Event Finished"
+      - ""
+      - "<blue>%1_name% <gray>- <white>%1_stat%"
+      - "<blue>%2_name% <gray>- <white>%2_stat%%"
+      - "<blue>%3_name% <gray>- <white>%3_stat%"
+    rewards:
+      '1':
+        - "eco give %player% 100000000"
+      '2':
+        - "eco give %player% 10000000"
+      '3':
+        - "eco give %player% 1000000"

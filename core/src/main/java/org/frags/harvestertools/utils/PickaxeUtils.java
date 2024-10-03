@@ -91,6 +91,8 @@ public class PickaxeUtils {
                 List<ItemsChance> itemsChanceList = plugin.getBlockManager().roll(customDrops);
                 if (!itemsChanceList.isEmpty()) {
                     for (ItemsChance item : itemsChanceList) {
+                        System.out.println(1);
+                        System.out.println(item.getExperience());
                         initialMoneySell += item.getPrice();
                         initialEssencePrice += item.getEssence();
                         initialXP += item.getExperience();
@@ -101,6 +103,8 @@ public class PickaxeUtils {
 
 
             getInitialPrices(initialMoneySell, initialEssencePrice, initialXP);
+
+            System.out.println("InitialXP" + initialXP);
 
             addAmountToMaps(player, initialMoneySell, initialEssencePrice, initialXP);
 
@@ -141,8 +145,8 @@ public class PickaxeUtils {
                             String formattedLine = MessageManager.miniStringParse(line)
                                     .replace("%money%", Utils.formatNumber(BigDecimal.valueOf(moneyL)))
                                     .replace("%essence%", Utils.formatNumber(BigDecimal.valueOf(essenceL)))
-                                    .replace("%money_boost%", String.valueOf(moneyBoost))
-                                    .replace("%essence_boost%", String.valueOf(essenceBoost));
+                                    .replace("%money_boost%", String.format("%.2f", moneyBoost))
+                                    .replace("%essence_boost%", String.format("%.2f", essenceBoost));
                             player.sendMessage(formattedLine);
                         }
                     }
@@ -280,8 +284,8 @@ public class PickaxeUtils {
 
         CustomEnchant essenceBoost = plugin.getEnchantsManager().getEnchant("essencebooster", Tools.sword);
         if (essenceBoost != null) {
-            if (enchantsManager.hasEnchantment(itemStack, moneyBoost)) {
-                int level = enchantsManager.getEnchantmentLevel(itemStack, moneyBoost);
+            if (enchantsManager.hasEnchantment(itemStack, essenceBoost)) {
+                int level = enchantsManager.getEnchantmentLevel(itemStack, essenceBoost);
                 double boost = essenceBoost.getBoostPerLevel() * level;
 
                 essenceToAdd = boost * initialEssence;
@@ -341,11 +345,11 @@ public class PickaxeUtils {
                 ToolUtils.setExperience(itemStack, 0D);
                 MessageManager.miniMessageSender(player, plugin.messages.getConfig().getString("level-up-tool").replace("%level%", String.valueOf((int) toolLevel + 1)));
                 ToolUtils.updateVariables(itemStack);
-                return;
             }
 
             //Adds experience
             ToolUtils.setExperience(itemStack, toolExperience + experience);
+            experienceMap.remove(player);
         }
     }
 
@@ -377,9 +381,9 @@ public class PickaxeUtils {
     }
 
     private void addAmountToMaps(Player player, double money, double essence, double experience) {
-        double newMoney = moneyMap.get(player) + money;
-        double newEssence = essenceMap.get(player) + essence;
-        double newExperience = experienceMap.get(player) + experience;
+        double newMoney = moneyMap.getOrDefault(player, 0D) + money;
+        double newEssence = essenceMap.getOrDefault(player, 0D) + essence;
+        double newExperience = experienceMap.getOrDefault(player, 0D) + experience;
 
         moneyMap.replace(player, newMoney);
         essenceMap.replace(player, newEssence);

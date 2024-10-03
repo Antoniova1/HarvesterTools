@@ -75,6 +75,8 @@ public final class HarvesterTools extends JavaPlugin {
 
     public BlocksFile blocksFile;
 
+    public EventsFile eventsFile;
+
     private EnchantsManager enchantsManager;
 
     private EssenceManager essenceManager;
@@ -117,11 +119,12 @@ public final class HarvesterTools extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
+        instance = this;
+
         this.nmsHandler = createNMSHandler();
 
         this.adventure = BukkitAudiences.create(this);
 
-        instance = this;
 
 
         /*this.config = getConfig();
@@ -152,6 +155,7 @@ public final class HarvesterTools extends JavaPlugin {
         this.cropsFile = new CropsFile(this);
         this.mobsFile = new MobsFile(this);
         this.blocksFile = new BlocksFile(this);
+        this.eventsFile = new EventsFile(this);
 
         getCommand("essence").setExecutor(new EssenceCommandManager(this));
         getCommand("essence").setTabCompleter(new EssenceTab());
@@ -204,7 +208,9 @@ public final class HarvesterTools extends JavaPlugin {
 
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new EssenceExpansions(this).register();
+            essenceManager.loadEssenceTops();
         }
+
     }
 
     @Override
@@ -293,6 +299,8 @@ public final class HarvesterTools extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerFishListener(this), this);
         getServer().getPluginManager().registerEvents(new MobSwordListener(this), this);
         getServer().getPluginManager().registerEvents(new HarvesterPickaxeListener(this), this);
+        getServer().getPluginManager().registerEvents(new ToolDropListener(), this);
+        getServer().getPluginManager().registerEvents(new PrepareToolsListener(), this);
     }
 
     private String getMinecraftVersion() {

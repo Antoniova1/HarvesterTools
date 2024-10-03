@@ -397,6 +397,8 @@ public class ToolUtils {
 
         container.set(ToolUtils.levelKey, PersistentDataType.INTEGER, 0);
 
+        container.set(ToolUtils.experienceKey, PersistentDataType.DOUBLE, 0D);
+
         container.set(ToolUtils.prestigeKey, PersistentDataType.INTEGER, newPrestige);
 
         ConfigurationSection prestigeSection = getInstance().getConfig().getConfigurationSection("Prestige");

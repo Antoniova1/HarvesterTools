@@ -10,24 +10,24 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
 
-public class DataFile {
+public class EventsFile {
 
     private final HarvesterTools plugin;
     private FileConfiguration dataConfig = null;
     private File configFile = null;
 
 
-    public DataFile(HarvesterTools plugin) {
+    public EventsFile(HarvesterTools plugin) {
         this.plugin = plugin;
     }
 
     public void reloadConfig() {
         if (this.configFile == null)
-            this.configFile = new File(plugin.getDataFolder(), "data.yml");
+            this.configFile = new File(plugin.getDataFolder(), "events.yml");
 
         dataConfig = YamlConfiguration.loadConfiguration(configFile);
 
-        InputStream defaultStream = plugin.getResource("data.yml");
+        InputStream defaultStream = plugin.getResource("events.yml");
         if (defaultStream != null) {
             YamlConfiguration defaultConfig = YamlConfiguration.
                     loadConfiguration(new InputStreamReader(defaultStream));
@@ -55,10 +55,10 @@ public class DataFile {
 
     public void saveDefaultConfig() {
         if (this.configFile == null)
-            this.configFile = new File(plugin.getDataFolder(), "data.yml");
+            this.configFile = new File(plugin.getDataFolder(), "events.yml");
 
         if (!configFile.exists()) {
-            plugin.saveResource("data.yml", false);
+            plugin.saveResource("events.yml", false);
         }
     }
 }

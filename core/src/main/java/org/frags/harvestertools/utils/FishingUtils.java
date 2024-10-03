@@ -70,10 +70,7 @@ public class FishingUtils {
         this.initialExperience = experience;
     }
 
-    public void fastRod(PlayerFishEvent e, ItemStack itemStack) {
-        CustomEnchant fastRod = enchantsManager.getEnchant("fastrod", Tools.rod);
-        if (fastRod == null)
-            return;
+    public void fastRod(CustomEnchant fastRod, PlayerFishEvent e, ItemStack itemStack) {
         if (!enchantsManager.hasEnchantment(itemStack, fastRod))
             return;
         //Player has enchant
@@ -83,13 +80,10 @@ public class FishingUtils {
         double calculatedBoost = 1 / (1 + (boost / 100));
 
         int minWaitTime = e.getHook().getMinWaitTime();
-        int maxWaitTime = e.getHook().getMaxWaitTime();
 
         int reducedMinTime = (int) (minWaitTime * calculatedBoost);
-        int reducedMaxTime = (int) (maxWaitTime * calculatedBoost);
 
         e.getHook().setMinWaitTime(reducedMinTime);
-        e.getHook().setMaxWaitTime(reducedMaxTime);
     }
 
     public void calculateAutoSellDrops(ItemStack itemStack, Player player, ItemStack drop) {
@@ -151,8 +145,8 @@ public class FishingUtils {
                             String formattedLine = MessageManager.miniStringParse(line)
                                     .replace("%money%", Utils.formatNumber(BigDecimal.valueOf(moneyL)))
                                     .replace("%essence%", Utils.formatNumber(BigDecimal.valueOf(essenceL)))
-                                    .replace("%money_boost%", String.valueOf(moneyBoost))
-                                    .replace("%essence_boost%", String.valueOf(essenceBoost));
+                                    .replace("%money_boost%", String.format("%.2f", moneyBoost))
+                                    .replace("%essence_boost%", String.format("%.2f", essenceBoost));
                             player.sendMessage(formattedLine);
                         }
                     }
@@ -335,6 +329,7 @@ public class FishingUtils {
 
             //Adds experience
             ToolUtils.setExperience(itemStack, toolExperience + experience);
+            experienceMap.remove(player);
         }
     }
 
@@ -365,8 +360,8 @@ public class FishingUtils {
 
         CustomEnchant essenceBoost = plugin.getEnchantsManager().getEnchant("essencebooster", Tools.rod);
         if (essenceBoost != null) {
-            if (enchantsManager.hasEnchantment(itemStack, moneyBoost)) {
-                int level = enchantsManager.getEnchantmentLevel(itemStack, moneyBoost);
+            if (enchantsManager.hasEnchantment(itemStack, essenceBoost)) {
+                int level = enchantsManager.getEnchantmentLevel(itemStack, essenceBoost);
                 double boost = essenceBoost.getBoostPerLevel() * level;
 
                 essenceToAdd = boost * initialEssence;
@@ -396,9 +391,9 @@ public class FishingUtils {
     }
 
     private void addAmountToMaps(Player player, double money, double essence, double experience) {
-        double newMoney = moneyMap.get(player) + money;
-        double newEssence = essenceMap.get(player) + essence;
-        double newExperience = experienceMap.get(player) + experience;
+        double newMoney = moneyMap.getOrDefault(player, 0D) + money;
+        double newEssence = essenceMap.getOrDefault(player, 0D) + essence;
+        double newExperience = experienceMap.getOrDefault(player, 0D) + experience;
 
         moneyMap.replace(player, newMoney);
         essenceMap.replace(player, newEssence);

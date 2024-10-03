@@ -120,6 +120,8 @@ public class BlockManager {
                 double essence = drop.getDouble("essence-price");
                 double experience = drop.getDouble("experience");
 
+                System.out.println(experience);
+
                 itemsChanceList.add(new ItemsChance(itemStack, chance, price, essence, experience));
             }
             CustomDrops customDrops = new CustomDrops(material, level, rolls, itemsChanceList);

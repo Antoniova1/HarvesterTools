@@ -70,9 +70,9 @@ public class MobSwordListener implements Listener {
 
         plugin.getMobUtils().procStrength(player, itemStack);
 
-        plugin.getMobUtils().addExperience(player, itemStack);
-
         plugin.getMobUtils().calculateBoosters(player, itemStack);
+
+        plugin.getMobUtils().addExperience(player, itemStack);
 
         plugin.getMobUtils().procCustomEnchants(player, itemStack);
 
@@ -97,12 +97,13 @@ public class MobSwordListener implements Listener {
                 MythicMob mob = activeMob.getType();
                 entityName = mob.getInternalName();
             } else {
-                entityName = entity.getName();
+                entityName = entity.getType().name();
             }
         } else {
-            entityName = entity.getName();
+            entityName = entity.getType().name();
         }
 
+        plugin.getMobUtils().manageSharpness(e, itemStack);
 
         if (plugin.getMobManager().getMob(entityName) == null)
             return;
@@ -119,6 +120,5 @@ public class MobSwordListener implements Listener {
             return;
         }
 
-        plugin.getMobUtils().manageSharpness(e, itemStack);
     }
 }

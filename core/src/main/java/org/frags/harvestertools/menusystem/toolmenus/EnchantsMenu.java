@@ -163,10 +163,10 @@ public class EnchantsMenu extends Menu {
                     String replaced = miniMessageParser(lore.get(i)).replace("%price%", formattedPrice).
                             replace("%level%", String.valueOf(enchantLevel))
                                     .replace("%maxLevel%", String.valueOf(enchant.getMaxLevel()))
-                                    .replace("%boost%", String.valueOf(boost))
+                                    .replace("%boost%", String.format("%.3f", boost))
                                     .replace("%hoe_level%", String.valueOf(enchant.getRequiredLevel()))
                                     .replace("%hoe_prestige%", String.valueOf(enchant.getRequiredPrestige()))
-                                    .replace("%chance%", String.valueOf(chance));
+                                    .replace("%chance%", String.format("%.3f", chance));
                     lore.remove(i);
                     lore.add(i, replaced);
                 }

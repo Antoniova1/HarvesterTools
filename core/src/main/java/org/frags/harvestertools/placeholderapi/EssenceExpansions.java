@@ -3,6 +3,7 @@ package org.frags.harvestertools.placeholderapi;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 import org.frags.harvestertools.HarvesterTools;
+import org.frags.harvestertools.managers.LeaderBoardManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,6 +44,24 @@ public class EssenceExpansions extends PlaceholderExpansion {
     public @Nullable String onPlaceholderRequest(Player player, @NotNull String params) {
 
         if (player == null) return null;
+        //%harvestertools_top_essence_(balance)(player)_1%
+        if (params.contains("_")) {
+            String[] split = params.split("_");
+
+            if (split[0].equalsIgnoreCase("top")) {
+
+                if (split[1].equalsIgnoreCase("essence")) {
+                    int top = Integer.parseInt(split[3]) - 1;
+                    LeaderBoardManager manager = plugin.getEssenceManager().getPlayerEssenceTop(top);
+                    if (manager != null) {
+                        if (split[2].equalsIgnoreCase("balance"))
+                            return manager.getFormattedBalance();
+                        if (split[2].equalsIgnoreCase("player"))
+                            return manager.getPlayerName();
+                    }
+                }
+            }
+        }
 
         if (params.equalsIgnoreCase("essence")) {
             return String.valueOf(plugin.getEssenceManager().getEssence(player));

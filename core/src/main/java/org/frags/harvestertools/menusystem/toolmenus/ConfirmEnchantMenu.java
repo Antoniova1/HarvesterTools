@@ -41,7 +41,7 @@ public class ConfirmEnchantMenu extends Menu {
 
     @Override
     public String getMenuName() {
-        return miniMessageParser(section.getString("title")).replace("%enchant%", playerMenuUtility.getEnchant().getName());
+        return miniMessageParser(section.getString("title")).replace("%enchant%", playerMenuUtility.getEnchant().getCustomName());
     }
 
     @Override
@@ -58,6 +58,9 @@ public class ConfirmEnchantMenu extends Menu {
         PersistentDataContainer container = clickedItem.getItemMeta().getPersistentDataContainer();
 
         String key = container.get(itemKey, PersistentDataType.STRING);
+
+        if (key == null)
+            return;
 
         if (key.equalsIgnoreCase("max-item")) {
             //This is the max Item :)

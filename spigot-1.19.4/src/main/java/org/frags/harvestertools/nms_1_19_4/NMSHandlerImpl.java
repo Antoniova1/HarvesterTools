@@ -42,7 +42,7 @@ public class NMSHandlerImpl implements NMSHandler {
         int y = block.getY() & 15;
         int z = block.getZ() & 15;
 
-        final LevelChunk levelChunk = nmsWorld.getChunkIfLoaded(block.getX() >> 4, block.getZ() >> 4);
+        final LevelChunk levelChunk = nmsWorld.getChunk(block.getX() >> 4, block.getZ() >> 4);
         final LevelChunkSection levelChunkSection = levelChunk.getSection(levelChunk.getSectionIndex(block.getY()));
         final BlockState blockState = levelChunk.getSection(levelChunk.getSectionIndex(block.getY())).getBlockState(x, y, z);
 
@@ -128,7 +128,7 @@ public class NMSHandlerImpl implements NMSHandler {
         int y = block.getY() & 15;
         int z = block.getZ() & 15;
 
-        final LevelChunk levelChunk = nmsWorld.getChunkIfLoaded(block.getX() >> 4, block.getZ() >> 4);
+        final LevelChunk levelChunk = nmsWorld.getChunk(block.getX() >> 4, block.getZ() >> 4);
         final LevelChunkSection levelChunkSection = levelChunk.getSection(levelChunk.getSectionIndex(block.getY()));
         final BlockState blockState = levelChunk.getSection(levelChunk.getSectionIndex(block.getY())).getBlockState(x, y, z);
 

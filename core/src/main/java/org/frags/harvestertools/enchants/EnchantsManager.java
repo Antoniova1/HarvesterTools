@@ -41,6 +41,7 @@ public class EnchantsManager {
     private final List<CustomEnchant> swordEnchants = new ArrayList<>();
 
 
+
     private final NamespacedKey toolsKey;
 
 

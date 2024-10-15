@@ -91,8 +91,6 @@ public class PickaxeUtils {
                 List<ItemsChance> itemsChanceList = plugin.getBlockManager().roll(customDrops);
                 if (!itemsChanceList.isEmpty()) {
                     for (ItemsChance item : itemsChanceList) {
-                        System.out.println(1);
-                        System.out.println(item.getExperience());
                         initialMoneySell += item.getPrice();
                         initialEssencePrice += item.getEssence();
                         initialXP += item.getExperience();
@@ -103,8 +101,6 @@ public class PickaxeUtils {
 
 
             getInitialPrices(initialMoneySell, initialEssencePrice, initialXP);
-
-            System.out.println("InitialXP" + initialXP);
 
             addAmountToMaps(player, initialMoneySell, initialEssencePrice, initialXP);
 

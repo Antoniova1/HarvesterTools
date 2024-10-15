@@ -14,6 +14,7 @@ import org.frags.harvestertools.enums.Tools;
 import org.frags.harvestertools.managers.CropsManager;
 import org.frags.harvestertools.managers.MessageManager;
 import org.frags.harvestertools.objects.HarvesterDrops;
+import org.frags.harvestertools.toolsmanagers.HoeManager;
 import org.frags.harvestertools.utils.RandomSystem;
 import org.frags.harvestertools.utils.ToolUtils;
 
@@ -48,30 +49,27 @@ public class CropBrokenListener implements Listener {
             return;
         }
 
+        HoeManager hoeManager = plugin.getHoeManager(player);
+
         e.setCancelled(true);
 
         replenishCrop(block); //This replenishes the broken crop
 
-        plugin.getCropUtils().calculateAutoSellDrops(itemStack, player, block);
 
-        plugin.getCropUtils().procSpeed(player, itemStack);
+        hoeManager.calculateAutoSellDrops(itemStack, block);
 
-        plugin.getCropUtils().procHaste(player, itemStack);
+        hoeManager.procSpeed(itemStack);
+        hoeManager.procHaste(itemStack);
+        hoeManager.procSoulSpeed(itemStack);
 
-        plugin.getCropUtils().procRush(player, itemStack);
+        hoeManager.procRush(itemStack);
+        hoeManager.procSeller(itemStack);
 
-        plugin.getCropUtils().procSoulSpeed(player, itemStack);
+        hoeManager.addToolExperience(itemStack);
 
-        plugin.getCropUtils().procSeller(player, itemStack);
+        hoeManager.procCropReaper(itemStack, block);
 
-        plugin.getCropUtils().calculateBoosters(player, itemStack);
-
-        plugin.getCropUtils().addExperience(player, itemStack);
-
-        plugin.getCropUtils().procCropReaper(player, itemStack, block);
-
-        plugin.getCropUtils().procCustomEnchants(player, itemStack);
-
+        hoeManager.procCustomEnchants(itemStack);
 
         RandomSystem randomSystem = new RandomSystem();
 

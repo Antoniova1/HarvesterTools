@@ -29,6 +29,10 @@ import org.frags.harvestertools.enums.Tools;
 import org.frags.harvestertools.mysql.MySQL;
 import org.frags.harvestertools.mysql.SQLGetter;
 import org.frags.harvestertools.placeholderapi.EssenceExpansions;
+import org.frags.harvestertools.toolsmanagers.HoeManager;
+import org.frags.harvestertools.toolsmanagers.PickaxeManager;
+import org.frags.harvestertools.toolsmanagers.RodManager;
+import org.frags.harvestertools.toolsmanagers.SwordManager;
 import org.frags.harvestertools.utils.*;
 
 import java.io.File;
@@ -100,6 +104,11 @@ public final class HarvesterTools extends JavaPlugin {
     private PickaxeUtils pickaxeUtils;
 
     private static final HashMap<Player, PlayerMenuUtility> playerMenuUtilityMap = new HashMap<>();
+
+    public final HashMap<String, HoeManager> hoeManagerMap = new HashMap<>();
+    public final HashMap<String, SwordManager> swordManagerMap = new HashMap<>();
+    public final HashMap<String, RodManager> rodManagerMap = new HashMap<>();
+    public final HashMap<String, PickaxeManager> pickaxeManagerMap = new HashMap<>();
 
     public MySQL sql;
     public SQLGetter data;
@@ -391,4 +400,19 @@ public final class HarvesterTools extends JavaPlugin {
         return blockManager;
     }
 
+    public HoeManager getHoeManager(Player player) {
+        return hoeManagerMap.get(player.getName());
+    }
+
+    public SwordManager getSwordManager(Player player) {
+        return swordManagerMap.get(player.getName());
+    }
+
+    public RodManager getRodManager(Player player) {
+        return rodManagerMap.get(player.getName());
+    }
+
+    public PickaxeManager getPickaxeManager(Player player) {
+        return pickaxeManagerMap.get(player.getName());
+    }
 }

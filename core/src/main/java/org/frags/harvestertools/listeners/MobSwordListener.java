@@ -7,17 +7,16 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.frags.harvestertools.HarvesterTools;
 import org.frags.harvestertools.managers.MessageManager;
 import org.frags.harvestertools.objects.HarvesterMob;
+import org.frags.harvestertools.toolsmanagers.SwordManager;
 import org.frags.harvestertools.utils.ToolUtils;
 
 public class MobSwordListener implements Listener {
@@ -62,19 +61,21 @@ public class MobSwordListener implements Listener {
 
         HarvesterMob mob = plugin.getMobManager().getMob(entityName);
 
-        plugin.getMobUtils().calculateAutoSellDrops(itemStack, player, mob, e.getDrops());
+        SwordManager swordManager = plugin.getSwordManager(player);
+
+        swordManager.calculateAutoSellDrops(itemStack, mob, e.getDrops());
 
         e.getDrops().clear();
 
-        plugin.getMobUtils().procHaste(player, itemStack);
+        swordManager.procHaste(itemStack);
 
-        plugin.getMobUtils().procStrength(player, itemStack);
+        swordManager.procStrength(itemStack);
 
-        plugin.getMobUtils().calculateBoosters(player, itemStack);
+        swordManager.procSpeed(itemStack);
 
-        plugin.getMobUtils().addExperience(player, itemStack);
+        swordManager.addToolExperience(itemStack);
 
-        plugin.getMobUtils().procCustomEnchants(player, itemStack);
+        swordManager.procCustomEnchants(itemStack);
 
     }
 
@@ -103,7 +104,7 @@ public class MobSwordListener implements Listener {
             entityName = entity.getType().name();
         }
 
-        plugin.getMobUtils().manageSharpness(e, itemStack);
+        plugin.getSwordManager(player).manageSharpness(e, itemStack);
 
         if (plugin.getMobManager().getMob(entityName) == null)
             return;

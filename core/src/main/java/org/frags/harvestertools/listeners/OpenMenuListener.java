@@ -43,12 +43,12 @@ public class OpenMenuListener implements Listener {
 
 
         if (toolType == Tools.rod) {
-            if (e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) {
+            if (e.getAction() == Action.RIGHT_CLICK_AIR) {
                 lastRightClickTime.put(player.getUniqueId(), System.currentTimeMillis());
                 return;
             }
 
-            if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
+            if (e.getAction() == Action.LEFT_CLICK_AIR) {
                 Long lastClick = lastRightClickTime.get(player.getUniqueId());
                 if (lastClick != null && (System.currentTimeMillis() - lastClick) < 200) {
                     return; //System to avoid right click double proc
@@ -58,7 +58,7 @@ public class OpenMenuListener implements Listener {
             return;
         }
 
-        if (e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) {
+        if (e.getAction() == Action.RIGHT_CLICK_AIR) {
             new ToolMenu(plugin, createPlayerMenuUtility(player, toolType, item)).open();
         }
     }

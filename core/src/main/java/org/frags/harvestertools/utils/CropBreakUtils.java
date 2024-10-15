@@ -406,7 +406,7 @@ public class CropBreakUtils {
             if (enchantsManager.hasEnchantment(itemStack, moneyBooster)) {
                 double boost = moneyBooster.getBoostPerLevel() * level;
 
-                money = money + (boost * initialMoney);
+                money = money + (boost * money);
 
                 if (rushMap.containsKey(player)) {
                     double rushBoost = rushMap.get(player);
@@ -420,7 +420,7 @@ public class CropBreakUtils {
             if (enchantsManager.hasEnchantment(itemStack, essenceBooster)) {
                 double boost = essenceBooster.getBoostPerLevel() * level;
 
-                essence = essence + (boost * initialEssence);
+                essence = essence + (boost * essence);
 
                 if (rushMap.containsKey(player)) {
                     double rushBoost = rushMap.get(player);

@@ -407,21 +407,19 @@ public class ToolUtils {
         ConfigurationSection section = prestigeSection.getConfigurationSection("boosts");
 
         if (prestigeSection.getBoolean("boost-essence")) {
-            double essenceBoost = container.get(ToolUtils.essenceBoostKey, PersistentDataType.DOUBLE);
-            double prestigeEssenceBoost = section.getDouble("essence");
-            container.set(ToolUtils.essenceBoostKey, PersistentDataType.DOUBLE, essenceBoost + prestigeEssenceBoost);
+
+            double prestigeEssenceBoost = section.getDouble("essence") * newPrestige;
+            container.set(ToolUtils.essenceBoostKey, PersistentDataType.DOUBLE, prestigeEssenceBoost);
         }
 
         if (prestigeSection.getBoolean("boost-money")) {
-            double moneyBoost = container.get(ToolUtils.moneyBoostKey, PersistentDataType.DOUBLE);
-            double prestigeMoneyBoost = section.getDouble("money");
-            container.set(ToolUtils.moneyBoostKey, PersistentDataType.DOUBLE, moneyBoost + prestigeMoneyBoost);
+            double prestigeMoneyBoost = section.getDouble("money") * newPrestige;
+            container.set(ToolUtils.moneyBoostKey, PersistentDataType.DOUBLE, prestigeMoneyBoost);
         }
 
         if (prestigeSection.getBoolean("boost-enchants")) {
-            double enchantBoost = container.get(ToolUtils.enchantBoostKey, PersistentDataType.DOUBLE);
-            double prestigeEnchantBoost = section.getDouble("enchants");
-            container.set(ToolUtils.enchantBoostKey, PersistentDataType.DOUBLE, enchantBoost + prestigeEnchantBoost);
+            double prestigeEnchantBoost = section.getDouble("enchants") * newPrestige;
+            container.set(ToolUtils.enchantBoostKey, PersistentDataType.DOUBLE, prestigeEnchantBoost);
         }
 
         itemStack.setItemMeta(meta);
@@ -482,6 +480,8 @@ public class ToolUtils {
         double nextLevelXP = levels.getStartingXP() + levels.getStartingXP() * (level * levels.getIncrementXP());
 
         double percentage = (getItemExperience(itemStack) / nextLevelXP) * 100;
+        if (percentage > 100)
+            percentage = 100;
 
         String formattedPercentage = String.format("%.2f", percentage);
 

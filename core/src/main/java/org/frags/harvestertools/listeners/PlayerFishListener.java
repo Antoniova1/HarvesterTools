@@ -15,6 +15,7 @@ import org.frags.harvestertools.HarvesterTools;
 import org.frags.harvestertools.enchants.CustomEnchant;
 import org.frags.harvestertools.enchants.EnchantsManager;
 import org.frags.harvestertools.enums.Tools;
+import org.frags.harvestertools.toolsmanagers.RodManager;
 import org.frags.harvestertools.utils.ToolUtils;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -44,8 +45,11 @@ public class PlayerFishListener implements Listener {
         if (e.getState() == PlayerFishEvent.State.FISHING) {
 
             CustomEnchant fastRod = plugin.getEnchantsManager().getEnchant("fastrod", Tools.rod);
+
             if (fastRod != null) {
-                plugin.getFishingUtils().fastRod(fastRod, e, itemStack);
+                RodManager rodManager = plugin.getRodManager(player);
+
+                rodManager.fastRod(fastRod, e, itemStack);
             }
             //Player cast the rod
 
@@ -96,16 +100,17 @@ public class PlayerFishListener implements Listener {
             ItemStack drop = ((Item) e.getCaught()).getItemStack();
             Entity entity = e.getCaught();
             entity.remove();
+            RodManager rodManager = plugin.getRodManager(player);
 
-            plugin.getFishingUtils().calculateAutoSellDrops(itemStack, player, drop);
 
-            plugin.getFishingUtils().procTsunami(player, itemStack);
+            rodManager.calculateAutoSellDrops(itemStack, drop);
 
-            plugin.getFishingUtils().calculateBoosters(player, itemStack);
+            rodManager.procTsunami(itemStack);
 
-            plugin.getFishingUtils().addExperience(player, itemStack);
+            rodManager.addToolExperience(itemStack);
 
-            plugin.getFishingUtils().procCustomEnchants(player, itemStack);
+
+            rodManager.procCustomEnchants(itemStack);
         }
     }
 }

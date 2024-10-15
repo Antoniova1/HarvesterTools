@@ -1,6 +1,7 @@
 package org.frags.harvestertools.listeners;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -12,6 +13,7 @@ import org.frags.harvestertools.HarvesterTools;
 import org.frags.harvestertools.enums.Tools;
 import org.frags.harvestertools.managers.MessageManager;
 import org.frags.harvestertools.objects.HarvesterDrops;
+import org.frags.harvestertools.toolsmanagers.PickaxeManager;
 import org.frags.harvestertools.utils.ToolUtils;
 
 public class HarvesterPickaxeListener implements Listener {
@@ -56,6 +58,14 @@ public class HarvesterPickaxeListener implements Listener {
         }
         //Do stuff
 
+        /*if (ToolUtils.isTool(itemStack)) {
+            player.sendMessage(ChatColor.RED + "Los picos especiales están desactivados ahora mismo.");
+            e.setCancelled(true);
+            return;
+        }
+         */
+
+
         HarvesterDrops customBlock = plugin.getBlockManager().getBlock(block.getType().name());
 
         int toolLevel = ToolUtils.getItemLevel(itemStack);
@@ -73,17 +83,17 @@ public class HarvesterPickaxeListener implements Listener {
             }, 2L);
         }
 
-        plugin.getPickaxeUtils().calculateAutoSellDrops(itemStack, player, customBlock, block.getDrops());
+        PickaxeManager pickaxeManager = plugin.getPickaxeManager(player);
 
-        plugin.getPickaxeUtils().procHaste(player, itemStack);
+        pickaxeManager.calculateAutoSellDrops(itemStack, customBlock, block.getDrops());
 
-        plugin.getPickaxeUtils().procSpeed(player, itemStack);
+        pickaxeManager.procHaste(itemStack);
 
-        plugin.getPickaxeUtils().calculateBoosters(player, itemStack);
+        pickaxeManager.procSpeed(itemStack);
 
-        plugin.getPickaxeUtils().addExperience(player, itemStack);
+        pickaxeManager.addToolExperience(itemStack);
 
-        plugin.getPickaxeUtils().procCustomEnchants(player, itemStack);
+        pickaxeManager.procCustomEnchants(itemStack);
 
         e.setDropItems(false);
     }

@@ -75,7 +75,7 @@ public class RodManager extends ToolManager {
             addEssence(initialEssencePrice);
             addExperience(initialXP);
 
-            if (!isInCollectPeriod() || !isInAutoSellPeriod()) {
+            if (!isInCollectPeriod() && !isInAutoSellPeriod()) {
                 setAutoSellPeriod(true);
                 long autoSellTime = 60 * 20;
 
@@ -156,7 +156,7 @@ public class RodManager extends ToolManager {
             addEssence(initialEssencePrice);
             addExperience(initialXP);
 
-            if (!isInCollectPeriod()) {
+            if (!isInCollectPeriod() || !isInAutoSellPeriod()) {
                 setCollectPeriod(true);
 
                 calculateBoostersValue(itemStack);

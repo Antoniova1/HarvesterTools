@@ -1,6 +1,7 @@
 package org.frags.harvestertools.objects;
 
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 public class HarvesterDrops {
 

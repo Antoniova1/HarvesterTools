@@ -73,7 +73,7 @@ public class CropBrokenListener implements Listener {
 
         RandomSystem randomSystem = new RandomSystem();
 
-        if (randomSystem.success(0.00001, false))
+        if (randomSystem.success(0.01, true))
             ToolUtils.updateVariables(itemStack);
     }
 

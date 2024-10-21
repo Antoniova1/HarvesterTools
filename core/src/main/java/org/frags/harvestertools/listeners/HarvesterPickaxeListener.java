@@ -14,6 +14,7 @@ import org.frags.harvestertools.enums.Tools;
 import org.frags.harvestertools.managers.MessageManager;
 import org.frags.harvestertools.objects.HarvesterDrops;
 import org.frags.harvestertools.toolsmanagers.PickaxeManager;
+import org.frags.harvestertools.utils.RandomSystem;
 import org.frags.harvestertools.utils.ToolUtils;
 
 public class HarvesterPickaxeListener implements Listener {
@@ -94,6 +95,11 @@ public class HarvesterPickaxeListener implements Listener {
         pickaxeManager.addToolExperience(itemStack);
 
         pickaxeManager.procCustomEnchants(itemStack);
+
+        RandomSystem randomSystem = new RandomSystem();
+
+        if (randomSystem.success(0.01, false))
+            ToolUtils.updateVariables(itemStack);
 
         e.setDropItems(false);
     }

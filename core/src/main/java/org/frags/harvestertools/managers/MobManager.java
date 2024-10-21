@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.frags.harvestertools.HarvesterTools;
 import org.frags.harvestertools.objects.*;
+import org.frags.harvestertools.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,18 +54,14 @@ public class MobManager {
             for (String dropKey : section1.getKeys(false)) {
                 ConfigurationSection drop = section1.getConfigurationSection(dropKey);
 
-                Material dropMaterial;
+                ItemStack itemStack;
                 try {
-                    dropMaterial = Material.valueOf(drop.getString("material"));
+                    itemStack = new ItemStack(Material.valueOf(drop.getString("material")));
                 } catch (IllegalArgumentException e) {
-                    Bukkit.getLogger().warning("Error while creating custom crops");
-                    Bukkit.getLogger().warning("Material " + drop.getString("material") + " is not a valid material");
-                    continue;
+                    itemStack = Utils.getHead(drop.getString("material"));
                 }
 
                 double chance = drop.getDouble("chance");
-
-                ItemStack itemStack = new ItemStack(dropMaterial);
 
                 String name = drop.getString("name");
 

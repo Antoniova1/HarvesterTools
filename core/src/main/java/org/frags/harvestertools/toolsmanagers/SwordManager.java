@@ -76,7 +76,7 @@ public class SwordManager extends ToolManager{
             addExperience(initialXP);
 
 
-            if (!isInAutoSellPeriod()) {
+            if (!isInCollectPeriod() && !isInAutoSellPeriod()) {
                 setAutoSellPeriod(true);
                 BukkitScheduler scheduler = plugin.getServer().getScheduler();
                 calculateBoostersValue(itemStack);
@@ -168,7 +168,7 @@ public class SwordManager extends ToolManager{
 
             addExperience(initialXP);
 
-            if (!isInCollectPeriod() || !isInAutoSellPeriod()) {
+            if (!isInCollectPeriod() && !isInAutoSellPeriod()) {
                 setCollectPeriod(true);
 
                 calculateBoostersValue(itemStack);

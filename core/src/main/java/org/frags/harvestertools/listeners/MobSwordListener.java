@@ -14,9 +14,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.frags.harvestertools.HarvesterTools;
+import org.frags.harvestertools.enums.Tools;
 import org.frags.harvestertools.managers.MessageManager;
 import org.frags.harvestertools.objects.HarvesterMob;
 import org.frags.harvestertools.toolsmanagers.SwordManager;
+import org.frags.harvestertools.utils.RandomSystem;
 import org.frags.harvestertools.utils.ToolUtils;
 
 public class MobSwordListener implements Listener {
@@ -39,6 +41,9 @@ public class MobSwordListener implements Listener {
         if (itemStack == null || itemStack.getType() == Material.AIR) return;
 
         if (!ToolUtils.isTool(itemStack)) return;
+
+        if (ToolUtils.getTool(itemStack) != Tools.sword) return;
+
 
         String entityName;
         if (Bukkit.getPluginManager().getPlugin("MythicMobs") != null) {
@@ -76,6 +81,11 @@ public class MobSwordListener implements Listener {
         swordManager.addToolExperience(itemStack);
 
         swordManager.procCustomEnchants(itemStack);
+
+        RandomSystem randomSystem = new RandomSystem();
+
+        if (randomSystem.success(1, true))
+            ToolUtils.updateVariables(itemStack);
 
     }
 

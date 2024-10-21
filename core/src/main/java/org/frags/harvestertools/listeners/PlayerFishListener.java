@@ -16,6 +16,7 @@ import org.frags.harvestertools.enchants.CustomEnchant;
 import org.frags.harvestertools.enchants.EnchantsManager;
 import org.frags.harvestertools.enums.Tools;
 import org.frags.harvestertools.toolsmanagers.RodManager;
+import org.frags.harvestertools.utils.RandomSystem;
 import org.frags.harvestertools.utils.ToolUtils;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -111,6 +112,11 @@ public class PlayerFishListener implements Listener {
 
 
             rodManager.procCustomEnchants(itemStack);
+
+            RandomSystem randomSystem = new RandomSystem();
+
+            if (randomSystem.success(1, false))
+                ToolUtils.updateVariables(itemStack);
         }
     }
 }

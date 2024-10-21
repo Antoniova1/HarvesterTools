@@ -69,7 +69,7 @@ public class PickaxeManager extends ToolManager {
             addExperience(initialXP);
 
 
-            if (!isInCollectPeriod() || !isInAutoSellPeriod()) {
+            if (!isInCollectPeriod() && !isInAutoSellPeriod()) {
                 setAutoSellPeriod(true);
                 BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
                 calculateBoostersValue(itemStack);
@@ -163,7 +163,7 @@ public class PickaxeManager extends ToolManager {
             addEssence(initialEssencePrice);
             addExperience(initialXP);
 
-            if (!isInCollectPeriod() || !isInAutoSellPeriod()) {
+            if (!isInCollectPeriod() && !isInAutoSellPeriod()) {
                 setCollectPeriod(true);
 
                 calculateBoostersValue(itemStack);

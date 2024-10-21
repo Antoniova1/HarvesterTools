@@ -12,7 +12,9 @@ import org.frags.harvestertools.objects.Drops;
 import org.frags.harvestertools.objects.CustomDrops;
 import org.frags.harvestertools.objects.HarvesterDrops;
 import org.frags.harvestertools.objects.ItemsChance;
+import org.frags.harvestertools.utils.Utils;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +40,7 @@ public class CropsManager {
                 Material material;
                 try {
                     material = Material.valueOf(key.toUpperCase());
-                } catch (NullPointerException e) {
+                } catch (IllegalArgumentException e) {
                     Bukkit.getLogger().warning("Material " + key + " is not a valid material");
                     Bukkit.getLogger().warning("Why are you changing keys in crops.yml?");
                     continue;
@@ -63,6 +65,7 @@ public class CropsManager {
             } catch (IllegalArgumentException e) {
                 Bukkit.getLogger().warning("Error while creating custom crops");
                 Bukkit.getLogger().warning("Material " + key + " is not a valid material");
+                System.out.println(1);
                 continue;
             }
             int rolls = crop.getInt("rolls");
@@ -70,18 +73,15 @@ public class CropsManager {
             for (String dropKey : crop.getConfigurationSection("drops").getKeys(false)) {
                 ConfigurationSection drop = crop.getConfigurationSection("drops." + dropKey);
 
-                Material dropMaterial;
+                ItemStack itemStack;
                 try {
-                    dropMaterial = Material.valueOf(drop.getString("material"));
+                    itemStack = new ItemStack(Material.valueOf(drop.getString("material")));
                 } catch (IllegalArgumentException e) {
-                    Bukkit.getLogger().warning("Error while creating custom crops");
-                    Bukkit.getLogger().warning("Material " + drop.getString("material") + " is not a valid material");
-                    continue;
+                    System.out.println(2);
+                    itemStack = Utils.getHead(drop.getString("material"));
                 }
 
                 double chance = drop.getDouble("chance");
-
-                ItemStack itemStack = new ItemStack(dropMaterial);
 
                 String name = drop.getString("name");
 

@@ -4,13 +4,17 @@ import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.configuration.MemoryConfigurationOptions;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.profile.PlayerProfile;
+import org.bukkit.profile.PlayerTextures;
 import org.frags.harvestertools.commands.commandsmanagers.EssenceCommandManager;
 import org.frags.harvestertools.commands.commandsmanagers.MainCommandManager;
 import org.frags.harvestertools.commands.tabcompleters.EssenceTab;
@@ -37,8 +41,13 @@ import org.frags.harvestertools.utils.*;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -103,6 +112,15 @@ public final class HarvesterTools extends JavaPlugin {
 
     private PickaxeUtils pickaxeUtils;
 
+    public static ItemStack carameloAzul;
+    public static ItemStack carameloNaranja;
+    public static ItemStack carameloMorado;
+    public static ItemStack carameloDorado;
+    public static ItemStack carameloVerde;
+
+    private static final UUID RANDOM_UUID = UUID.fromString("92864445-51c5-4c3b-9039-517c9927d1b4");
+
+
     private static final HashMap<Player, PlayerMenuUtility> playerMenuUtilityMap = new HashMap<>();
 
     public final HashMap<String, HoeManager> hoeManagerMap = new HashMap<>();
@@ -134,6 +152,11 @@ public final class HarvesterTools extends JavaPlugin {
 
         this.adventure = BukkitAudiences.create(this);
 
+        createCarameloAzul();
+        createCarameloNaranja();
+        createCarameloMorado();
+        createCarameloDorado();
+        createCarameloVerde();
 
 
         /*this.config = getConfig();
@@ -241,6 +264,124 @@ public final class HarvesterTools extends JavaPlugin {
 
     }
 
+    public static void createCarameloMorado() {
+        ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
+        PlayerProfile profile = getProfile("http://textures.minecraft.net/texture/5bf88af96d30085a6d084376f1018627b7b4512d26af21e750e4d09cd261d6be");
+        SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
+        skullMeta.setOwnerProfile(profile);
+
+        skullMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&d&l&nCaramelo Morado"));
+        List<String> lore = new ArrayList<>();
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7Un dulce místico con destellos oscuros, hallado en las"));
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7profundidades de la tierra durante Halloween. Su esencia"));
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7parece estar impregnada de magia antigua."));
+        lore.add("");
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7¡Úsalo para tradear y desenterrar secretos sombríos!"));
+
+        skullMeta.setLore(lore);
+
+        itemStack.setItemMeta(skullMeta);
+        carameloMorado = itemStack;
+    }
+
+    public static void createCarameloVerde() {
+        ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
+        PlayerProfile profile = getProfile("http://textures.minecraft.net/texture/210f26213fe751c1c63074beca2c9b6074293216f7282e2985c4c1ef8ff18ccb");
+        SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
+        skullMeta.setOwnerProfile(profile);
+
+        skullMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&a&l&nCaramelo Verde"));
+        List<String> lore = new ArrayList<>();
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7Un dulce especial cubierto de un brillo esmeralda. Se"));
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7dice que solo aparece durante la temporada de &6Halloween&7,"));
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7escondido entre los cultivos más misteriosos."));
+        lore.add("");
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7¡Úsalo para tradear y conseguir espeluznantes recompensas!"));
+
+        skullMeta.setLore(lore);
+
+        itemStack.setItemMeta(skullMeta);
+        carameloVerde = itemStack;
+    }
+
+
+    public static void createCarameloAzul() {
+        ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
+        PlayerProfile profile = getProfile("http://textures.minecraft.net/texture/acae2920a19ead5dce963a301164e95a5a2f5fe2a3b7b9bfb0eb5deb559f0040");
+        SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
+        skullMeta.setOwnerProfile(profile);
+
+        skullMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&b&l&nCaramelo Azul"));
+        List<String> lore = new ArrayList<>();
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7Un raro dulce con un brillo profundo y cristalino, encontrado"));
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7solo en las aguas embrujadas durante &6Halloween&7. Dicen"));
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7que su sabor es tan frío como el océano nocturno."));
+        lore.add("");
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7¡Úsalo para tradear y descubrir tesoros escalofriantes!"));
+
+        skullMeta.setLore(lore);
+
+        itemStack.setItemMeta(skullMeta);
+        carameloAzul = itemStack;
+    }
+
+    public static void createCarameloNaranja() {
+        ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
+        PlayerProfile profile = getProfile("http://textures.minecraft.net/texture/72b65a206b2ea931f96c1cf18e0e0ccefb2771f4ecae550c80c429fe477c8036");
+        SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
+        skullMeta.setOwnerProfile(profile);
+
+        skullMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&e&l&nCaramelo Naranja"));
+        List<String> lore = new ArrayList<>();
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7Un dulce cálido y chispeante, infundido con la energía de"));
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7los espíritus caídos. Solo aparece tras derrotar a"));
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7criaturas tenebrosas durante Halloween."));
+        lore.add("");
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7¡Úsalo para tradear y reclamar espeluznantes recompensas de los más valientes!"));
+
+        skullMeta.setLore(lore);
+
+
+        itemStack.setItemMeta(skullMeta);
+        carameloNaranja = itemStack;
+    }
+
+    public static void createCarameloDorado() {
+        ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
+        PlayerProfile profile = getProfile("http://textures.minecraft.net/texture/e4b3cc149377e1cd7990d562d58154d400f92dc22483213c3c060e7d35e0960f");
+        SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
+        skullMeta.setOwnerProfile(profile);
+
+        skullMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6&l&nCaramelo Dorado"));
+        List<String> lore = new ArrayList<>();
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7Un dulce legendario con un resplandor dorado, obtenido solo"));
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7por los más dedicados durante Halloween. Se dice que contiene"));
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7la esencia de todos los elementos: cosecha, pesca, minería y combate."));
+        lore.add("");
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7¡Úsalo para tradear y desbloquear las recompensas más valiosas y codiciadas!"));
+
+        skullMeta.setLore(lore);
+
+
+        itemStack.setItemMeta(skullMeta);
+        carameloDorado = itemStack;
+    }
+
+
+    private static PlayerProfile getProfile(String url) {
+        PlayerProfile profile = Bukkit.createPlayerProfile(RANDOM_UUID); // Get a new player profile
+        PlayerTextures textures = profile.getTextures();
+        URL urlObject;
+        try {
+            urlObject = new URL(url); // The URL to the skin, for example: https://textures.minecraft.net/texture/18813764b2abc94ec3c3bc67b9147c21be850cdf996679703157f4555997ea63a
+        } catch (MalformedURLException exception) {
+            throw new RuntimeException("Invalid URL", exception);
+        }
+        textures.setSkin(urlObject); // Set the skin of the player profile to the URL
+        profile.setTextures(textures); // Set the textures back to the profile
+        return profile;
+    }
+
     public void reloadObjects() {
         this.nmsHandler = createNMSHandler();
 
@@ -310,6 +451,9 @@ public final class HarvesterTools extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new HarvesterPickaxeListener(this), this);
         getServer().getPluginManager().registerEvents(new ToolDropListener(), this);
         getServer().getPluginManager().registerEvents(new PrepareToolsListener(), this);
+        getServer().getPluginManager().registerEvents(new ObtainExperienceListener(this), this);
+        getServer().getPluginManager().registerEvents(new ObtainEssenceListener(this), this);
+        getServer().getPluginManager().registerEvents(new ObtainMoneyListener(this), this);
     }
 
     private String getMinecraftVersion() {

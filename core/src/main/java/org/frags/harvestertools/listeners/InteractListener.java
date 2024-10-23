@@ -47,7 +47,8 @@ public class InteractListener implements Listener {
         String formattedAmount = Utils.formatNumber(new BigDecimal(amount));
 
         Player player = e.getPlayer();
-        player.getInventory().remove(itemStack);
+
+        itemStack.setAmount(itemStack.getAmount() - 1);
         plugin.getEssenceManager().addEssence(player, amount);
 
         MessageManager.miniMessageSender(player, plugin.messages.getConfig().getString("essence-redeem")

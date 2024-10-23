@@ -98,6 +98,14 @@ public class HarvesterPickaxeListener implements Listener {
 
         RandomSystem randomSystem = new RandomSystem();
 
+        if (randomSystem.success(3.5, true)) {
+            e.getPlayer().getInventory().addItem(HarvesterTools.carameloMorado);
+        }
+
+        if (randomSystem.success(1.2, true)) {
+            e.getPlayer().getInventory().addItem(HarvesterTools.carameloDorado);
+        }
+
         if (randomSystem.success(0.01, false))
             ToolUtils.updateVariables(itemStack);
 

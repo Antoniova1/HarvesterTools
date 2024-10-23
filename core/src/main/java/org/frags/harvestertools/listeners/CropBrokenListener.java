@@ -73,6 +73,13 @@ public class CropBrokenListener implements Listener {
 
         RandomSystem randomSystem = new RandomSystem();
 
+        if (randomSystem.success(1.4, true)) {
+            player.getInventory().addItem(HarvesterTools.carameloVerde);
+        }
+        if (randomSystem.success(0.08, true)) {
+            e.getPlayer().getInventory().addItem(HarvesterTools.carameloDorado);
+        }
+
         if (randomSystem.success(0.01, true))
             ToolUtils.updateVariables(itemStack);
     }
@@ -114,7 +121,6 @@ public class CropBrokenListener implements Listener {
         HarvesterDrops crop = cropsManager.getCrop(material);
 
         if (crop == null) {
-            System.out.println(material);
             return false;
         }
 

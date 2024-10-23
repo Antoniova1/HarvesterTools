@@ -12,6 +12,7 @@ import org.frags.harvestertools.HarvesterTools;
 import org.frags.harvestertools.enchants.CustomEnchant;
 import org.frags.harvestertools.enchants.EnchantsManager;
 import org.frags.harvestertools.enums.Tools;
+import org.frags.harvestertools.events.ObtainExperienceEvent;
 import org.frags.harvestertools.managers.LevelManager;
 import org.frags.harvestertools.managers.MessageManager;
 import org.frags.harvestertools.objects.Level;
@@ -126,33 +127,8 @@ public class ToolManager {
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 calculateExperienceBooster(itemStack);
 
-                Tools tools = ToolUtils.getTool(itemStack);
+                Bukkit.getPluginManager().callEvent(new ObtainExperienceEvent(player, getExperience(), itemStack));
 
-                double toolLevel = ToolUtils.getItemLevel(itemStack);
-                double toolExperience = ToolUtils.getItemExperience(itemStack);
-
-                LevelManager levelManager = plugin.getLevelManager();
-
-                Level level = levelManager.getLevel(tools);
-
-                if (toolLevel >= level.getMaxLevel())
-                    return;
-
-                double nextLevelXP = level.getStartingXP() + level.getStartingXP() * (toolLevel * level.getIncrementXP());
-
-                if (toolExperience + getExperience() >= nextLevelXP) {
-                    //Next level for the item
-                    ToolUtils.setLevel(itemStack, 1);
-                    ToolUtils.setExperience(itemStack, 0D);
-                    MessageManager.miniMessageSender(player, plugin.messages.getConfig().getString("level-up-tool").replace("%level%", String.valueOf((int) toolLevel + 1)));
-                    ToolUtils.updateVariables(itemStack);
-                    setExperience(0);
-                    setExperiencePeriod(false);
-                    return;
-                }
-
-                ToolUtils.setExperience(itemStack, toolExperience + getExperience());
-                ToolUtils.updateVariables(itemStack);
                 setExperience(0);
                 setExperiencePeriod(false);
             }, 100L);

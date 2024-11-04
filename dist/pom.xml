@@ -80,6 +80,19 @@
         </resources>
     </build>
 
+
+    <distributionManagement>
+        <!-- ... Some other Distribution repository definitions -->
+
+        <repository>
+            <id>repsy</id>
+            <name>harvestertools</name>
+            <url>https://repo.repsy.io/mvn/frags/harvestertools</url>
+        </repository>
+
+        <!-- ... Some other Distribution repository definitions -->
+    </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.frags</groupId>

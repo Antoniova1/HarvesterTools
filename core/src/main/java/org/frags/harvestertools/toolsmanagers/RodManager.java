@@ -126,13 +126,15 @@ public class RodManager extends ToolManager {
                         }
                     }
 
+                    Tools tool = Tools.rod;
+
                     if (plugin.canUseVault) {
                         //Give money
-                        Bukkit.getPluginManager().callEvent(new ObtainMoneyEvent(player, money));
+                        Bukkit.getPluginManager().callEvent(new ObtainMoneyEvent(player, money, tool, itemStack));
                     }
 
                     //plugin.getEssenceManager().addEssence(player, essence);
-                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, essence));
+                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, essence, tool, itemStack));
 
                     ItemMeta meta = itemStack.getItemMeta();
 
@@ -168,7 +170,7 @@ public class RodManager extends ToolManager {
                     calculateBoostersAdder(itemStack);
 
                     //plugin.getEssenceManager().addEssence(player, getEssence());
-                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, getEssence()));
+                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, getEssence(), Tools.rod, itemStack));
 
                     ItemMeta meta = itemStack.getItemMeta();
 

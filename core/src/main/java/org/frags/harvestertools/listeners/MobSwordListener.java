@@ -84,13 +84,6 @@ public class MobSwordListener implements Listener {
 
         RandomSystem randomSystem = new RandomSystem();
 
-        if (randomSystem.success(0.43, true)) {
-            e.getEntity().getKiller().getInventory().addItem(HarvesterTools.carameloNaranja);
-        }
-        if (randomSystem.success(0.07, true)) {
-            e.getEntity().getKiller().getInventory().addItem(HarvesterTools.carameloDorado);
-        }
-
         if (randomSystem.success(1, true))
             ToolUtils.updateVariables(itemStack);
 

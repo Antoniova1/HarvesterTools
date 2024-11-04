@@ -9,10 +9,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitScheduler;
 import org.frags.harvestertools.HarvesterTools;
 import org.frags.harvestertools.enums.Tools;
 import org.frags.harvestertools.managers.MessageManager;
 import org.frags.harvestertools.objects.HarvesterDrops;
+import org.frags.harvestertools.tasks.BlockRestoreTask;
+import org.frags.harvestertools.tasks.RestoreBlock;
 import org.frags.harvestertools.toolsmanagers.PickaxeManager;
 import org.frags.harvestertools.utils.RandomSystem;
 import org.frags.harvestertools.utils.ToolUtils;
@@ -21,8 +24,20 @@ public class HarvesterPickaxeListener implements Listener {
 
     private final HarvesterTools plugin;
 
+    private final BlockRestoreTask task;
+
+    private final long selectedTime;
+
     public HarvesterPickaxeListener(HarvesterTools plugin) {
         this.plugin = plugin;
+
+        this.task = new BlockRestoreTask();
+
+        BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
+
+        scheduler.scheduleSyncRepeatingTask(plugin, task, 0L, 40L);
+
+        selectedTime = plugin.getConfig().getLong("tools.pickaxe.time-to-regen") * 1000;
     }
 
     @EventHandler
@@ -80,7 +95,7 @@ public class HarvesterPickaxeListener implements Listener {
         if (plugin.getConfig().getBoolean("tools.pickaxe.regen-block")) {
             e.setCancelled(true);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                plugin.getNmsHandler().regenBlock(block, plugin);
+                regenBlock(block);
             }, 2L);
         }
 
@@ -98,17 +113,19 @@ public class HarvesterPickaxeListener implements Listener {
 
         RandomSystem randomSystem = new RandomSystem();
 
-        if (randomSystem.success(3.5, true)) {
-            e.getPlayer().getInventory().addItem(HarvesterTools.carameloMorado);
-        }
-
-        if (randomSystem.success(1.2, true)) {
-            e.getPlayer().getInventory().addItem(HarvesterTools.carameloDorado);
-        }
-
         if (randomSystem.success(0.01, false))
             ToolUtils.updateVariables(itemStack);
 
         e.setDropItems(false);
+    }
+
+
+
+    private void regenBlock(Block block) {
+        Material oldMaterial = block.getType();
+
+        block.setType(Material.BEDROCK, false);
+
+        task.addToQueue(new RestoreBlock(block, oldMaterial, System.currentTimeMillis() + selectedTime));
     }
 }

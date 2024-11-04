@@ -9,11 +9,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitScheduler;
 import org.frags.harvestertools.HarvesterTools;
 import org.frags.harvestertools.enums.Tools;
 import org.frags.harvestertools.managers.CropsManager;
 import org.frags.harvestertools.managers.MessageManager;
 import org.frags.harvestertools.objects.HarvesterDrops;
+import org.frags.harvestertools.tasks.CropRestoreTask;
+import org.frags.harvestertools.tasks.ReplenishCrop;
 import org.frags.harvestertools.toolsmanagers.HoeManager;
 import org.frags.harvestertools.utils.RandomSystem;
 import org.frags.harvestertools.utils.ToolUtils;
@@ -22,8 +25,21 @@ public class CropBrokenListener implements Listener {
 
     private final HarvesterTools plugin;
 
+    private final CropRestoreTask task;
+
+    private final long selectedTime;
+
+
     public CropBrokenListener(HarvesterTools plugin) {
         this.plugin = plugin;
+
+        selectedTime = (plugin.getConfig().getLong("tools.hoe.time-to-replenish") * 1000);
+        this.task = new CropRestoreTask();
+
+        BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
+
+        scheduler.scheduleSyncRepeatingTask(plugin, task, 0L, 40L);
+
     }
 
     //Cannot make diferent EventHandlers for this because I didn't find the way, so expect a really big method. If you have
@@ -53,8 +69,9 @@ public class CropBrokenListener implements Listener {
 
         e.setCancelled(true);
 
-        replenishCrop(block); //This replenishes the broken crop
-
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            replenishCrop(block);
+        }, 1L);
 
         hoeManager.calculateAutoSellDrops(itemStack, block);
 
@@ -72,13 +89,6 @@ public class CropBrokenListener implements Listener {
         hoeManager.procCustomEnchants(itemStack);
 
         RandomSystem randomSystem = new RandomSystem();
-
-        if (randomSystem.success(1.4, true)) {
-            player.getInventory().addItem(HarvesterTools.carameloVerde);
-        }
-        if (randomSystem.success(0.08, true)) {
-            e.getPlayer().getInventory().addItem(HarvesterTools.carameloDorado);
-        }
 
         if (randomSystem.success(0.01, true))
             ToolUtils.updateVariables(itemStack);
@@ -141,7 +151,17 @@ public class CropBrokenListener implements Listener {
     }
 
     private void replenishCrop(Block block) {
-        Bukkit.getScheduler().runTaskLater(plugin, () -> plugin.getNmsHandler().replenishCrop(block, plugin), 1L);
+        Ageable blockState = (Ageable) block.getBlockData();
+
+        blockState.setAge(0);
+
+        block.setBlockData(blockState, true);
+
+        Ageable grownData = (Ageable) blockState.clone();
+
+        grownData.setAge(grownData.getMaximumAge());
+
+        task.addToQueue(new ReplenishCrop(block, grownData, System.currentTimeMillis() + selectedTime));
     }
 
     /*@EventHandler

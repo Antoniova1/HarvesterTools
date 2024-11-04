@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
+import org.frags.harvestertools.enums.Tools;
 
 public class ObtainExperienceEvent extends Event {
 
@@ -15,7 +16,7 @@ public class ObtainExperienceEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
 
-    public ObtainExperienceEvent(Player player, double amount, ItemStack itemStack) {
+    public ObtainExperienceEvent(Player player, double amount, Tools tool, ItemStack itemStack) {
         this.player = player;
         this.amount = amount;
         this.itemStack = itemStack;

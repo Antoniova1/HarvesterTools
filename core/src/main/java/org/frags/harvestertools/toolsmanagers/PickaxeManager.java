@@ -13,6 +13,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.frags.harvestertools.HarvesterTools;
 import org.frags.harvestertools.enchants.CustomEnchant;
+import org.frags.harvestertools.enums.Tools;
 import org.frags.harvestertools.events.ObtainEssenceEvent;
 import org.frags.harvestertools.events.ObtainMoneyEvent;
 import org.frags.harvestertools.managers.MessageManager;
@@ -119,15 +120,17 @@ public class PickaxeManager extends ToolManager {
                         }
                     }
 
+                    Tools tool = Tools.pickaxe;
+
 
                     if (plugin.canUseVault) {
                         //Give money
                         //plugin.getEcon().depositPlayer(Bukkit.getOfflinePlayer(player.getUniqueId()), money);
-                        Bukkit.getPluginManager().callEvent(new ObtainMoneyEvent(player, money));
+                        Bukkit.getPluginManager().callEvent(new ObtainMoneyEvent(player, money, tool, itemStack));
                     }
 
                     //plugin.getEssenceManager().addEssence(player, essence);
-                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, essence));
+                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, essence, tool, itemStack));
 
                     ItemMeta meta = itemStack.getItemMeta();
 
@@ -175,7 +178,7 @@ public class PickaxeManager extends ToolManager {
                 Bukkit.getScheduler().runTaskLater(plugin, () -> {
                     calculateBoostersAdder(itemStack);
 
-                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, getEssence()));
+                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, getEssence(), Tools.pickaxe, itemStack));
 
                     ItemMeta meta = itemStack.getItemMeta();
 

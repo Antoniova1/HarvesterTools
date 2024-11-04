@@ -115,13 +115,6 @@ public class PlayerFishListener implements Listener {
 
             RandomSystem randomSystem = new RandomSystem();
 
-            if (randomSystem.success(16, true)) {
-                e.getPlayer().getInventory().addItem(HarvesterTools.carameloAzul);
-            }
-            if (randomSystem.success(1, true)) {
-                e.getPlayer().getInventory().addItem(HarvesterTools.carameloDorado);
-            }
-
             if (randomSystem.success(1, false))
                 ToolUtils.updateVariables(itemStack);
         }

@@ -10,6 +10,7 @@
         <module name="HarvesterTools-spigot-1.20.4" />
         <module name="HarvesterTools-core" />
         <module name="HarvesterTools-spigot-1.20.2" />
+        <module name="HarvesterTools-spigot-1.21.1" />
         <module name="HarvesterTools-spigot-1.17.1" />
         <module name="HarvesterTools-spigot-1.20.6" />
         <module name="HarvesterTools-spigot-1.16.5" />

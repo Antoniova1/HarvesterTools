@@ -125,11 +125,11 @@ public class SwordManager extends ToolManager{
                     }
 
                     if (plugin.canUseVault) {
-                        Bukkit.getPluginManager().callEvent(new ObtainMoneyEvent(player, money));
+                        Bukkit.getPluginManager().callEvent(new ObtainMoneyEvent(player, money, Tools.sword, itemStack));
                     }
 
                     //plugin.getEssenceManager().addEssence(player, essence);
-                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, essence));
+                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, essence, Tools.sword, itemStack));
 
 
                     ItemMeta meta = itemStack.getItemMeta();
@@ -181,8 +181,7 @@ public class SwordManager extends ToolManager{
                     calculateBoostersAdder(itemStack);
 
                     //plugin.getEssenceManager().addEssence(player, getEssence());
-                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, getEssence()));
-
+                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, getEssence(), Tools.sword, itemStack));
 
                     ItemMeta meta = itemStack.getItemMeta();
 

@@ -80,6 +80,18 @@
         </resources>
     </build>
 
+    <distributionManagement>
+        <!-- ... Some other Distribution repository definitions -->
+
+        <repository>
+            <id>repsy</id>
+            <name>harvestertools</name>
+            <url>https://repo.repsy.io/mvn/frags/harvestertools</url>
+        </repository>
+
+        <!-- ... Some other Distribution repository definitions -->
+    </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.frags</groupId>
@@ -90,30 +102,6 @@
         <dependency>
             <groupId>org.frags</groupId>
             <artifactId>HarvesterTools-spigot-1.20.4</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.frags</groupId>
-            <artifactId>HarvesterTools-spigot-1.19.4</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.frags</groupId>
-            <artifactId>HarvesterTools-spigot-1.18.2</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.frags</groupId>
-            <artifactId>HarvesterTools-spigot-1.17.1</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.frags</groupId>
-            <artifactId>HarvesterTools-spigot-1.16.5</artifactId>
             <version>1.0</version>
             <scope>compile</scope>
         </dependency>

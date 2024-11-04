@@ -1,0 +1,337 @@
+#######################################################
+#  _____ _   _  ____ _   _    _    _   _ _____ ____   #
+#  | ____| \ | |/ ___| | | |  / \  | \ | |_   _/ ___| #
+# |  _| |  \| | |   | |_| | / _ \ |  \| | | | \___ \  #
+# | |___| |\  | |___|  _  |/ ___ \| |\  | | |  ___) | #
+# |_____|_| \_|\____|_| |_/_/   \_|_| \_| |_| |____/  #
+#                                                     #
+#######################################################
+
+
+EnchantsMenu:
+  name: "<gold>Enchants Menu"
+  size: 45
+  item-preview: true
+  item-preview-slot: 4
+  filler: GRAY_STAINED_GLASS_PANE
+
+
+CustomEnchants:
+  autosell:
+    upgradable: false
+    name: "<green><b>Auto Sell"
+    material: PLAYER_HEAD
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjA5Mjk5YTExN2JlZTg4ZDMyNjJmNmFiOTgyMTFmYmEzNDRlY2FlMzliNDdlYzg0ODEyOTcwNmRlZGM4MWU0ZiJ9fX0=
+    slot: 10
+    price: 100000
+    required-level: 0
+    maxLevel: 1
+    required-prestige: 0
+    autosell-time: 60
+    lore:
+      - '<gray>Automatically sells all crops'
+      - ''
+      - '<gray><b>· Price: <white>%price%'
+      - ''
+      - '<dark_gray>Click to buy this enchant!'
+    actionbar:
+      enabled: true
+      message: '<dark_green><b>[💰] AutoSell: + <green>$%money% <dark_green>+ <yellow>❋%essence%'
+    title:
+      enabled: true
+      title: '<dark_green><b>[💰] <green><b>AutoSell'
+      subtitle: '<dark_green>+ <green>$%money% <dark_green>+ <yellow>❋%essence%'
+      fadeIn: 20
+      fadeOut: 20
+      time: 80
+    message:
+      - "   <aqua><b>Auto Sell Summary"
+      - ""
+      - "<green>- Earned Money: <dark_green>$%money%"
+      - "<yellow>- Recollected essence: <gold>☀%essence%"
+      - ""
+      - "   <aqua><b>Boosters"
+      - ""
+      - "<green>- Money Booster: <white>x%money_boost%"
+      - "<yellow>- Essence Booster: <white>x%essence_boost%"
+    change:
+      title:
+        enabled: true
+        title: "<red><b>[!] %mode%"
+        subtitle: "<gray>Mode changed"
+        fadeIn: 20
+        fadeOut: 20
+        time: 80
+      message: "<green>Your sell mode have been changed to %mode%"
+  moneybooster:
+    name: '<red><b>Money Booster'
+    material: PLAYER_HEAD
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTQ2N2E3YjlkNzZiYTZkMGZlZDc0MzYwMjUzM2ZjOThjODdhZjBjNjBmODBmMzhkYTc3NGY3YTAxYTIwOTNmYSJ9fX0=
+    upgradable: true
+    slot: 11
+    boost-per-level: 0.1
+    price: 100
+    price-increase: 150
+    maxLevel: 300
+    required-level: 0
+    required-prestige: 0
+    lore:
+      - "<gray>Boost obtained money"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - "<gray><b>· Boost: <white>%boost%"
+      - ""
+      - "<dark_gray>Click to buy this enchant!"
+  essencebooster:
+    name: "<red><b>Essence Booster"
+    material: PLAYER_HEAD
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjdjNDE5MzBmOGZmMGYyYjA0MzBlMTY5YWU1ZjM4ZTk4NGRmMTI0NDIxNTcwNWM2ZjE3Mzg2Mjg0NDU0M2U5ZCJ9fX0=
+    upgradable: true
+    slot: 12
+    boost-per-level: 0.1
+    price: 200
+    price-increase: 250
+    maxLevel: 300
+    required-level: 0
+    required-prestige: 0
+    lore:
+      - "<gray>Boost obtained essence"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - "<gray><b>· Boost: <white>%boost%"
+      - ""
+      - "<dark_gray>Click to buy this enchant!"
+  experiencebooster:
+    name: "<red><b>Experience Booster"
+    material: PLAYER_HEAD
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODdkODg1YjMyYjBkZDJkNmI3ZjFiNTgyYTM0MTg2ZjhhNTM3M2M0NjU4OWEyNzM0MjMxMzJiNDQ4YjgwMzQ2MiJ9fX0=
+    upgradable: true
+    slot: 13
+    boost-per-level: 0.1
+    price: 250
+    price-increase: 300
+    maxLevel: 300
+    required-level: 0
+    required-prestige: 0
+    lore:
+      - "<gray>Boost obtained experience"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - "<gray><b>· Boost: <white>%boost%"
+      - ""
+      - "<dark_gray>Click to buy this enchant"
+  soul_speed:
+    upgradable: false
+    name: "<dark_gray><b>Soul Speed"
+    material: SOUL_SAND
+    slot: 14
+    price: 1000000
+    maxLevel: 1
+    lore:
+      - '<gray>Don''t slow down while farming in soul sand!'
+      - ''
+      - '<gray><b>· Price: <white>%price%'
+      - ''
+      - '<dark_gray>Click to buy this enchant!'
+  essencebag:
+    name: "<gold><b>Essence Bag"
+    material: PLAYER_HEAD
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWZkMTA4MzgzZGZhNWIwMmU4NjYzNTYwOTU0MTUyMGU0ZTE1ODk1MmQ2OGMxYzhmOGYyMDBlYzdlODg2NDJkIn19fQ==
+    upgradable: true
+    slot: 15
+    chance-per-level: 0.001
+    price: 200
+    price-increase: 50
+    maxLevel: 500
+    lore:
+      - "<gray>Chance to find a bag full of essence!"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - "<gray><b>· Chance: <white>%chance%"
+      - ""
+      - "<dark_gray>Click to buy this enchant!"
+    commands:
+      little:
+        command: "essence give %player% 300000"
+        chance: 20
+      medium:
+        command: "essence give %player% 500000"
+        chance: 15
+      large:
+        command: "essence give %player% 1000000"
+        chance: 10
+      huge:
+        command: "essence give %player% 2000000"
+        chance: 5
+      jackpot:
+        command: "essence give %player% 5000000"
+        chance: 1
+  keyfinder:
+    name: "<light_purple><b>Key Finder"
+    material: PLAYER_HEAD
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjYyNDFjM2E3NjZhYjVjMTcyYjI5M2QzMWRmZmQ0NDY4MDg5N2RlMjk0MzkzNjdjZDRlOWNlMzg5NDlkZmUyNyJ9fX0=
+    upgradable: true
+    slot: 16
+    chance-per-level: 0.005
+    price: 750
+    price-increase: 350
+    maxLevel: 450
+    lore:
+      - "<gray>Chance to find keys while farming!"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - "<gray><b>· Chance: <white>%chance%"
+      - ""
+      - "<dark_gray>Click to buy this enchant!"
+    commands:
+      vote:
+        command: "crate key give %player% vote 1 -s"
+        chance: 20
+      rare:
+        command: "crate key give %player% rare 1 -s"
+        chance: 15
+      epic:
+        command: "crate key give %player% epic 1 -s"
+        chance: 10
+      legendary:
+        command: "crate key give %player% legendary 1 -s"
+        chance: 5
+      mythical:
+        command: "crate key give %player% mythical 1 -s"
+        chance: 1
+  rush:
+    name: "<red><b>Rush"
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjdjNDE5MzBmOGZmMGYyYjA0MzBlMTY5YWU1ZjM4ZTk4NGRmMTI0NDIxNTcwNWM2ZjE3Mzg2Mjg0NDU0M2U5ZCJ9fX0=
+    upgradable: true
+    slot: 20
+    chance-per-level: 0.0005
+    boost-per-level: 0.25
+    time: 30
+    price: 1000
+    price-increase: 200
+    maxLevel: 150
+    required-level: 0
+    required-prestige: 1
+    lore:
+      - "<gray>Boost obtained essence, money and experience!"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - "<gray><b>· Chance: <white>%chance%"
+      - ""
+      - "<dark_gray>You need at least prestige %hoe_prestige% for this enchant!"
+    message: "<red>Rush has been activated! Farm Farm Farm!"
+  seller:
+    name: "<red><b>Seller"
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjk2YjZjNzdmMmMxMTMzZjZkZjczNmVmMmQ4YzUyZDQ3ZjU4NDg3YzIzZTg0ODBlZjc5ZTBkNjBhMjg5ZjU4In19fQ==
+    upgradable: true
+    slot: 22
+    chance-per-level: 0.005
+    price: 350
+    price-increase: 320
+    maxLevel: 100
+    lore:
+      - "<gray>Chance to sell double in Auto Sell"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - "<gray><b>· Chance: <white>%chance%"
+      - ""
+      - "<dark_gray>Click to buy the enchant!"
+    message: "<green>Seller has been activated!"
+  speed:
+    name: "<aqua><b>Speed"
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODQ4MDVjYWZhOWEzMWQ5ZGY4MzljNTY3MDNmNzlkYWI5ZGQ4NWJkNWM1OWI4NjM4MGJhNDMyOTk0ODQ4ODRiMCJ9fX0=
+    upgradable: true
+    slot: 24
+    price: 100000
+    price-increase: 250000
+    maxLevel: 3
+    lore:
+      - "<gray>Be speedier while farming!"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - ""
+      - "<dark_gray>Click to buy the enchant!"
+  haste:
+    name: "<aqua><b>Haste"
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODQ4MDVjYWZhOWEzMWQ5ZGY4MzljNTY3MDNmNzlkYWI5ZGQ4NWJkNWM1OWI4NjM4MGJhNDMyOTk0ODQ4ODRiMCJ9fX0=
+    upgradable: true
+    slot: 30
+    price: 100000
+    price-increase: 250000
+    maxLevel: 3
+    lore:
+      - "<gray>Break faster while farming!"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - ""
+      - "<dark_gray>Click to buy the enchant!"
+  cropreaper:
+    name: "<dark_green><b>Crop Reaper"
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTQ2Yzc1ZjJkZTIwY2UxOWQ5NWI4NzNmOTE4MjYzZjkyOGJiOTlkODgzNmFlZWU4ZDljMjk0Yjc0YTI0YTA3MSJ9fX0=
+    upgradable: true
+    slot: 31
+    price: 1000000
+    price-increase: 1500
+    maxLevel: 31
+    chance-per-level: 0.01
+    required-prestige: 10
+    lore:
+      - "<gray>Chance to break crops in an area!"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - "<gray><b>· Current Chance: <white>%chance%"
+      - ""
+      - "<dark_gray>Click to buy the enchant!"
+    actionbar:
+      enabled: true
+      message: '<dark_green><b>[!] Crop Reaper: + $%money% + ❋%essence%'
+    title:
+      enabled: true
+      title: '<dark_green><b>[!] <green><b>Crop Reaper'
+      subtitle: '+ <green>$%money% + ❋%essence%'
+      fadeIn: 20
+      fadeOut: 20
+      time: 80
+  spawnerfinder:
+    name: "<red><b>Spawner finder"
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjBlMmM5YmZjNDc1YmUxYTRhNWE2NGNiZmY3ZmJjOTc0M2I4NmI1YTM3Mzg3YjAxMDZlZTI1NTZhNDQ0NzQ3NiJ9fX0=
+    upgradable: true
+    slot: 32
+    price: 150000
+    price-increase: 1000
+    maxLevel: 250
+    chance-per-level: 0.002
+    lore:
+      - "<gray>Chance to find spawners while farming!"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - "<gray><b>· Current Chance: <white>%chance%"
+      - ""
+      - "<dark_gray>Click to buy the enchant!"
+    commands:
+      skeleton:
+        command: "silkspawners give %player% skeleton"
+        chance: 20
+      zombie:
+        command: "silkspawners give %player% zombie"
+        chance: 25
+      spider:
+        command: "silkspawners give %player% spider"
+        chance: 15
+      creeper:
+        command: "silkspawners give %player% creeper"
+        chance: 10
+      enderman:
+        command: "silkspawners give %player% enderman"
+        chance: 30

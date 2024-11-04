@@ -1,0 +1,356 @@
+#Whether custom crops should be enabled. (Enabling this will disable experience | money | essence per mob and will be per drop.)
+enable_custom: false
+
+Mobs:
+  cow:
+    money: 5
+    essence: 2
+    experience: 1
+    level: 0
+    custom_drops: #Only works if enable_custom is enabled
+      rolls: 3
+      drops:
+        '1':
+          material: RAW_BEEF
+          chance: 70
+          name: "<#ff0000>Custom Beef"
+          lore:
+            - "<gray>Meat obtained by the"
+            - "<gray>best farmers."
+          price: 5
+          essence-price: 7
+          experience: 1.2
+        '2':
+          material: RAW_BEEF
+          chance: 5
+          name: "<#ff0000>Expensive Beef"
+          glow: true
+          lore:
+            - "<gray>Wagyu A5 Beef"
+          price: 5
+          essence-price: 7
+          experience: 1.2
+  pig:
+    money: 5
+    essence: 2
+    experience: 1
+    level: 0
+    custom_drops:
+      rolls: 2
+      drops:
+        '1':
+          material: PORKCHOP
+          chance: 65
+          name: "<#ff8800>Custom Porkchop"
+          lore:
+            - "<gray>Pork from well-fed pigs."
+          price: 4
+          essence-price: 6
+          experience: 1.1
+        '2':
+          material: PORKCHOP
+          chance: 10
+          name: "<#ff8800>Golden Porkchop"
+          glow: true
+          lore:
+            - "<gray>Rare and valuable pork."
+          price: 8
+          essence-price: 12
+          experience: 1.4
+  sheep:
+    money: 5
+    essence: 2
+    experience: 1
+    level: 0
+    custom_drops:
+      rolls: 2
+      drops:
+        '1':
+          material: MUTTON
+          chance: 60
+          name: "<#ffffff>Custom Mutton"
+          lore:
+            - "<gray>Freshly sheared mutton."
+          price: 4
+          essence-price: 6
+          experience: 1.1
+        '2':
+          material: WHITE_WOOL
+          chance: 20
+          name: "<#ffffff>Fine Wool"
+          glow: true
+          lore:
+            - "<gray>Premium wool for crafting."
+          price: 6
+          essence-price: 8
+          experience: 1.3
+  chicken:
+    money: 3
+    essence: 1
+    experience: 1
+    level: 0
+    custom_drops:
+      rolls: 2
+      drops:
+        '1':
+          material: CHICKEN
+          chance: 70
+          name: "<#ffff00>Custom Chicken"
+          lore:
+            - "<gray>Free-range chicken."
+          price: 3
+          essence-price: 4
+          experience: 1.0
+        '2':
+          material: FEATHER
+          chance: 15
+          name: "<#ffff00>Golden Feather"
+          glow: true
+          lore:
+            - "<gray>Feather of a rare bird."
+          price: 5
+          essence-price: 6
+          experience: 1.2
+  silverfish:
+    money: 10
+    essence: 5
+    experience: 3
+    level: 0
+    custom_drops:
+      rolls: 2
+      drops:
+        '1':
+          material: STONE
+          chance: 50
+          name: "<#888888>Silver Stone"
+          lore:
+            - "<gray>A stone touched by silverfish."
+          price: 7
+          essence-price: 10
+          experience: 1.5
+        '2':
+          material: IRON_INGOT
+          chance: 10
+          name: "<#888888>Silver Ingot"
+          glow: true
+          lore:
+            - "<gray>Rare ingot from silverfish."
+          price: 12
+          essence-price: 15
+          experience: 2.0
+  cave_spider:
+    money: 12
+    essence: 6
+    experience: 4
+    level: 0
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: SPIDER_EYE
+          chance: 60
+          name: "<#00ff00>Cave Spider Eye"
+          lore:
+            - "<gray>Venomous eye of a cave spider."
+          price: 8
+          essence-price: 12
+          experience: 2.5
+        '2':
+          material: STRING
+          chance: 20
+          name: "<#00ff00>Web of Deceit"
+          glow: true
+          lore:
+            - "<gray>String from a cave spider."
+          price: 10
+          essence-price: 14
+          experience: 2.8
+  zombie:
+    money: 20
+    essence: 10
+    experience: 6
+    level: 2
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: ROTTEN_FLESH
+          chance: 60
+          name: "<#00aa00>Zombie Flesh"
+          lore:
+            - "<gray>Flesh of a wandering zombie."
+          price: 10
+          essence-price: 14
+          experience: 3.0
+        '2':
+          material: IRON_INGOT
+          chance: 20
+          name: "<#00aa00>Zombie's Treasure"
+          glow: true
+          lore:
+            - "<gray>Valuable item from a zombie."
+          price: 15
+          essence-price: 20
+          experience: 3.5
+  skeleton:
+    money: 20
+    essence: 10
+    experience: 6
+    level: 2
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: BONE
+          chance: 65
+          name: "<#ffffff>Skeleton Bone"
+          lore:
+            - "<gray>Brittle bone of a skeleton."
+          price: 10
+          essence-price: 14
+          experience: 3.2
+        '2':
+          material: ARROW
+          chance: 20
+          name: "<#ffffff>Skeleton Arrow"
+          glow: true
+          lore:
+            - "<gray>Arrow used by a skeleton."
+          price: 15
+          essence-price: 19
+          experience: 3.6
+  spider:
+    money: 18
+    essence: 9
+    experience: 5
+    level: 1
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: SPIDER_EYE
+          chance: 60
+          name: "<#ff0000>Spider Eye"
+          lore:
+            - "<gray>Eye of a venomous spider."
+          price: 9
+          essence-price: 12
+          experience: 2.5
+        '2':
+          material: STRING
+          chance: 20
+          name: "<#ff0000>Spider Silk"
+          glow: true
+          lore:
+            - "<gray>Silk from a dangerous spider."
+          price: 12
+          essence-price: 15
+          experience: 2.8
+  wither_skeleton:
+    money: 30
+    essence: 15
+    experience: 8
+    level: 5
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: COAL
+          chance: 50
+          name: "<#000000>Wither Skeleton Coal"
+          lore:
+            - "<gray>Coal from a wither skeleton."
+          price: 12
+          essence-price: 16
+          experience: 4.0
+        '2':
+          material: WITHER_SKELETON_SKULL
+          chance: 5
+          name: "<#000000>Wither Skull"
+          glow: true
+          lore:
+            - "<gray>Skull of a wither skeleton."
+          price: 50
+          essence-price: 60
+          experience: 5.0
+  blaze:
+    money: 28
+    essence: 14
+    experience: 7
+    level: 6
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: BLAZE_ROD
+          chance: 55
+          name: "<#ff5500>Blaze Rod"
+          lore:
+            - "<gray>Rod of a fiery blaze."
+          price: 15
+          essence-price: 20
+          experience: 4.5
+        '2':
+          material: BLAZE_POWDER
+          chance: 20
+          name: "<#ff5500>Blaze Powder"
+          glow: true
+          lore:
+            - "<gray>Powder from a blaze."
+          price: 18
+          essence-price: 22
+          experience: 4.8
+  enderman:
+    money: 40
+    essence: 20
+    experience: 10
+    level: 8
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: ENDER_PEARL
+          chance: 60
+          name: "<#aa00ff>Ender Pearl"
+          lore:
+            - "<gray>Pearl of a wandering enderman."
+          price: 20
+          essence-price: 25
+          experience: 5.0
+        '2':
+          material: CHORUS_FRUIT
+          chance: 10
+          name: "<#aa00ff>Chorus Fruit"
+          glow: true
+          lore:
+            - "<gray>Fruit of an enderman."
+          price: 25
+          essence-price: 30
+          experience: 5.5
+  iron_golem:
+    money: 50
+    essence: 25
+    experience: 12
+    level: 8
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: IRON_INGOT
+          chance: 65
+          name: "<#aaaaaa>Golem's Iron"
+          lore:
+            - "<gray>Iron from a sturdy golem."
+          price: 22
+          essence-price: 28
+          experience: 6.0
+        '2':
+          material: ROSE
+          chance: 10
+          name: "<#ff0000>Golem's Rose"
+          glow: true
+          lore:
+            - "<gray>Rose from a fallen golem."
+          price: 30
+          essence-price: 35
+          experience: 7.0

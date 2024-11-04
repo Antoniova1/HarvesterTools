@@ -1,0 +1,157 @@
+main_menu:
+  size: 45
+  title: "<gray>Essence shop"
+  filler: GRAY_STAINED_GLASS_PANE # Air to not put anything.
+  items:
+    '13':
+      material: MAGMA_CREAM
+      glow: true
+      name: "<yellow><b>Essence"
+      lore:
+        - "<gray>You have <white>❋%essence% essence"
+        - "<gray>You can get essence by harvesting"
+        - "<gray>crops."
+    '20':
+      material: SPAWNER
+      name: "<red><b>Spawners Shop"
+      lore:
+        - "<gray>Right click to open spawners shop!"
+      menu: spawners
+    '22':
+      material: TRIPWIRE_HOOK
+      name: "<blue><b>Keys Shop"
+      lore:
+        - "<gray>Right click to open keys shop!"
+      menu: keys
+spawners:
+  size: 54
+  title: "<red><b>Spawners Shop"
+  filler: GRAY_STAINED_GLASS_PANE
+  glow: false
+  items:
+    '10':
+      material: SPAWNER
+      name: "<yellow>Zombie Spawner"
+      lore:
+        - "<gray>● Price: <white>100k <gray>Essence"
+        - ""
+        - "<gray>Click to purchase"
+      commands:
+        - "silkspawners give %player% zombie"
+      price: 100000
+    '11':
+      material: SPAWNER
+      name: "<yellow>Skeleton Spawner"
+      lore:
+        - "<gray>● Price: <white>150k <gray>Essence"
+        - ""
+        - "<gray>Click to purchase"
+      commands:
+        - "silkspawners give %player% skeleton"
+      price: 150000
+    '12':
+      material: SPAWNER
+      name: "<yellow>Spider Spawner"
+      lore:
+        - "<gray>● Price: <white>200k <gray>Essence"
+        - ""
+        - "<gray>Click to purchase"
+      commands:
+        - "silkspawners give %player% spider"
+      price: 200000
+    '13':
+      material: SPAWNER
+      name: "<yellow>Creeper Spawner"
+      lore:
+        - "<gray>● Price: <white>250k <gray>Essence"
+        - ""
+        - "<gray>Click to purchase"
+      commands:
+        - "silkspawners give %player% creeper"
+      price: 250000
+    '14':
+      material: SPAWNER
+      name: "<yellow>Enderman Spawner"
+      lore:
+        - "<gray>● Price: <white>300k <gray>Essence"
+        - ""
+        - "<gray>Click to purchase"
+      commands:
+        - "silkspawners give %player% enderman"
+      price: 300000
+    '15':
+      material: SPAWNER
+      name: "<yellow>Iron Golem Spawner"
+      lore:
+        - "<gray>● Price: <white>350k <gray>Essence"
+        - ""
+        - "<gray>Click to purchase"
+      commands:
+        - "silkspawners give %player% iron_golem"
+      price: 350000
+    '16':
+      material: SPAWNER
+      name: "<yellow>Blaze Spawner"
+      lore:
+        - "<gray>● Price: <white>400k <gray>Essence"
+        - ""
+        - "<gray>Click to purchase"
+      commands:
+        - "silkspawners give %player% blaze"
+      price: 400000
+    '19':
+      material: SPAWNER
+      name: "<yellow>Silverfish Spawner"
+      lore:
+        - "<gray>● Price: <white>450k <gray>Essence"
+        - ""
+        - "<gray>Click to purchase"
+      commands:
+        - "silkspawners give %player% silverfish"
+      price: 450000
+keys:
+  size: 45
+  title: "<blue><b>Keys Shop"
+  filler: GRAY_STAINED_GLASS_PANE
+  glow: false
+  items:
+    '20':
+      material: TRIPWIRE_HOOK
+      name: "<green>Vote Key"
+      lore:
+        - "<gray>● Price: <white>100k <gray>Essence"
+        - ""
+        - "<gray>Click to purchase"
+      commands:
+        - "givekey %player% vote"
+      price: 100000
+    '21':
+      material: TRIPWIRE_HOOK
+      name: "<blue>Rare Key"
+      lore:
+        - "<gray>● Price: <white>200k <gray>Essence"
+        - ""
+        - "<gray>Click to purchase"
+      commands:
+        - "givekey %player% rare"
+      price: 200000
+    '22':
+      material: TRIPWIRE_HOOK
+      name: "<white>Epic Key"
+      lore:
+        - "<gray>● Price: <white>300k <gray>Essence"
+        - ""
+        - "<gray>Click to purchase"
+      commands:
+        - "givekey %player% epic"
+      price: 300000
+    '23':
+      material: TRIPWIRE_HOOK
+      name: "<red>Legendary Key"
+      lore:
+        - "<gray>● Price: <white>400k <gray>Essence"
+        - ""
+        - "<gray>Click to purchase"
+      commands:
+        - "givekey %player% legendary"
+      price: 400000

@@ -1,0 +1,102 @@
+#Menu opened when you right-click with a tool
+Tool-Menu:
+  item-preview: true
+  item-preview-slot: 4
+  hoe-name: "<gray>Hoe Menu"
+  rod-name: "<gray>Rod Menu"
+  pickaxe-name: "<gray>Pickaxe Menu"
+  sword-name: "<gray>Sword Menu"
+  slots: 27
+  filler: "GRAY_STAINED_GLASS_PANE"
+  hoe-menu:
+    '1':
+      item: prestige
+      slot: 12
+      value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWM5ZTZiZmRjYmUyOTdiNTNjZTFmMTI3YTJhZjNjYjk1Mzk0MTVjNDE4MTM4ZmQxYmRkYTU3MjQyYzY5ZWRkIn19fQ== #This can be a material (Only in special items)
+      name: "<gold><b>Hoe Prestige"
+      lore:
+        - "<gray>Click here to prestige your hoe!"
+    '2':
+      item: enchants
+      slot: 14
+      value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzUyOTk1MjZiNGEzNTM5MmQ0YTQxYmNiNGJmMzJlMGRiMDRkMGYwMWQyNWNkYTEzNzE5OGEzNTcxOTY4NWY2In19fQ==
+      name: "<yellow><b>🌾Hoe Upgrades"
+      lore:
+        - "<gray>Click here to see all possible upgrades!"
+    '3':
+      item: DIAMOND_BLOCK
+      slot: 23
+      name: "<red>Test Item"
+      commands: #You can use placeholderapi variables!
+        - "[close]"
+        - "[message] The menu has been closed."
+        - "give %player% DIAMOND_BLOCK 1"
+  sword-menu:
+    '1':
+      item: prestige
+      slot: 12
+      value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWM5ZTZiZmRjYmUyOTdiNTNjZTFmMTI3YTJhZjNjYjk1Mzk0MTVjNDE4MTM4ZmQxYmRkYTU3MjQyYzY5ZWRkIn19fQ== #This can be a material (Only in special items)
+      name: "<gold><b>Sword Prestige"
+      lore:
+        - "<gray>Click here to prestige your sword"
+    '2':
+      item: enchants
+      slot: 14
+      value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzUyOTk1MjZiNGEzNTM5MmQ0YTQxYmNiNGJmMzJlMGRiMDRkMGYwMWQyNWNkYTEzNzE5OGEzNTcxOTY4NWY2In19fQ==
+      name: "<yellow><b>🗡Sword Upgrades"
+      lore:
+        - "<gray>Click here to see all possible upgrades!"
+  pickaxe-menu:
+    '1':
+      item: prestige
+      slot: 12
+      value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWM5ZTZiZmRjYmUyOTdiNTNjZTFmMTI3YTJhZjNjYjk1Mzk0MTVjNDE4MTM4ZmQxYmRkYTU3MjQyYzY5ZWRkIn19fQ== #This can be a material (Only in special items)
+      name: "<gold><b>Pickaxe Prestige"
+      lore:
+        - "<gray>Click here to prestige your pickaxe"
+    '2':
+      item: enchants
+      slot: 14
+      value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzUyOTk1MjZiNGEzNTM5MmQ0YTQxYmNiNGJmMzJlMGRiMDRkMGYwMWQyNWNkYTEzNzE5OGEzNTcxOTY4NWY2In19fQ==
+      name: "<yellow><b>⛏Pickaxe Upgrades"
+      lore:
+        - "<gray>Click here to see all possible upgrades!"
+  rod-menu:
+    '1':
+      item: prestige
+      slot: 12
+      value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWM5ZTZiZmRjYmUyOTdiNTNjZTFmMTI3YTJhZjNjYjk1Mzk0MTVjNDE4MTM4ZmQxYmRkYTU3MjQyYzY5ZWRkIn19fQ== #This can be a material (Only in special items)
+      name: "<gold><b>Rod Prestige"
+      lore:
+        - "<gray>Click here to prestige your "
+    '2':
+      item: enchants
+      slot: 14
+      value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzUyOTk1MjZiNGEzNTM5MmQ0YTQxYmNiNGJmMzJlMGRiMDRkMGYwMWQyNWNkYTEzNzE5OGEzNTcxOTY4NWY2In19fQ==
+      name: "<yellow><b>🎣Rod Upgrades"
+      lore:
+        - "<gray>Click here to see all possible upgrades!"
+Prestige-Menu:
+  title: "<red>Prestige Menu"
+  slots: 9
+  filler: "GRAY_STAINED_GLASS_PANE"
+  items: #Special items: reset
+    '1':
+      item: "reset"
+      slot: 3
+      value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWM5ZTZiZmRjYmUyOTdiNTNjZTFmMTI3YTJhZjNjYjk1Mzk0MTVjNDE4MTM4ZmQxYmRkYTU3MjQyYzY5ZWRkIn19fQ
+      name: "<green><b>Prestige your item!"
+      lore:
+        - "<gray>Prestige wont remove your enchants"
+        - "<gray>However it will reset your level in"
+        - "<gray>exchange for a little boost!"
+        - ""
+        - "<red><b>You need level %level_to_prestige% for using this!"
+    '2':
+      item: "PLAYER_HEAD"
+      slot: 5
+      value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjQyZmY2ODhhOWMyMWU0NjRjNGE5MDhiM2MxNGZjODI2ODk2OTRhMTU2OWZkYWZiNjE1ZmEzNGEzYjczMDlmNSJ9fX0=
+      name: "<green><b>Prestige info"
+      lore:
+        - "<gold> | Essence boost: %current_essence_boost%"
+        - "<green> | Money boost: %current_money_boost%"

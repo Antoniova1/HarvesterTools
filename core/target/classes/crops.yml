@@ -1,0 +1,168 @@
+#Whether custom crops should be enabled. (Levels will still be taken from normal crops section)
+enable_custom: false
+
+crops:
+  WHEAT:
+    level: 0
+    price: 1.3
+    essence-price: 2
+    experience: 2.3
+  POTATOES:
+    level: 2
+    price: 1.5
+    essence-price: 2.2
+    experience: 2.5
+  PUMPKIN:
+    level: 3
+    price: 2.5
+    essence-price: 2.5
+    experience: 2.7
+  MELON:
+    level: 3
+    price: 2.5
+    essence-price: 2.5
+    experience: 3
+  CARROTS:
+    level: 5
+    price: 2
+    essence-price: 2.4
+    experience: 3
+  BEETROOTS:
+    level: 7
+    price: 2.3
+    essence-price: 2.6
+    experience: 3.2
+  NETHER_WART:
+    level: 16
+    price: 3.2
+    essence-price: 3.6
+    experience: 3.5
+
+
+#To add flags add item-flags: (String list)
+custom_crops:
+  WHEAT:
+    rolls: 3
+    drops:
+      '1':
+        material: WHEAT
+        chance: 70
+        name: "<#F5DEB3>Custom Wheat"
+        glow: true
+        lore:
+          - "<gray>In the past only gods"
+          - "<gray>could farm this crop."
+        price: 2
+        essence-price: 4
+        experience: 2.3
+      '2':
+        material: HAY_BLOCK
+        chance: 3
+        name: "<#F5DEB3>Extra Wheat"
+        glow: true
+        lore:
+          - "<gray>A better form of"
+          - "<gray>gods farmers."
+        price: 5
+        essence-price: 30
+        experience: 2.6
+  POTATOES:
+    rolls: 2
+    drops:
+      '1':
+        material: POTATO
+        chance: 70
+        name: "<#F5DEB3>Custom Potatoes"
+        glow: false
+        lore:
+          - "<gray>In the past only gods"
+          - "<gray>could farm this crop."
+        price: 2.3
+        essence-price: 4.5
+        experience: 2.5
+      '2':
+        material: POTATO
+        chance: 3
+        name: "<#F5DEB3>Extra Potatoes"
+        glow: true
+        lore:
+          - "<gray>A better form of"
+          - "<gray>gods farmers."
+        price: 7
+        essence-price: 35
+        experience: 2.1
+  CARROTS:
+    rolls: 4
+    drops:
+      '1':
+        material: CARROT
+        chance: 70
+        name: "<#F5DEB3>Custom Carrot"
+        glow: false
+        lore:
+          - "<gray>In the past only gods"
+          - "<gray>could farm this crop."
+        price: 2.9
+        essence-price: 5
+        experience: 2.8
+      '2':
+        material: CARROT
+        chance: 3
+        name: "<#F5DEB3>Extra Carrot"
+        glow: true
+        lore:
+          - "<gray>A better form of"
+          - "<gray>gods farmers."
+        price: 10
+        essence-price: 40
+        experience: 2.5
+  BEETROOTS:
+    rolls: 3
+    drops:
+      '1':
+        material: BEETROOTS
+        chance: 70
+        name: "<#FF6347>Custom Beetroots"
+        glow: false
+        lore:
+          - "<gray>In the past only gods"
+          - "<gray>could farm this crop."
+        price: 2.7
+        essence-price: 4.8
+        experience: 2.4
+      '2':
+        material: BEETROOT_SEEDS
+        chance: 3
+        name: "<#FF6347>Extra Beetroots"
+        glow: true
+        lore:
+          - "<gray>A better form of"
+          - "<gray>gods farmers."
+        price: 6
+        essence-price: 32
+        experience: 2.2
+  NETHER_WART:
+    rolls: 3
+    drops:
+      '1':
+        material: NETHER_WART
+        chance: 70
+        name: "<#8B0000>Custom Nether Wart"
+        glow: true
+        lore:
+          - "<gray>In the past only gods"
+          - "<gray>could farm this crop."
+        price: 3.5
+        essence-price: 6
+        experience: 3.0
+      '2':
+        material: NETHER_WART_BLOCK
+        chance: 3
+        name: "<#8B0000>Extra Nether Wart"
+        glow: true
+        lore:
+          - "<gray>A better form of"
+          - "<gray>gods farmers."
+        price: 12
+        essence-price: 50
+        experience: 2.9

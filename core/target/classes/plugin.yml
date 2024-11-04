@@ -1,0 +1,44 @@
+name: HarvesterTools
+version: '1.0'
+main: org.frags.harvestertools.HarvesterTools
+api-version: '1.16'
+softdepend:
+  - PlaceholderAPI
+commands:
+  hoe:
+    description: Gives you hoe
+  sword:
+    description: Gives you sword
+  rod:
+    description: Gives you rod
+  pickaxe:
+    description: Gives you pickaxe
+  essence:
+    description: Core essence command.
+  harvestertools:
+    description: Core plugin command
+permissions:
+  harvestertools.essence:
+    default: op
+  harvestertools.essence.balance:
+    default: true
+  harvestertools.essence.give:
+    default: op
+  harvestertools.essence.take:
+    default: op
+  harvestertools.essence.pay:
+    default: true
+  harvestertools.essence.withdraw:
+    default: true
+  harvestertools.essence.shop:
+    default: true
+  harvestertools.main:
+    default: op
+  harvestertools.give:
+    default: op
+  harvestertools.level:
+    default: op
+  harvestertools.prestige:
+    default: op
+  harvestertools.reload:
+    default: op

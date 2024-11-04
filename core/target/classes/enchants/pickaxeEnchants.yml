@@ -1,0 +1,289 @@
+#######################################################
+#  _____ _   _  ____ _   _    _    _   _ _____ ____   #
+#  | ____| \ | |/ ___| | | |  / \  | \ | |_   _/ ___| #
+# |  _| |  \| | |   | |_| | / _ \ |  \| | | | \___ \  #
+# | |___| |\  | |___|  _  |/ ___ \| |\  | | |  ___) | #
+# |_____|_| \_|\____|_| |_/_/   \_|_| \_| |_| |____/  #
+#                                                     #
+#######################################################
+
+
+EnchantsMenu:
+  name: "<gold>Enchants Menu"
+  size: 45
+  item-preview: true
+  item-preview-slot: 4
+  filler: GRAY_STAINED_GLASS_PANE
+
+CustomEnchants:
+  autosell:
+    upgradable: false
+    name: "<green><b>Auto Sell"
+    material: PLAYER_HEAD
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjA5Mjk5YTExN2JlZTg4ZDMyNjJmNmFiOTgyMTFmYmEzNDRlY2FlMzliNDdlYzg0ODEyOTcwNmRlZGM4MWU0ZiJ9fX0=
+    slot: 10
+    price: 100000
+    required-level: 0
+    maxLevel: 1
+    required-prestige: 0
+    autosell-time: 60
+    lore:
+      - '<gray>Automatically sells all crops'
+      - ''
+      - '<gray><b>· Price: <white>%price%'
+      - ''
+      - '<gray>Click to buy this enchant!'
+    actionbar:
+      enabled: true
+      message: '<dark_green><b>[💰] AutoSell: + <green>$%money% <dark_green>+ <yellow>❋%essence%'
+    title:
+      enabled: true
+      title: '<dark_green><b>[💰] <green><b>AutoSell'
+      subtitle: '<dark_green>+ <green>$%money% <dark_green>+ <yellow>❋%essence%'
+      fadeIn: 20
+      fadeOut: 20
+      time: 80
+    message:
+      - "   <aqua><b>Auto Sell Summary"
+      - ""
+      - "<green>- Earned Money: <dark_green>$%money%"
+      - "<yellow>- Recollected essence: <gold>☀%essence%"
+      - ""
+      - "   <aqua><b>Boosters"
+      - ""
+      - "<green>- Money Booster: <white>x%money_boost%"
+      - "<yellow>- Essence Booster: <white>x%essence_boost%"
+    change:
+      title:
+        enabled: true
+        title: "<red><b>[!] %mode%"
+        subtitle: "<gray>Mode changed"
+        fadeIn: 20
+        fadeOut: 20
+        time: 80
+      message: "<green>Your sell mode have been changed to %mode%"
+  moneybooster:
+    name: '<red><b>Money Booster'
+    material: PLAYER_HEAD
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTQ2N2E3YjlkNzZiYTZkMGZlZDc0MzYwMjUzM2ZjOThjODdhZjBjNjBmODBmMzhkYTc3NGY3YTAxYTIwOTNmYSJ9fX0=
+    upgradable: true
+    slot: 11
+    boost-per-level: 0.1
+    price: 100
+    price-increase: 150
+    maxLevel: 300
+    required-level: 0
+    required-prestige: 0
+    lore:
+      - "<gray>Boost obtained money"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - "<gray><b>· Boost: <white>%boost%"
+      - ""
+      - "<dark_gray>Click to buy this enchant!"
+  essencebooster:
+    name: "<red><b>Essence Booster"
+    material: PLAYER_HEAD
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjdjNDE5MzBmOGZmMGYyYjA0MzBlMTY5YWU1ZjM4ZTk4NGRmMTI0NDIxNTcwNWM2ZjE3Mzg2Mjg0NDU0M2U5ZCJ9fX0=
+    upgradable: true
+    slot: 12
+    boost-per-level: 0.1
+    price: 200
+    price-increase: 250
+    maxLevel: 300
+    required-level: 0
+    required-prestige: 0
+    lore:
+      - "<gray>Boost obtained essence"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - "<gray><b>· Boost: <white>%boost%"
+      - ""
+      - "<dark_gray>Click to buy this enchant!"
+  experiencebooster:
+    name: "<red><b>Experience Booster"
+    material: PLAYER_HEAD
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODdkODg1YjMyYjBkZDJkNmI3ZjFiNTgyYTM0MTg2ZjhhNTM3M2M0NjU4OWEyNzM0MjMxMzJiNDQ4YjgwMzQ2MiJ9fX0=
+    upgradable: true
+    slot: 13
+    boost-per-level: 0.1
+    price: 250
+    price-increase: 300
+    maxLevel: 300
+    required-level: 0
+    required-prestige: 0
+    lore:
+      - "<gray>Boost obtained experience"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - "<gray><b>· Boost: <white>%boost%"
+      - ""
+      - "<dark_gray>Click to buy this enchant"
+  moneybag:
+    name: "<green><b>Money Bag"
+    material: PLAYER_HEAD
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWZkMTA4MzgzZGZhNWIwMmU4NjYzNTYwOTU0MTUyMGU0ZTE1ODk1MmQ2OGMxYzhmOGYyMDBlYzdlODg2NDJkIn19fQ==
+    upgradable: true
+    slot: 14
+    chance-per-level: 0.001
+    price: 200
+    price-increase: 50
+    maxLevel: 500
+    lore:
+      - "<gray>Chance to find a bag full of money!"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - "<gray><b>· Chance: <white>%chance%"
+      - ""
+      - "<dark_gray>Click to buy this enchant!"
+    commands:
+      little:
+        command: "eco give %player% 300000"
+        chance: 20
+      medium:
+        command: "eco give %player% 500000"
+        chance: 15
+      large:
+        command: "eco give %player% 1000000"
+        chance: 10
+      huge:
+        command: "eco give %player% 2000000"
+        chance: 5
+      jackpot:
+        command: "eco give %player% 5000000"
+        chance: 1
+  essencebag:
+    name: "<gold><b>Essence Bag"
+    material: PLAYER_HEAD
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWZkMTA4MzgzZGZhNWIwMmU4NjYzNTYwOTU0MTUyMGU0ZTE1ODk1MmQ2OGMxYzhmOGYyMDBlYzdlODg2NDJkIn19fQ==
+    upgradable: true
+    slot: 15
+    chance-per-level: 0.001
+    price: 200
+    price-increase: 50
+    maxLevel: 500
+    lore:
+      - "<gray>Chance to find a bag full of essence!"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - "<gray><b>· Chance: <white>%chance%"
+      - ""
+      - "<dark_gray>Click to buy this enchant!"
+    commands:
+      little:
+        command: "essence give %player% 300000"
+        chance: 20
+      medium:
+        command: "essence give %player% 500000"
+        chance: 15
+      large:
+        command: "essence give %player% 1000000"
+        chance: 10
+      huge:
+        command: "essence give %player% 2000000"
+        chance: 5
+      jackpot:
+        command: "essence give %player% 5000000"
+        chance: 1
+  keyfinder:
+    name: "<light_purple><b>Key Finder"
+    material: PLAYER_HEAD
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjYyNDFjM2E3NjZhYjVjMTcyYjI5M2QzMWRmZmQ0NDY4MDg5N2RlMjk0MzkzNjdjZDRlOWNlMzg5NDlkZmUyNyJ9fX0=
+    upgradable: true
+    slot: 16
+    chance-per-level: 0.005
+    price: 750
+    price-increase: 350
+    maxLevel: 450
+    lore:
+      - "<gray>Chance to find keys while farming!"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - "<gray><b>· Chance: <white>%chance%"
+      - ""
+      - "<dark_gray>Click to buy this enchant!"
+    commands:
+      vote:
+        command: "crate key give %player% vote 1 -s"
+        chance: 20
+      rare:
+        command: "crate key give %player% rare 1 -s"
+        chance: 15
+      epic:
+        command: "crate key give %player% epic 1 -s"
+        chance: 10
+      legendary:
+        command: "crate key give %player% legendary 1 -s"
+        chance: 5
+      mythical:
+        command: "crate key give %player% mythical 1 -s"
+        chance: 1
+  haste:
+    name: "<aqua><b>Haste"
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODQ4MDVjYWZhOWEzMWQ5ZGY4MzljNTY3MDNmNzlkYWI5ZGQ4NWJkNWM1OWI4NjM4MGJhNDMyOTk0ODQ4ODRiMCJ9fX0=
+    upgradable: true
+    slot: 20
+    price: 100000
+    price-increase: 250000
+    maxLevel: 3
+    lore:
+      - "<gray>Break faster while mining!"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - ""
+      - "<dark_gray>Click to buy the enchant!"
+  efficiency:
+    name: "<aqua><b>Efficiency"
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODQ4MDVjYWZhOWEzMWQ5ZGY4MzljNTY3MDNmNzlkYWI5ZGQ4NWJkNWM1OWI4NjM4MGJhNDMyOTk0ODQ4ODRiMCJ9fX0=
+    upgradable: true
+    slot: 22
+    price: 100000
+    price-increase: 250000
+    maxLevel: 5
+    lore:
+      - "<gray>Break faster while mining!"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - ""
+      - "<dark_gray>Click to buy the enchant!"
+  fortune:
+    name: "<aqua><b>fortune"
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODQ4MDVjYWZhOWEzMWQ5ZGY4MzljNTY3MDNmNzlkYWI5ZGQ4NWJkNWM1OWI4NjM4MGJhNDMyOTk0ODQ4ODRiMCJ9fX0=
+    upgradable: true
+    slot: 24
+    price: 100000
+    price-increase: 250000
+    maxLevel: 3
+    lore:
+      - "<gray>Get more drops while mining!"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - ""
+      - "<dark_gray>Click to buy the enchant!"
+  speed:
+    name: "<aqua><b>Speed"
+    value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODQ4MDVjYWZhOWEzMWQ5ZGY4MzljNTY3MDNmNzlkYWI5ZGQ4NWJkNWM1OWI4NjM4MGJhNDMyOTk0ODQ4ODRiMCJ9fX0=
+    upgradable: true
+    slot: 31
+    price: 100000
+    price-increase: 250000
+    maxLevel: 3
+    lore:
+      - "<gray>Be speedier while mining!"
+      - "<gray><b>· Price: <white>%price%"
+      - "<gray><b>· Max Level: <white>%maxLevel%"
+      - "<gray><b>· Current Level: <white>%level%"
+      - ""
+      - "<dark_gray>Click to buy the enchant!"
+
+
+

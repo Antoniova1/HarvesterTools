@@ -1,0 +1,630 @@
+#Wether custom drops should be enabled.
+enable_custom: false
+
+blocks:
+  stone:
+    money: 20
+    essence: 10
+    experience: 5
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: STONE
+          chance: 70
+          name: "<gray>Stone"
+          lore:
+            - "<gray>Stone that has been"
+            - "<gray>imported from mount everest"
+          price: 5
+          essence-price: 7
+          experience: 1.2
+        '2':
+          material: STONE
+          chance: 5
+          name: "<gray>Premium Stone"
+          glow: true
+          lore:
+            - "<gray>Is this from the moon?"
+          price: 5
+          essence-price: 7
+          experience: 1.2
+  deepslate:
+    money: 22
+    essence: 11
+    experience: 6
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: DEEPSLATE
+          chance: 70
+          name: "<gray>Deepslate"
+          lore:
+            - "<gray>A dense block from deep underground"
+          price: 6
+          essence-price: 8
+          experience: 1.3
+        '2':
+          material: DEEPSLATE
+          chance: 5
+          name: "<gray>Premium Deepslate"
+          glow: true
+          lore:
+            - "<gray>A rare find from the depths"
+          price: 6
+          essence-price: 8
+          experience: 1.3
+  netherrack:
+    money: 18
+    essence: 9
+    experience: 4
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: NETHERRACK
+          chance: 70
+          name: "<red>Netherrack"
+          lore:
+            - "<red>A block from the fiery Nether"
+          price: 4
+          essence-price: 6
+          experience: 1.0
+        '2':
+          material: NETHERRACK
+          chance: 5
+          name: "<red>Glowing Netherrack"
+          glow: true
+          lore:
+            - "<red>It glows with an eerie light"
+          price: 4
+          essence-price: 6
+          experience: 1.0
+  basalt:
+    money: 21
+    essence: 10
+    experience: 5
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: BASALT
+          chance: 70
+          name: "<dark_gray>Basalt"
+          lore:
+            - "<dark_gray>A block formed from lava"
+          price: 5
+          essence-price: 7
+          experience: 1.1
+        '2':
+          material: BASALT
+          chance: 5
+          name: "<dark_gray>Polished Basalt"
+          glow: true
+          lore:
+            - "<dark_gray>Shiny and smooth"
+          price: 5
+          essence-price: 7
+          experience: 1.1
+  coal_ore:
+    money: 8
+    essence: 4
+    experience: 10
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: COAL
+          chance: 70
+          name: "<black>Coal"
+          lore:
+            - "<black>A common but valuable resource"
+          price: 2
+          essence-price: 3
+          experience: 0.8
+        '2':
+          material: COAL
+          chance: 5
+          name: "<black>Rare Coal"
+          glow: true
+          lore:
+            - "<black>This piece seems special"
+          price: 2
+          essence-price: 3
+          experience: 0.8
+  deepslate_coal_ore:
+    money: 9
+    essence: 5
+    experience: 11
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: COAL
+          chance: 70
+          name: "<black>Deepslate Coal"
+          lore:
+            - "<black>Coal from deep underground"
+          price: 2.5
+          essence-price: 3.5
+          experience: 0.9
+        '2':
+          material: COAL
+          chance: 5
+          name: "<black>Premium Deepslate Coal"
+          glow: true
+          lore:
+            - "<black>This coal has a deeper hue"
+          price: 2.5
+          essence-price: 3.5
+          experience: 0.9
+  iron_ore:
+    money: 10
+    essence: 5
+    experience: 10
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: IRON_INGOT
+          chance: 70
+          name: "<gray>Iron Ore"
+          lore:
+            - "<gray>A valuable metal ore"
+          price: 3
+          essence-price: 4
+          experience: 1.0
+        '2':
+          material: IRON_INGOT
+          chance: 5
+          name: "<gray>Premium Iron Ore"
+          glow: true
+          lore:
+            - "<gray>This iron is exceptionally pure"
+          price: 3
+          essence-price: 4
+          experience: 1.0
+  deepslate_iron_ore:
+    money: 12
+    essence: 6
+    experience: 11
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: IRON_INGOT
+          chance: 70
+          name: "<gray>Deepslate Iron Ore"
+          lore:
+            - "<gray>Iron from deep within the earth"
+          price: 3.5
+          essence-price: 4.5
+          experience: 1.1
+        '2':
+          material: IRON_INGOT
+          chance: 5
+          name: "<gray>Premium Deepslate Iron Ore"
+          glow: true
+          lore:
+            - "<gray>This iron is denser than usual"
+          price: 3.5
+          essence-price: 4.5
+          experience: 1.1
+  copper_ore:
+    money: 9
+    essence: 4
+    experience: 10
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: COPPER_INGOT
+          chance: 70
+          name: "<orange>Copper Ore"
+          lore:
+            - "<orange>A useful but common metal"
+          price: 3
+          essence-price: 4
+          experience: 1.0
+        '2':
+          material: COPPER_INGOT
+          chance: 5
+          name: "<orange>Premium Copper Ore"
+          glow: true
+          lore:
+            - "<orange>This copper shines brightly"
+          price: 3
+          essence-price: 4
+          experience: 1.0
+  deepslate_copper_ore:
+    money: 11
+    essence: 5
+    experience: 11
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: COPPER_INGOT
+          chance: 70
+          name: "<orange>Deepslate Copper Ore"
+          lore:
+            - "<orange>Copper from deep within the earth"
+          price: 3.5
+          essence-price: 4.5
+          experience: 1.1
+        '2':
+          material: COPPER_INGOT
+          chance: 5
+          name: "<orange>Premium Deepslate Copper Ore"
+          glow: true
+          lore:
+            - "<orange>This copper has a unique sheen"
+          price: 3.5
+          essence-price: 4.5
+          experience: 1.1
+  gold_ore:
+    money: 15
+    essence: 7
+    experience: 12
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: GOLD_INGOT
+          chance: 70
+          name: "<yellow>Gold Ore"
+          lore:
+            - "<yellow>A precious metal ore"
+          price: 5
+          essence-price: 7
+          experience: 1.5
+        '2':
+          material: GOLD_INGOT
+          chance: 5
+          name: "<yellow>Premium Gold Ore"
+          glow: true
+          lore:
+            - "<yellow>This gold is unusually pure"
+          price: 5
+          essence-price: 7
+          experience: 1.5
+  deepslate_gold_ore:
+    money: 18
+    essence: 9
+    experience: 13
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: GOLD_INGOT
+          chance: 70
+          name: "<yellow>Deepslate Gold Ore"
+          lore:
+            - "<yellow>Gold from deep within the earth"
+          price: 6
+          essence-price: 8
+          experience: 1.6
+        '2':
+          material: GOLD_INGOT
+          chance: 5
+          name: "<yellow>Premium Deepslate Gold Ore"
+          glow: true
+          lore:
+            - "<yellow>This gold has a special shine"
+          price: 6
+          essence-price: 8
+          experience: 1.6
+  lapis_ore:
+    money: 14
+    essence: 7
+    experience: 15
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: LAPIS_LAZULI
+          chance: 70
+          name: "<blue>Lapis Ore"
+          lore:
+            - "<blue>A beautiful blue stone"
+          price: 4
+          essence-price: 5
+          experience: 1.7
+        '2':
+          material: LAPIS_LAZULI
+          chance: 5
+          name: "<blue>Premium Lapis Ore"
+          glow: true
+          lore:
+            - "<blue>This lapis is unusually vibrant"
+          price: 4
+          essence-price: 5
+          experience: 1.7
+  deepslate_lapis_ore:
+    money: 16
+    essence: 8
+    experience: 16
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: LAPIS_LAZULI
+          chance: 70
+          name: "<blue>Deepslate Lapis Ore"
+          lore:
+            - "<blue>Lapis from deep within the earth"
+          price: 4.5
+          essence-price: 6
+          experience: 1.8
+        '2':
+          material: LAPIS_LAZULI
+          chance: 5
+          name: "<blue>Premium Deepslate Lapis Ore"
+          glow: true
+          lore:
+            - "<blue>This lapis has a deep blue hue"
+          price: 4.5
+          essence-price: 6
+          experience: 1.8
+  redstone_ore:
+    money: 12
+    essence: 6
+    experience: 14
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: REDSTONE
+          chance: 70
+          name: "<red>Redstone Ore"
+          lore:
+            - "<red>A useful energy source"
+          price: 3.5
+          essence-price: 5
+          experience: 1.6
+        '2':
+          material: REDSTONE
+          chance: 5
+          name: "<red>Premium Redstone Ore"
+          glow: true
+          lore:
+            - "<red>This redstone is unusually potent"
+          price: 3.5
+          essence-price: 5
+          experience: 1.6
+
+  deepslate_redstone_ore:
+    money: 14
+    essence: 7
+    experience: 15
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: REDSTONE
+          chance: 70
+          name: "<red>Deepslate Redstone Ore"
+          lore:
+            - "<red>Redstone from deep within the earth"
+          price: 4
+          essence-price: 5.5
+          experience: 1.7
+        '2':
+          material: REDSTONE
+          chance: 5
+          name: "<red>Premium Deepslate Redstone Ore"
+          glow: true
+          lore:
+            - "<red>This redstone has a deeper red hue"
+          price: 4
+          essence-price: 5.5
+          experience: 1.7
+  diamond_ore:
+    money: 25
+    essence: 12
+    experience: 20
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: DIAMOND
+          chance: 70
+          name: "<aqua>Diamond Ore"
+          lore:
+            - "<aqua>The most valuable gemstone"
+          price: 15
+          essence-price: 18
+          experience: 2.0
+        '2':
+          material: DIAMOND
+          chance: 5
+          name: "<aqua>Premium Diamond Ore"
+          glow: true
+          lore:
+            - "<aqua>This diamond is exceptionally brilliant"
+          price: 15
+          essence-price: 18
+          experience: 2.0
+  deepslate_diamond_ore:
+    money: 28
+    essence: 14
+    experience: 22
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: DIAMOND
+          chance: 70
+          name: "<aqua>Deepslate Diamond Ore"
+          lore:
+            - "<aqua>Diamond from deep within the earth"
+          price: 17
+          essence-price: 20
+          experience: 2.2
+        '2':
+          material: DIAMOND
+          chance: 5
+          name: "<aqua>Premium Deepslate Diamond Ore"
+          glow: true
+          lore:
+            - "<aqua>This diamond has an unmatched clarity"
+          price: 17
+          essence-price: 20
+          experience: 2.2
+  emerald_ore:
+    money: 30
+    essence: 15
+    experience: 25
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: EMERALD
+          chance: 70
+          name: "<green>Emerald Ore"
+          lore:
+            - "<green>A rare and precious gem"
+          price: 18
+          essence-price: 20
+          experience: 2.5
+        '2':
+          material: EMERALD
+          chance: 5
+          name: "<green>Premium Emerald Ore"
+          glow: true
+          lore:
+            - "<green>This emerald is unusually vibrant"
+          price: 18
+          essence-price: 20
+          experience: 2.5
+  deepslate_emerald_ore:
+    money: 33
+    essence: 17
+    experience: 27
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: EMERALD
+          chance: 70
+          name: "<green>Deepslate Emerald Ore"
+          lore:
+            - "<green>Emerald from deep within the earth"
+          price: 20
+          essence-price: 22
+          experience: 2.7
+        '2':
+          material: EMERALD
+          chance: 5
+          name: "<green>Premium Deepslate Emerald Ore"
+          glow: true
+          lore:
+            - "<green>This emerald has an unmatched hue"
+          price: 20
+          essence-price: 22
+          experience: 2.7
+  nether_gold_ore:
+    money: 16
+    essence: 8
+    experience: 13
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: GOLD_INGOT
+          chance: 70
+          name: "<yellow>Nether Gold Ore"
+          lore:
+            - "<yellow>Gold from the dangerous Nether"
+          price: 6
+          essence-price: 8
+          experience: 1.7
+        '2':
+          material: GOLD_INGOT
+          chance: 5
+          name: "<yellow>Premium Nether Gold Ore"
+          glow: true
+          lore:
+            - "<yellow>This gold has a strange glow"
+          price: 6
+          essence-price: 8
+          experience: 1.7
+  nether_quartz_ore:
+    money: 14
+    essence: 7
+    experience: 15
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: QUARTZ
+          chance: 70
+          name: "<white>Nether Quartz Ore"
+          lore:
+            - "<white>A valuable white mineral"
+          price: 4
+          essence-price: 6
+          experience: 1.5
+        '2':
+          material: QUARTZ
+          chance: 5
+          name: "<white>Premium Nether Quartz Ore"
+          glow: true
+          lore:
+            - "<white>This quartz is unusually pure"
+          price: 4
+          essence-price: 6
+          experience: 1.5
+  ancient_debris:
+    money: 40
+    essence: 20
+    experience: 30
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: ANCIENT_DEBRIS
+          chance: 70
+          name: "<dark_red>Ancient Debris"
+          lore:
+            - "<dark_red>A rare and ancient material"
+          price: 25
+          essence-price: 30
+          experience: 3.0
+        '2':
+          material: ANCIENT_DEBRIS
+          chance: 5
+          name: "<dark_red>Premium Ancient Debris"
+          glow: true
+          lore:
+            - "<dark_red>This debris seems otherworldly"
+          price: 25
+          essence-price: 30
+          experience: 3.0
+  end_stone:
+    money: 25
+    essence: 12
+    experience: 7
+    custom_drops:
+      rolls: 3
+      drops:
+        '1':
+          material: END_STONE
+          chance: 70
+          name: "<yellow>End Stone"
+          lore:
+            - "<yellow>A mysterious stone from the End"
+          price: 7
+          essence-price: 10
+          experience: 1.5
+        '2':
+          material: END_STONE
+          chance: 5
+          name: "<yellow>Premium End Stone"
+          glow: true
+          lore:
+            - "<yellow>This stone has an otherworldly aura"
+          price: 7
+          essence-price: 10
+          experience: 1.5

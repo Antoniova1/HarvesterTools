@@ -81,7 +81,6 @@
     </build>
 
     <distributionManagement>
-        <!-- ... Some other Distribution repository definitions -->
 
         <repository>
             <id>repsy</id>
@@ -89,14 +88,13 @@
             <url>https://repo.repsy.io/mvn/frags/harvestertools</url>
         </repository>
 
-        <!-- ... Some other Distribution repository definitions -->
     </distributionManagement>
 
     <dependencies>
         <dependency>
             <groupId>org.frags</groupId>
             <artifactId>HarvesterTools-core</artifactId>
-            <version>1.0</version>
+            <version>1.2</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

@@ -82,13 +82,25 @@ public class SwordManager extends ToolManager{
                 setAutoSellPeriod(true);
                 BukkitScheduler scheduler = plugin.getServer().getScheduler();
                 calculateBoostersValue(itemStack);
-                long autosellTime = 60*20;
+                long autosellTime = section.getLong("autosell-time") * 20;
+
                 scheduler.runTaskLater(plugin, () -> {
 
                     calculateBoostersAdder(itemStack);
 
+                    double oldMoney = getMoney();
+                    double oldEssence = getEssence();
+
+                    if (plugin.canUseVault) {
+                        Bukkit.getPluginManager().callEvent(new ObtainMoneyEvent(player, oldMoney, Tools.sword, itemStack, this));
+                    }
+
+                    //plugin.getEssenceManager().addEssence(player, essence);
+                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, oldEssence, Tools.sword, itemStack, this));
+
                     double money = getMoney();
-                    double essence = getEssence();
+                    double essence = getMoney();
+
                     ConfigurationSection actionBar = section.getConfigurationSection("autosell.actionbar");
                     if (actionBar.getBoolean("enabled")) {
                         String message = MessageManager.miniStringParse(actionBar.getString("message"))
@@ -123,14 +135,6 @@ public class SwordManager extends ToolManager{
                             player.sendMessage(formattedLine);
                         }
                     }
-
-                    if (plugin.canUseVault) {
-                        Bukkit.getPluginManager().callEvent(new ObtainMoneyEvent(player, money));
-                    }
-
-                    //plugin.getEssenceManager().addEssence(player, essence);
-                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, essence));
-
 
                     ItemMeta meta = itemStack.getItemMeta();
 
@@ -181,8 +185,7 @@ public class SwordManager extends ToolManager{
                     calculateBoostersAdder(itemStack);
 
                     //plugin.getEssenceManager().addEssence(player, getEssence());
-                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, getEssence()));
-
+                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, getEssence(), Tools.sword, itemStack, this));
 
                     ItemMeta meta = itemStack.getItemMeta();
 

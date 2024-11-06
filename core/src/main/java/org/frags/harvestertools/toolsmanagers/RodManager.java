@@ -79,7 +79,7 @@ public class RodManager extends ToolManager {
 
             if (!isInCollectPeriod() && !isInAutoSellPeriod()) {
                 setAutoSellPeriod(true);
-                long autoSellTime = 60 * 20;
+                long autoSellTime = section.getLong("autosell-time") * 20;
 
                 calculateBoostersValue(itemStack);
 
@@ -88,18 +88,27 @@ public class RodManager extends ToolManager {
 
                     calculateBoostersAdder(itemStack);
 
-                    double money = getMoney();
-                    double essence = getEssence();
+                    double oldMoney = getMoney();
+                    double oldEssence = getEssence();
 
-                    ConfigurationSection section = plugin.rodEnchantsFile.getConfig().getConfigurationSection("CustomEnchants.autosell");
-                    ConfigurationSection actionBar = section.getConfigurationSection("actionbar");
+                    if (plugin.canUseVault) {
+                        Bukkit.getPluginManager().callEvent(new ObtainMoneyEvent(player, oldMoney, Tools.rod, itemStack, this));
+                    }
+
+                    //plugin.getEssenceManager().addEssence(player, essence);
+                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, oldEssence, Tools.rod, itemStack, this));
+
+                    double money = getMoney();
+                    double essence = getMoney();
+
+                    ConfigurationSection actionBar = section.getConfigurationSection("autosell.actionbar");
                     if (actionBar.getBoolean("enabled")) {
                         String message = MessageManager.miniStringParse(actionBar.getString("message"))
                                 .replace("%money%", Utils.formatNumber(BigDecimal.valueOf(money)))
                                 .replace("%essence%", Utils.formatNumber(BigDecimal.valueOf(essence)));
                         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
                     }
-                    ConfigurationSection title = section.getConfigurationSection("title");
+                    ConfigurationSection title = section.getConfigurationSection("autosell.title");
                     if (title.getBoolean("enabled")) {
                         String titleMessage = MessageManager.miniStringParse(title.getString("title"))
                                 .replace("%money%", Utils.formatNumber(BigDecimal.valueOf(money)))
@@ -112,7 +121,8 @@ public class RodManager extends ToolManager {
                         int time = title.getInt("time");
                         player.sendTitle(titleMessage, subtitle, fadeIn, time, fadeOut);
                     }
-                    List<String> message = section.getStringList("message");
+
+                    List<String> message = section.getStringList("autosell.message");
                     if (!message.isEmpty()) {
                         double moneyBoost = moneyBooster;
                         double essenceBoost = essenceBooster;
@@ -125,14 +135,6 @@ public class RodManager extends ToolManager {
                             player.sendMessage(formattedLine);
                         }
                     }
-
-                    if (plugin.canUseVault) {
-                        //Give money
-                        Bukkit.getPluginManager().callEvent(new ObtainMoneyEvent(player, money));
-                    }
-
-                    //plugin.getEssenceManager().addEssence(player, essence);
-                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, essence));
 
                     ItemMeta meta = itemStack.getItemMeta();
 
@@ -168,7 +170,7 @@ public class RodManager extends ToolManager {
                     calculateBoostersAdder(itemStack);
 
                     //plugin.getEssenceManager().addEssence(player, getEssence());
-                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, getEssence()));
+                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, getEssence(), Tools.rod, itemStack, this));
 
                     ItemMeta meta = itemStack.getItemMeta();
 

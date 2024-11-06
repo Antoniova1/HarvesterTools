@@ -6,6 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.frags.harvestertools.HarvesterTools;
 import org.frags.harvestertools.events.ObtainMoneyEvent;
+import org.frags.harvestertools.toolsmanagers.ToolManager;
 
 public class ObtainMoneyListener implements Listener {
 
@@ -18,6 +19,11 @@ public class ObtainMoneyListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void obtainMoney(ObtainMoneyEvent e) {
+
+        ToolManager toolManager = e.getToolManager();
+
+        toolManager.setMoney(e.getAmount());
+
         plugin.getEcon().depositPlayer(e.getPlayer(), e.getAmount());
     }
 

@@ -71,11 +71,4 @@
       </plugin>
     </plugins>
   </build>
-  <distributionManagement>
-    <repository>
-      <id>repsy</id>
-      <name>harvestertools</name>
-      <url>https://repo.repsy.io/mvn/frags/harvestertools</url>
-    </repository>
-  </distributionManagement>
 </project>

@@ -76,14 +76,24 @@ public class PickaxeManager extends ToolManager {
                 setAutoSellPeriod(true);
                 BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
                 calculateBoostersValue(itemStack);
-                long autoSellTime = 60 * 20;
+                long autoSellTime = section.getLong("autosell-time") * 20;
 
                 scheduler.runTaskLater(plugin, () -> {
 
                     calculateBoostersAdder(itemStack);
 
+                    double oldMoney = getMoney();
+                    double oldEssence = getEssence();
+
+                    if (plugin.canUseVault) {
+                        Bukkit.getPluginManager().callEvent(new ObtainMoneyEvent(player, oldMoney, Tools.pickaxe, itemStack, this));
+                    }
+
+                    //plugin.getEssenceManager().addEssence(player, essence);
+                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, oldEssence, Tools.pickaxe, itemStack, this));
+
                     double money = getMoney();
-                    double essence = getEssence();
+                    double essence = getMoney();
 
                     ConfigurationSection actionBar = section.getConfigurationSection("autosell.actionbar");
                     if (actionBar.getBoolean("enabled")) {
@@ -119,18 +129,6 @@ public class PickaxeManager extends ToolManager {
                             player.sendMessage(formattedLine);
                         }
                     }
-
-                    Tools tool = Tools.pickaxe;
-
-
-                    if (plugin.canUseVault) {
-                        //Give money
-                        //plugin.getEcon().depositPlayer(Bukkit.getOfflinePlayer(player.getUniqueId()), money);
-                        Bukkit.getPluginManager().callEvent(new ObtainMoneyEvent(player, money, tool, itemStack));
-                    }
-
-                    //plugin.getEssenceManager().addEssence(player, essence);
-                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, essence, tool, itemStack));
 
                     ItemMeta meta = itemStack.getItemMeta();
 
@@ -178,7 +176,7 @@ public class PickaxeManager extends ToolManager {
                 Bukkit.getScheduler().runTaskLater(plugin, () -> {
                     calculateBoostersAdder(itemStack);
 
-                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, getEssence(), Tools.pickaxe, itemStack));
+                    Bukkit.getPluginManager().callEvent(new ObtainEssenceEvent(player, getEssence(), Tools.pickaxe, itemStack, this));
 
                     ItemMeta meta = itemStack.getItemMeta();
 

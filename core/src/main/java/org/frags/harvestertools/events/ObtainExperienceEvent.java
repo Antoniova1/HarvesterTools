@@ -13,6 +13,7 @@ public class ObtainExperienceEvent extends Event {
     private double amount;
 
     private final ItemStack itemStack;
+    private final Tools tool;
 
     private static final HandlerList HANDLERS = new HandlerList();
 
@@ -20,6 +21,7 @@ public class ObtainExperienceEvent extends Event {
         this.player = player;
         this.amount = amount;
         this.itemStack = itemStack;
+        this.tool = tool;
     }
 
     public Player getPlayer() {
@@ -30,6 +32,10 @@ public class ObtainExperienceEvent extends Event {
         return amount;
     }
 
+    public Tools getTool() {
+        return tool;
+    }
+
     public void setExperience(double amount) {
         this.amount = amount;
     }
@@ -38,7 +44,7 @@ public class ObtainExperienceEvent extends Event {
         return HANDLERS;
     }
 
-    public ItemStack getTool() {
+    public ItemStack getItemStack() {
         return itemStack;
     }
 

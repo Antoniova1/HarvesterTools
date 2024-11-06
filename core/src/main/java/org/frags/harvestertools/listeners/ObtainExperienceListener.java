@@ -25,7 +25,7 @@ public class ObtainExperienceListener implements Listener {
         if (e.getTool() == null)
             return;
 
-        ItemStack itemStack = e.getTool();
+        ItemStack itemStack = e.getItemStack();
 
         Tools tools = ToolUtils.getTool(itemStack);
 

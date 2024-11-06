@@ -127,7 +127,7 @@ public class ToolManager {
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 calculateExperienceBooster(itemStack);
 
-                Bukkit.getPluginManager().callEvent(new ObtainExperienceEvent(player, getExperience(), itemStack));
+                Bukkit.getPluginManager().callEvent(new ObtainExperienceEvent(player, getExperience(), ToolUtils.getTool(itemStack), itemStack));
 
                 setExperience(0);
                 setExperiencePeriod(false);

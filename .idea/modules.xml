@@ -5,10 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/HarvesterTools.iml" filepath="$PROJECT_DIR$/HarvesterTools.iml" />
       <module fileurl="file://$PROJECT_DIR$/core/HarvesterTools-core.iml" filepath="$PROJECT_DIR$/core/HarvesterTools-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/dist/HarvesterTools-dist.iml" filepath="$PROJECT_DIR$/dist/HarvesterTools-dist.iml" />
-      <module fileurl="file://$PROJECT_DIR$/spigot-1.20.2/HarvesterTools-spigot-1.20.2.iml" filepath="$PROJECT_DIR$/spigot-1.20.2/HarvesterTools-spigot-1.20.2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/spigot-1.20.4/HarvesterTools-spigot-1.20.4.iml" filepath="$PROJECT_DIR$/spigot-1.20.4/HarvesterTools-spigot-1.20.4.iml" />
-      <module fileurl="file://$PROJECT_DIR$/spigot-1.20.6/HarvesterTools-spigot-1.20.6.iml" filepath="$PROJECT_DIR$/spigot-1.20.6/HarvesterTools-spigot-1.20.6.iml" />
-      <module fileurl="file://$PROJECT_DIR$/spigot-1.21/HarvesterTools-spigot-1.21.iml" filepath="$PROJECT_DIR$/spigot-1.21/HarvesterTools-spigot-1.21.iml" />
     </modules>
   </component>
 </project>

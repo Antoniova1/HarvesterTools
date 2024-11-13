@@ -14,7 +14,11 @@
         <option value="$PROJECT_DIR$/spigot-1.17.1/pom.xml" />
         <option value="$PROJECT_DIR$/spigot-1.18.2/pom.xml" />
         <option value="$PROJECT_DIR$/spigot-1.19.4/pom.xml" />
+        <option value="$PROJECT_DIR$/spigot-1.20.2/pom.xml" />
+        <option value="$PROJECT_DIR$/spigot-1.20.4/pom.xml" />
         <option value="$PROJECT_DIR$/spigot-1.20.4/spigot-1.19.4/pom.xml" />
+        <option value="$PROJECT_DIR$/spigot-1.20.6/pom.xml" />
+        <option value="$PROJECT_DIR$/spigot-1.21/pom.xml" />
       </set>
     </option>
   </component>

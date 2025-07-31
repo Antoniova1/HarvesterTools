@@ -46,14 +46,14 @@ public class ConfirmEnchantMenu extends Menu {
 
     @Override
     public int getSlots() {
-        return 27;
+        return section.getInt("slots", 27);
     }
 
     @Override
     public void handleMenu(InventoryClickEvent e) {
         ItemStack clickedItem = e.getCurrentItem();
 
-        if (!clickedItem.hasItemMeta()) return;
+        if (clickedItem == null || !clickedItem.hasItemMeta()) return;
 
         PersistentDataContainer container = clickedItem.getItemMeta().getPersistentDataContainer();
 
@@ -62,20 +62,22 @@ public class ConfirmEnchantMenu extends Menu {
         if (key == null)
             return;
 
-        if (key.equalsIgnoreCase("max-item")) {
-            //This is the max Item :)
-            ItemStack playerTool = playerMenuUtility.getItem();
-            String enchantName = playerMenuUtility.getEnchant().getName();
-            int upgrades = result.getUpgrades();
+        ItemStack playerTool = playerMenuUtility.getItem();
+        String enchantName = playerMenuUtility.getEnchant().getName();
+        int maxEnchant = playerMenuUtility.getEnchant().getMaxLevel();
+        int currentLevel = plugin.getEnchantsManager().getEnchantmentLevel(playerTool, playerMenuUtility.getEnchant());
 
-            e.getWhoClicked().closeInventory();
+        e.setCancelled(true);
+
+        if (key.equalsIgnoreCase("max-item")) {
+            int upgrades = result.getUpgrades();
             plugin.getEnchantsManager().enchantItem(enchantName, playerTool, upgrades, playerMenuUtility.getOwner());
+            e.getWhoClicked().closeInventory();
+
         } else if (key.equalsIgnoreCase("select-item")) {
-            String line2 = "^^^^^^^^";
-            String line3 = "numbers of levels";
-            String line4 = "to upgrade";
+            // Mismo código para abrir GUI Sign con ingreso manual
             SignGUI gui = SignGUI.builder()
-                    .setLines(null, line2, line3, line4)
+                    .setLines(null, "^^^^^^^^", "numbers of levels", "to upgrade")
                     .setType(Material.OAK_SIGN)
                     .setHandler((player, signGUIResult) -> {
                         String line0 = signGUIResult.getLine(0);
@@ -87,23 +89,22 @@ public class ConfirmEnchantMenu extends Menu {
                         try {
                             int number = Integer.parseInt(line0);
                             if (number == 0) {
-                                return List.of(SignGUIAction.displayNewLines(null, line2, line3, line4));
+                                return List.of(SignGUIAction.displayNewLines(null, "^^^^^^^^", "numbers of levels", "to upgrade"));
                             }
-                            ItemStack playerTool = playerMenuUtility.getItem();
-                            int currentLevel = plugin.getEnchantsManager().getEnchantmentLevel(playerTool, playerMenuUtility.getEnchant());
-                            int maxEnchant = playerMenuUtility.getEnchant().getMaxLevel();
-                            if (number + currentLevel > maxEnchant) {
-                                //If number is higher than it should be
+
+                            int currentLevelInner = plugin.getEnchantsManager().getEnchantmentLevel(playerTool, playerMenuUtility.getEnchant());
+                            int maxEnchantInner = playerMenuUtility.getEnchant().getMaxLevel();
+
+                            if (number + currentLevelInner > maxEnchantInner) {
                                 MessageManager.miniMessageSender(player, plugin.messages.getConfig().getString("higher-than-max")
-                                        .replace("%maxLevel%", String.valueOf(maxEnchant)));
-                                return List.of(SignGUIAction.displayNewLines(null, line2, line3, line4));
+                                        .replace("%maxLevel%", String.valueOf(maxEnchantInner)));
+                                return List.of(SignGUIAction.displayNewLines(null, "^^^^^^^^", "numbers of levels", "to upgrade"));
                             }
-                            String enchantName = playerMenuUtility.getEnchant().getName();
+
                             plugin.getEnchantsManager().enchantItem(enchantName, playerTool, number, player);
                         } catch (NumberFormatException ex) {
-                            //The input wasn't a number
                             MessageManager.miniMessageSender(player, plugin.messages.getConfig().getString("not-number"));
-                            return List.of(SignGUIAction.displayNewLines(null, line2, line3, line4));
+                            return List.of(SignGUIAction.displayNewLines(null, "^^^^^^^^", "numbers of levels", "to upgrade"));
                         }
 
                         return Collections.emptyList();
@@ -111,8 +112,24 @@ public class ConfirmEnchantMenu extends Menu {
                     .build();
 
             gui.open(playerMenuUtility.getOwner());
-        }
 
+        } else if (key.startsWith("buy-")) {
+            try {
+                int levelsToBuy = Integer.parseInt(key.substring(4));
+
+                if (currentLevel + levelsToBuy > maxEnchant) {
+                    MessageManager.miniMessageSender(e.getWhoClicked(), plugin.messages.getConfig().getString("higher-than-max")
+                            .replace("%maxLevel%", String.valueOf(maxEnchant)));
+                    return;
+                }
+
+                plugin.getEnchantsManager().enchantItem(enchantName, playerTool, levelsToBuy, playerMenuUtility.getOwner());
+                e.getWhoClicked().closeInventory();
+
+            } catch (NumberFormatException ex) {
+                MessageManager.miniMessageSender(e.getWhoClicked(), plugin.messages.getConfig().getString("not-number"));
+            }
+        }
     }
 
     @Override
@@ -120,6 +137,7 @@ public class ConfirmEnchantMenu extends Menu {
         if (section.getBoolean("item-preview")) {
             inventory.setItem(section.getInt("item-preview-slot"), playerMenuUtility.getItem());
         }
+
         ConfigurationSection itemSection = section.getConfigurationSection("items");
         for (String key : itemSection.getKeys(false)) {
             ConfigurationSection createSection = itemSection.getConfigurationSection(key);
@@ -141,8 +159,7 @@ public class ConfirmEnchantMenu extends Menu {
 
                 for (int i = 0; i < lore.size(); i++) {
                     String replaced = replaceVariables(lore.get(i));
-                    lore.remove(i);
-                    lore.add(i, replaced);
+                    lore.set(i, replaced);
                 }
                 meta.setLore(lore);
 
@@ -161,14 +178,39 @@ public class ConfirmEnchantMenu extends Menu {
         setFillerGlass(section.getString("filler"));
     }
 
-
     private String replaceVariables(String string) {
         String colorReplaced = miniMessageParser(string);
-        return colorReplaced.
-                replace("%enchant%", playerMenuUtility.getEnchant().getCustomName()).
-                replace("%current_level%", String.valueOf(currentLevel))
+
+        // Preparamos reemplazos para los precios dinámicos de diferentes niveles
+        BigDecimal price1 = getPriceForLevels(1);
+        BigDecimal price5 = getPriceForLevels(5);
+        BigDecimal price10 = getPriceForLevels(10);
+        BigDecimal price20 = getPriceForLevels(20);
+
+        return colorReplaced
+                .replace("%enchant%", playerMenuUtility.getEnchant().getCustomName())
+                .replace("%current_level%", String.valueOf(currentLevel))
                 .replace("%next_level%", String.valueOf(result.getUpgrades() + currentLevel))
                 .replace("%price%", Utils.formatNumber(BigDecimal.valueOf(result.getTotalCost())))
-                .replace("%upgrades%", String.valueOf(result.getUpgrades()));
+                .replace("%upgrades%", String.valueOf(result.getUpgrades()))
+                .replace("%price_1%", Utils.formatNumber(price1))
+                .replace("%price_5%", Utils.formatNumber(price5))
+                .replace("%price_10%", Utils.formatNumber(price10))
+                .replace("%price_20%", Utils.formatNumber(price20));
+    }
+
+    /**
+     * Método para calcular el costo de mejorar X niveles.
+     * Ajusta según la lógica del plugin.
+     */
+    private BigDecimal getPriceForLevels(int levels) {
+        // Aquí debes usar la lógica de cálculo del plugin para el costo de 'levels' niveles.
+        // El método calculateCostForLevels es un ejemplo que deberías adaptar según tu plugin.
+
+        // Por simplicidad, asumimos que el costo es proporcional al resultado actual.
+        BigDecimal costPerLevel = BigDecimal.valueOf(result.getTotalCost())
+                .divide(BigDecimal.valueOf(result.getUpgrades()), BigDecimal.ROUND_HALF_UP);
+
+        return costPerLevel.multiply(BigDecimal.valueOf(levels));
     }
 }
